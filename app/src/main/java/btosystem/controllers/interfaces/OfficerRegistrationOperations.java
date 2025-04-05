@@ -6,13 +6,13 @@ import btosystem.classes.Project;
 import java.util.List;
 
 public interface OfficerRegistrationOperations
-                extends ListToStringParser<OfficerRegistration>, ToStringParser<OfficerRegistration> {
-        OfficerRegistration createRegistration(Project project, HdbOfficer officer);
+        extends ListToStringParser<OfficerRegistration>, ToStringParser<OfficerRegistration> {
+    OfficerRegistration createRegistration(Project project, HdbOfficer officer);
 
-        OfficerRegistration retrieveOfficerRegistration(
-                        List<OfficerRegistration> registrations, int index);
+    OfficerRegistration retrieveOfficerRegistration(
+            List<OfficerRegistration> registrations, int index);
 
-        int approveRegistration(OfficerRegistration registration);
+    int approveRegistration(OfficerRegistration registration);
 
-        int rejectRegistration(OfficerRegistration registration);
+    int rejectRegistration(OfficerRegistration registration);
 }

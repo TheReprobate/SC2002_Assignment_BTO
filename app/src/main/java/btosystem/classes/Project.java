@@ -14,7 +14,7 @@ public class Project {
     private long closeTime;
     private HashMap<FlatType, Integer> units;
     private ProjectTeam projectTeam;
-    private List<BtoApplication> BtoApplications;
+    private List<BtoApplication> btoApplications;
     private List<Enquiry> enquiries;
     private HdbManager createdBy;
 
@@ -30,7 +30,7 @@ public class Project {
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.projectTeam = projectTeam;
-        this.BtoApplications = new ArrayList<BtoApplication>();
+        this.btoApplications = new ArrayList<BtoApplication>();
         this.enquiries = new ArrayList<Enquiry>();
         this.units = new HashMap<FlatType, Integer>();
         this.createdBy = createdBy;
@@ -65,7 +65,7 @@ public class Project {
     }
 
     public List<BtoApplication> getBtoApplications() {
-        return BtoApplications;
+        return btoApplications;
     }
 
     public List<Enquiry> getEnquiries() {
