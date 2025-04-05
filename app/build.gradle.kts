@@ -45,6 +45,13 @@ checkstyle {
     isIgnoreFailures = false 
 }
 
+tasks.withType<Checkstyle> {
+    reports {
+        html.outputLocation.set(file("../docs/checkstyle/main.html"))
+    }
+    ignoreFailures = false
+}
+
 tasks.build {
     dependsOn(tasks.checkstyleMain, tasks.javadoc)
 }
