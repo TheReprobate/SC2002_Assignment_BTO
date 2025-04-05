@@ -89,4 +89,4 @@ nb-configuration.xml
 ##############################
 *.log
 
-docs/checkstyle
+docs
