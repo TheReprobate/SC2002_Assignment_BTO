@@ -9,10 +9,15 @@ import btosystem.classes.enums.Neighborhood;
 import java.util.HashMap;
 import java.util.List;
 
-public interface ProjectOperations extends MapToStringParser<Project>, CleanupOperations<Project> {
+public interface ProjectOperations
+        extends MapToStringParser<Project>, CleanupOperations<Project>, ListToStringParser<Project> {
     Project createProject(String name, Neighborhood neighborhood, long openTime, long closeTime);
 
     Project retrieveProject(HashMap<String, Project> projects, String name);
+
+    List<Project> filterProject(HashMap<String, Project> projects, Neighborhood neighborhood);
+
+    List<Project> filterProject(HashMap<String, Project> projects, boolean visible);
 
     ProjectTeam retrieveProjectTeam(Project project);
 
@@ -24,9 +29,15 @@ public interface ProjectOperations extends MapToStringParser<Project>, CleanupOp
 
     int updateUnitCount(Project project, FlatType flatType, int count);
 
-    int deleteProject(List<Project> projects, Project project);
+    int editProject(Project project, Neighborhood neighborhood);
 
-    boolean projectExist(List<Project> projects, String name);
+    int editProject(Project project, long openTime, long closeTime);
+
+    int deleteProject(HashMap<String, Project> projects, Project project);
+
+    boolean projectExist(HashMap<String, Project> projects, String name);
 
     String toString(HashMap<String, Project> projects);
+
+    String toString(List<Project> projects);
 }
