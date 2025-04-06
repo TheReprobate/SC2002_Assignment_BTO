@@ -4,6 +4,7 @@ import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
+import btosystem.classes.enums.FlatType;
 import java.util.List;
 
 public interface BtoApplicationOperations
@@ -11,13 +12,11 @@ public interface BtoApplicationOperations
         CleanupOperations<BtoApplication> {
     BtoApplication createApplication(Project project, Applicant applicant);
 
-    BtoApplication retrieveApplication(Applicant applicant);
-
-    BtoApplication retrieveApplication(Project project, int index);
+    BtoApplication retrieveApplication(List<BtoApplication> applications, int index);
 
     List<BtoApplication> retrieveApplications(Project project);
 
-    int processApplication(BtoApplication application, HdbOfficer officer);
+    int processApplication(BtoApplication application, HdbOfficer officer, FlatType flatType);
 
     int approveApplication(BtoApplication application);
 
