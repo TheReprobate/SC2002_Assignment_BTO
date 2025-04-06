@@ -14,6 +14,7 @@ SC2002 BTO Application
 | `./gradlew checkstyleMain`     | Generates a Checkstyle report (output in `./docs/checkstyle/main.html`).    |
 | `./gradlew build`        | Builds the project, including Javadoc and Checkstyle reports.               |
 | `./gradlew run`          | Executes the main class of the project.                                     |
+| `./gradlew -q --console plain run`          | Executes the main class of the project in a console.                                     |
 
 ---
 
