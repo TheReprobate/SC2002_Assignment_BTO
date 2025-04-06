@@ -11,7 +11,7 @@ import btosystem.classes.User;
 import java.util.HashMap;
 import java.util.List;
 
-public interface UserOperations extends ToStringParser<User> {
+public interface UserOperations extends ToStringSerializer<User> {
     public boolean authenticate(HashMap<String, User> users, String username, String password);
 
     public BtoApplication retrieveApplication(Applicant applicant);

@@ -8,7 +8,7 @@ import btosystem.classes.enums.FlatType;
 import java.util.List;
 
 public interface BtoApplicationOperations
-        extends ListToStringParser<BtoApplication>,
+        extends ListToStringSerializer<BtoApplication>,
         CleanupOperations<BtoApplication> {
     BtoApplication createApplication(Project project, Applicant applicant);
 

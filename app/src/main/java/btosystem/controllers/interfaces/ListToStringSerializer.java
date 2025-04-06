@@ -2,6 +2,6 @@ package btosystem.controllers.interfaces;
 
 import java.util.List;
 
-public interface ListToStringParser<T> extends ToStringParser<T> {
+public interface ListToStringSerializer<T> extends ToStringSerializer<T> {
     String toString(List<T> data);
 }

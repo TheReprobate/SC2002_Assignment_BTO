@@ -6,7 +6,7 @@ import btosystem.classes.Project;
 import java.util.List;
 
 public interface OfficerRegistrationOperations
-        extends ListToStringParser<OfficerRegistration> {
+        extends ListToStringSerializer<OfficerRegistration> {
     OfficerRegistration createRegistration(Project project, HdbOfficer officer);
 
     OfficerRegistration retrieveOfficerRegistration(

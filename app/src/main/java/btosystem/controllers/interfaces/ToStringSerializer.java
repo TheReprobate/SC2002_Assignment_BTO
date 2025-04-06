@@ -1,5 +1,5 @@
 package btosystem.controllers.interfaces;
 
-public interface ToStringParser<T> {
+public interface ToStringSerializer<T> {
     String toString(T data);
 }

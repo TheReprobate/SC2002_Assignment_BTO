@@ -6,7 +6,7 @@ import btosystem.classes.OfficerRegistration;
 import btosystem.classes.ProjectTeam;
 import java.util.List;
 
-public interface ProjectTeamOperations extends ToStringParser<ProjectTeam> {
+public interface ProjectTeamOperations extends ToStringSerializer<ProjectTeam> {
     ProjectTeam createProjectTeam();
 
     List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
