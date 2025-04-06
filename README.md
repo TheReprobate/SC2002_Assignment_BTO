@@ -32,8 +32,3 @@ SC2002 BTO Application
    Use `./gradlew build` to ensure the project compiles and passes all checks.
 
 ---
-
-⚠️ **Important**: Pushing code with Checkstyle errors/warnings will break the build pipeline.  
-✅ **Pro Tip**: Configure your IDE to use the project's Checkstyle rules for real-time feedback.
-
----
