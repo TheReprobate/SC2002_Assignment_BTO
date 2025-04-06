@@ -36,8 +36,4 @@ public interface ProjectOperations
     int deleteProject(HashMap<String, Project> projects, Project project);
 
     boolean projectExist(HashMap<String, Project> projects, String name);
-
-    String toString(HashMap<String, Project> projects);
-
-    String toString(List<Project> projects);
 }
