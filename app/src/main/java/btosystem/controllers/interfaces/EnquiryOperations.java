@@ -6,7 +6,7 @@ import btosystem.classes.Project;
 import java.util.List;
 
 public interface EnquiryOperations
-        extends ListToStringSerializer<Enquiry>, CleanupOperations<Enquiry> {
+        extends ListToString<Enquiry>, CleanupOperations<Enquiry> {
     Enquiry createEnquiry(Project project, Applicant applicant, String content);
 
     Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index);

@@ -9,7 +9,7 @@ import btosystem.classes.enums.Neighborhood;
 import java.util.List;
 
 public interface ProjectOperations
-        extends ListToStringSerializer<Project>, CleanupOperations<Project> {
+        extends ListToString<Project>, CleanupOperations<Project> {
     Project createProject(String name, Neighborhood neighborhood, long openTime, long closeTime);
 
     Project retrieveProject(List<Project> projects, String name);
