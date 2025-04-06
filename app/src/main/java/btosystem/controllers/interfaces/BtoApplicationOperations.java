@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface BtoApplicationOperations
         extends ListToStringParser<BtoApplication>,
-        ToStringParser<BtoApplication>,
         CleanupOperations<BtoApplication> {
     BtoApplication createApplication(Project project, Applicant applicant);
 

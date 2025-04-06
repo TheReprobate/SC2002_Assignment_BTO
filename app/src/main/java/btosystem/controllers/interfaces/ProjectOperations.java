@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface ProjectOperations
-        extends MapToStringParser<Project>, CleanupOperations<Project>, ListToStringParser<Project> {
+        extends MapToStringParser<Project>, CleanupOperations<Project> {
     Project createProject(String name, Neighborhood neighborhood, long openTime, long closeTime);
 
     Project retrieveProject(HashMap<String, Project> projects, String name);
