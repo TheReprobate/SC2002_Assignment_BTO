@@ -55,3 +55,7 @@ tasks.withType<Checkstyle> {
 tasks.build {
     dependsOn(tasks.checkstyleMain, tasks.javadoc)
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
