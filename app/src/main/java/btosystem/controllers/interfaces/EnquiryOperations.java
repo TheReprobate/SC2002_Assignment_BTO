@@ -3,7 +3,10 @@ package btosystem.controllers.interfaces;
 import btosystem.classes.Applicant;
 import btosystem.classes.Enquiry;
 import btosystem.classes.Project;
+
 import java.util.List;
+
+import btosystem.classes.User;
 
 public interface EnquiryOperations
         extends ListToString<Enquiry>, CleanupOperations<Enquiry> {
@@ -11,9 +14,9 @@ public interface EnquiryOperations
 
     Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index);
 
-    int deleteEnquiry(Enquiry enquiry);
+    int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
 
-    int replyEnquiry(Enquiry enquiry, String reply);
+    int replyEnquiry(User user, Enquiry enquiry, String reply);
 
     int editEnquiry(Enquiry enquiry, String content);
 }
