@@ -1,16 +1,13 @@
 package btosystem.controllers.interfaces;
 
-import btosystem.classes.BtoApplication;
-import btosystem.classes.Enquiry;
-import btosystem.classes.Project;
-import btosystem.classes.ProjectTeam;
+import btosystem.classes.*;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import java.util.List;
 
 public interface ProjectOperations
         extends ListToString<Project>, CleanupOperations<Project> {
-    Project createProject(String name, Neighborhood neighborhood, long openTime, long closeTime);
+    Project createProject(String name, Neighborhood neighborhood, long openTime, long closeTime, HdbManager hdbManager);
 
     Project retrieveProject(List<Project> projects, String name);
 
@@ -25,10 +22,6 @@ public interface ProjectOperations
     List<Enquiry> retrieveEnquiries(Project project);
 
     List<BtoApplication> retrieveApplications(Project project);
-
-    int addEnquiry(Project project, Enquiry enquiry);
-
-    int addApplication(Project project, BtoApplication application);
 
     int updateUnitCount(Project project, FlatType flatType, int count);
 

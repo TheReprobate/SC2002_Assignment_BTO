@@ -23,13 +23,14 @@ public class Project {
             Neighborhood neighborhood,
             long openTime,
             long closeTime,
-            ProjectTeam projectTeam,
+            //ProjectTeam projectTeam,
             HdbManager createdBy) {
         this.name = name;
         this.neighborhood = neighborhood;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        this.projectTeam = projectTeam;
+        //this.projectTeam = projectTeam;
+        this.projectTeam = null;
         this.btoApplications = new ArrayList<BtoApplication>();
         this.enquiries = new ArrayList<Enquiry>();
         this.units = new HashMap<FlatType, Integer>();
@@ -95,4 +96,9 @@ public class Project {
     public void setCreatedBy(HdbManager createdBy) {
         this.createdBy = createdBy;
     }
+
+    public void setUnits(HashMap<FlatType, Integer> units) {this.units = units; }
+
+    public void setProjectTeam(ProjectTeam projectTeam) {this.projectTeam = projectTeam; }
+
 }
