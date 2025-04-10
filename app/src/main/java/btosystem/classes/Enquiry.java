@@ -54,7 +54,13 @@ public class Enquiry {
 
     public void setReply(String reply) {
         this.reply = reply;
-        this.replied = true;
-        this.repliedAt = LocalDateTime.now();
+    }
+
+    public void setReplied(boolean replied) {
+        this.replied = replied;
+    }
+
+    public void setRepliedAt(LocalDateTime repliedAt) {
+        this.repliedAt = repliedAt;
     }
 }

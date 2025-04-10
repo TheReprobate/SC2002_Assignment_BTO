@@ -6,16 +6,14 @@ import btosystem.classes.Project;
 import btosystem.classes.User;
 import btosystem.controllers.interfaces.EnquiryOperations;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class EnquiryController implements EnquiryOperations {
 
     @Override
     public Enquiry createEnquiry(Project project, Applicant applicant, String content) {
-        Enquiry enquiry = new Enquiry(project, applicant, content);
-        applicant.getEnquiries().add(enquiry);
-        project.getEnquiries().add(enquiry);
-        return enquiry;
+        return new Enquiry(project, applicant, content);
     }
 
     @Override
@@ -38,6 +36,8 @@ public class EnquiryController implements EnquiryOperations {
     public int replyEnquiry(User user, Enquiry enquiry, String reply) {
         if (!enquiry.hasReplied()) {
             enquiry.setReply(reply);
+            enquiry.setReplied(true);
+            enquiry.setRepliedAt(LocalDateTime.now());
             return 1;
         }
         return 0;
@@ -56,6 +56,8 @@ public class EnquiryController implements EnquiryOperations {
     public void cleanup(Enquiry instance) {
         instance.setContent(null);
         instance.setReply(null);
+        instance.setReplied(false);
+        instance.setRepliedAt(null);
     }
 
     @Override
