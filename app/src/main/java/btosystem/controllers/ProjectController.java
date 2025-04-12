@@ -6,8 +6,8 @@ import btosystem.classes.enums.Neighborhood;
 import btosystem.controllers.interfaces.ProjectOperations;
 import btosystem.controllers.interfaces.ProjectTeamOperations;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class ProjectController implements ProjectOperations {
     // Default constructor
 
     @Override
-    public Project createProject(String name, Neighborhood neighborhood, long openTime, long closeTime, HdbManager hdbManager) {
+    public Project createProject(String name, Neighborhood neighborhood, LocalDate openTime, LocalDate closeTime, HdbManager hdbManager) {
         // Create project object first
         Project proj = new Project(name, neighborhood, openTime, closeTime, hdbManager);
         // Then we create ProjectTeam based on proj obj
@@ -107,7 +107,7 @@ public class ProjectController implements ProjectOperations {
     }
 
     @Override
-    public int editProject(Project project, long openTime, long closeTime) {
+    public int editProject(Project project, LocalDate openTime, LocalDate closeTime) {
         project.setOpenTime(openTime);
         project.setCloseTime(closeTime);
         return 1;

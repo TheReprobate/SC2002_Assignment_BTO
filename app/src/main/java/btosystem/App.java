@@ -8,6 +8,7 @@ import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import btosystem.controllers.ProjectController;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,9 @@ public class App {
         HdbManager hdbManager = new HdbManager("S9810294C", "Trump", 54, true);
 
         // Create some test projects
-        Project project1 = projectController.createProject("Project Ang Mo Kio", Neighborhood.ANG_MO_KIO, 1622505600000L, 1625097600000L, hdbManager);
-        Project project2 = projectController.createProject("Project Bishan", Neighborhood.BISHAN, 1622505600000L, 1625097600000L, hdbManager);
-        Project project3 = projectController.createProject("Project NTU", Neighborhood.JURONG, 1622505600000L, 1625097600000L, hdbManager);
+        Project project1 = projectController.createProject("Project Ang Mo Kio", Neighborhood.ANG_MO_KIO, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
+        Project project2 = projectController.createProject("Project Bishan", Neighborhood.BISHAN, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
+        Project project3 = projectController.createProject("Project NTU", Neighborhood.JURONG, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
 
         // List to store all projects
         List<Project> projects = new ArrayList<>();
@@ -62,8 +63,8 @@ public class App {
         System.out.println("Updated Neighborhood for " + project1.getName() + ": " + project1.getNeighborhood());
 
         // Test: Edit project open and close times
-        long newOpenTime = 1625097600000L;  // 01 Jul 2021 00:00:00
-        long newCloseTime = 1630454400000L; // 01 Sep 2021 00:00:00
+        LocalDate newOpenTime = LocalDate.of(2025, 4, 10);
+        LocalDate newCloseTime = LocalDate.of(2025, 5, 11);
         projectController.editProject(project2, newOpenTime, newCloseTime);
         System.out.println("Updated Open and Close Times for " + project2.getName() + ": "
                 + project2.getOpenTime() + " - " + project2.getCloseTime());

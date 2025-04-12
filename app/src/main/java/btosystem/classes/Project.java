@@ -5,13 +5,14 @@ import btosystem.classes.enums.Neighborhood;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.time.LocalDate;
 
 public class Project {
     private String name;
     private Neighborhood neighborhood;
     private boolean visible;
-    private long openTime;
-    private long closeTime;
+    private LocalDate openTime;
+    private LocalDate closeTime;
     private HashMap<FlatType, Integer> units;
     private ProjectTeam projectTeam;
     private List<BtoApplication> btoApplications;
@@ -21,8 +22,8 @@ public class Project {
     public Project(
             String name,
             Neighborhood neighborhood,
-            long openTime,
-            long closeTime,
+            LocalDate openTime,
+            LocalDate closeTime,
             //ProjectTeam projectTeam,
             HdbManager createdBy) {
         this.name = name;
@@ -49,11 +50,11 @@ public class Project {
         return visible;
     }
 
-    public long getOpenTime() {
+    public LocalDate getOpenTime() {
         return openTime;
     }
 
-    public long getCloseTime() {
+    public LocalDate getCloseTime() {
         return closeTime;
     }
 
@@ -85,11 +86,11 @@ public class Project {
         this.visible = visible;
     }
 
-    public void setOpenTime(long openTime) {
+    public void setOpenTime(LocalDate openTime) {
         this.openTime = openTime;
     }
 
-    public void setCloseTime(long closeTime) {
+    public void setCloseTime(LocalDate closeTime) {
         this.closeTime = closeTime;
     }
 
