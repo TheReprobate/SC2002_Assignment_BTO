@@ -8,13 +8,13 @@ SC2002 BTO Application
 ## 🚀 Getting Started
 
 ### Build Commands
-| Command                  | Description                                                                 |
-|--------------------------|-----------------------------------------------------------------------------|
-| `./gradlew javadoc`      | Generates Javadoc documentation in `./docs/javadoc/`.                       |
-| `./gradlew checkstyleMain`     | Generates a Checkstyle report (output in `./docs/checkstyle/main.html`).    |
-| `./gradlew build`        | Builds the project, including Javadoc and Checkstyle reports.               |
-| `./gradlew run`          | Executes the main class of the project.                                     |
-| `./gradlew -q --console plain run`          | Executes the main class of the project in a console.                                     |
+| Command                            | Description                                                              |
+|------------------------------------|--------------------------------------------------------------------------|
+| `./gradlew javadoc`                | Generates Javadoc documentation in `./docs/javadoc/`.                    |
+| `./gradlew checkstyleMain`         | Generates a Checkstyle report (output in `./docs/checkstyle/main.html`). |
+| `./gradlew build`                  | Builds the project, including Javadoc and Checkstyle reports.            |
+| `./gradlew run`                    | Executes the main class of the project.                                  |
+| `./gradlew -q --console plain run` | Executes the main class of the project in a console.                     |
 
 ---
 
