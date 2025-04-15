@@ -2,11 +2,17 @@ package btosystem.classes;
 
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
+import btosystem.controllers.interfaces.CleanupOperations;
+import btosystem.controllers.interfaces.ListToString;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.time.LocalDate;
 
+/**
+ * Project class, logical implementation is handled by ProjectController.
+ * {@link btosystem.controllers.ProjectController}
+ */
 public class Project {
     private String name;
     private Neighborhood neighborhood;
@@ -19,6 +25,11 @@ public class Project {
     private List<Enquiry> enquiries;
     private HdbManager createdBy;
 
+    /**
+     * Constructor for Project object.
+     * Actual implementation for creation of object is handled by.
+     * {@link btosystem.controllers.ProjectController}
+     */
     public Project(
             String name,
             Neighborhood neighborhood,
@@ -98,8 +109,12 @@ public class Project {
         this.createdBy = createdBy;
     }
 
-    public void setUnits(HashMap<FlatType, Integer> units) {this.units = units; }
+    public void setUnits(HashMap<FlatType, Integer> units) {
+        this.units = units;
+    }
 
-    public void setProjectTeam(ProjectTeam projectTeam) {this.projectTeam = projectTeam; }
+    public void setProjectTeam(ProjectTeam projectTeam) {
+        this.projectTeam = projectTeam;
+    }
 
 }
