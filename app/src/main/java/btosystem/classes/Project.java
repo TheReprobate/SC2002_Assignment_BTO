@@ -2,34 +2,47 @@ package btosystem.classes;
 
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
+import btosystem.controllers.interfaces.CleanupOperations;
+import btosystem.controllers.interfaces.ListToString;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Project class, logical implementation is handled by ProjectController.
+ * {@link btosystem.controllers.ProjectController}
+ */
 public class Project {
     private String name;
     private Neighborhood neighborhood;
     private boolean visible;
-    private long openTime;
-    private long closeTime;
+    private LocalDate openTime;
+    private LocalDate closeTime;
     private HashMap<FlatType, Integer> units;
     private ProjectTeam projectTeam;
     private List<BtoApplication> btoApplications;
     private List<Enquiry> enquiries;
     private HdbManager createdBy;
 
+    /**
+     * Constructor for Project object.
+     * Actual implementation for creation of object is handled by.
+     * {@link btosystem.controllers.ProjectController}
+     */
     public Project(
             String name,
             Neighborhood neighborhood,
-            long openTime,
-            long closeTime,
-            ProjectTeam projectTeam,
+            LocalDate openTime,
+            LocalDate closeTime,
+            //ProjectTeam projectTeam,
             HdbManager createdBy) {
         this.name = name;
         this.neighborhood = neighborhood;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        this.projectTeam = projectTeam;
+        //this.projectTeam = projectTeam;
+        this.projectTeam = null;
         this.btoApplications = new ArrayList<BtoApplication>();
         this.enquiries = new ArrayList<Enquiry>();
         this.units = new HashMap<FlatType, Integer>();
@@ -48,11 +61,11 @@ public class Project {
         return visible;
     }
 
-    public long getOpenTime() {
+    public LocalDate getOpenTime() {
         return openTime;
     }
 
-    public long getCloseTime() {
+    public LocalDate getCloseTime() {
         return closeTime;
     }
 
@@ -84,15 +97,24 @@ public class Project {
         this.visible = visible;
     }
 
-    public void setOpenTime(long openTime) {
+    public void setOpenTime(LocalDate openTime) {
         this.openTime = openTime;
     }
 
-    public void setCloseTime(long closeTime) {
+    public void setCloseTime(LocalDate closeTime) {
         this.closeTime = closeTime;
     }
 
     public void setCreatedBy(HdbManager createdBy) {
         this.createdBy = createdBy;
     }
+
+    public void setUnits(HashMap<FlatType, Integer> units) {
+        this.units = units;
+    }
+
+    public void setProjectTeam(ProjectTeam projectTeam) {
+        this.projectTeam = projectTeam;
+    }
+
 }
