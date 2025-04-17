@@ -2,6 +2,8 @@ package btosystem.classes;
 
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +12,8 @@ public class Project {
     private String name;
     private Neighborhood neighborhood;
     private boolean visible;
-    private long openTime;
-    private long closeTime;
+    private LocalDateTime openTime;
+    private LocalDateTime closeTime;
     private HashMap<FlatType, Integer> units;
     private ProjectTeam projectTeam;
     private List<BtoApplication> btoApplications;
@@ -21,15 +23,13 @@ public class Project {
     public Project(
             String name,
             Neighborhood neighborhood,
-            long openTime,
-            long closeTime,
-            ProjectTeam projectTeam,
+            LocalDateTime openTime,
+            LocalDateTime closeTime,
             HdbManager createdBy) {
         this.name = name;
         this.neighborhood = neighborhood;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        this.projectTeam = projectTeam;
         this.btoApplications = new ArrayList<BtoApplication>();
         this.enquiries = new ArrayList<Enquiry>();
         this.units = new HashMap<FlatType, Integer>();
@@ -48,11 +48,11 @@ public class Project {
         return visible;
     }
 
-    public long getOpenTime() {
+    public LocalDateTime getOpenTime() {
         return openTime;
     }
 
-    public long getCloseTime() {
+    public LocalDateTime getCloseTime() {
         return closeTime;
     }
 
@@ -84,15 +84,19 @@ public class Project {
         this.visible = visible;
     }
 
-    public void setOpenTime(long openTime) {
+    public void setOpenTime(LocalDateTime openTime) {
         this.openTime = openTime;
     }
 
-    public void setCloseTime(long closeTime) {
+    public void setCloseTime(LocalDateTime closeTime) {
         this.closeTime = closeTime;
     }
 
     public void setCreatedBy(HdbManager createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public void setProjectTeam(ProjectTeam projectTeam) {
+        this.projectTeam = projectTeam;
     }
 }
