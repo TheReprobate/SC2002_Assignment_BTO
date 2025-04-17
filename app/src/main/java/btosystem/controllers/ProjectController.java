@@ -244,7 +244,7 @@ public class ProjectController implements ProjectOperations {
         StringBuilder sb = new StringBuilder();
 
         // To adjust width of each column for formatting purposes
-        String stringFormat = "%-4s %-30s %-15s %-12s %-12s%n";
+        String stringFormat = "%-8s %-30s %-15s %-12s %-12s%n";
         // Table header
         sb.append(String.format(stringFormat,
                 "No.", "Name", "Neighborhood", "Open date", "Close date"));
@@ -253,7 +253,7 @@ public class ProjectController implements ProjectOperations {
         int count = 1;
         for (Project p : data) {
             sb.append(String.format(stringFormat,
-                    count++,
+                    "[" + count++ +"]",
                     p.getName(),
                     p.getNeighborhood(),
                     p.getOpenTime(),
