@@ -116,4 +116,7 @@ public class Project {
         this.projectTeam = projectTeam;
     }
 
+    public void addBtoApplication(BtoApplication btoApplication) {
+        this.btoApplications.add(btoApplication);
+    }
 }

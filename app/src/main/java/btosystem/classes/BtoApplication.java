@@ -3,6 +3,10 @@ package btosystem.classes;
 import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 
+/**
+ * BTOApplication class, logical implementation is handled by BtoApplicationController.
+ * {@link btosystem.controllers.BtoApplicationController}
+ */
 public class BtoApplication {
     private ApplicationStatus status;
     private HdbOfficer officerInCharge;
@@ -10,9 +14,16 @@ public class BtoApplication {
     private Applicant applicant;
     private Project project;
 
-    public BtoApplication(Project project, Applicant applicant) {
+    /**
+     * Constructor for a {@link BtoApplication} object.
+     * @param project the {@link Project} being applied for
+     * @param applicant the {@link Applicant} making the application
+     * @param flatType the {@link FlatType} being applied for
+     */
+    public BtoApplication(Project project, Applicant applicant, FlatType flatType) {
         this.project = project;
         this.applicant = applicant;
+        this.flatType = flatType;
 
         status = ApplicationStatus.PENDING;
     }
