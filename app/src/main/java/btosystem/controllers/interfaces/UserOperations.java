@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface UserOperations extends ToString<User> {
-    public boolean authenticate(HashMap<String, User> users, String username, String password);
+    public User authenticate(HashMap<String, User> users, String username, String password);
 
     public BtoApplication retrieveApplication(Applicant applicant);
 
