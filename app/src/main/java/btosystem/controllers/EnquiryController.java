@@ -5,7 +5,6 @@ import btosystem.classes.Enquiry;
 import btosystem.classes.Project;
 import btosystem.classes.User;
 import btosystem.controllers.interfaces.EnquiryOperations;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -118,7 +117,13 @@ public class EnquiryController implements EnquiryOperations {
 
         // Format: No. | Project Name | Applicant Name | Enquiry | Created At | Replied
         String format = "%-4s %-25s %-15s %-60s %-12s %-10s%n";
-        sb.append(String.format(format, "No.", "Project Name", "Applicant", "Enquiry", "Created At", "Replied"));
+        sb.append(String.format(format,
+                "No.",
+                "Project Name",
+                "Applicant",
+                "Enquiry",
+                "Created At",
+                "Replied"));
 
         int count = 1;
         for (Enquiry e : data) {
