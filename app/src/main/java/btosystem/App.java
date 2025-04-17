@@ -67,58 +67,6 @@ public class App {
         projects.add(proj2);
         projects.add(proj3);
 
-        // Testing Project Team
-        ProjectTeam t1 = projectTeamController.createProjectTeam(projects.get(0));
-        ProjectTeam t2 = projectTeamController.createProjectTeam(projects.get(1));
-        ProjectTeam t3 = projectTeamController.createProjectTeam(projects.get(2));
-
-        OfficerRegistration r1;
-
-        // Assigning project manager
-        try {
-            projectTeamController.assignProjectManager(t1, m1, false);
-        }
-        catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        try {
-            projectTeamController.assignProjectManager(t1, m2, false);
-        }
-        catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        try {
-            r1 = officerRegistrationController.createRegistration(t1, o1);
-            projectTeamController.addRegistration(t1, r1);
-        }
-        catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
-        
-
-        System.out.println(projectTeamController.toString(t1));
-
-        /* -------------------------------------- For HdbManager -------------------------------------- */
-        //int assignProject(ProjectTeam team, HdbManager manager);
-
-        //boolean isInTeam(ProjectTeam team, HdbManager manager);
-        /* -------------------------------------- End HdbManager -------------------------------------- */
-
-        /* -------------------------------------- For HdbOfficer -------------------------------------- */
-        //int assignProject(ProjectTeam team, HdbOfficer officer);
-
-        //boolean isInTeam(ProjectTeam team, HdbOfficer officer);
-        /* -------------------------------------- End HdbOfficer -------------------------------------- */
-
-        /* ---------------------------------- For OfficerRegistration --------------------------------- */
-        //int addRegistration(ProjectTeam team, OfficerRegistration registration);
-
-        //List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
-        /* ---------------------------------- End OfficerRegistration --------------------------------- */
-
         /*
         // Test: Retrieve project by name
         Project retrievedProject = projectController.retrieveProject(projects, "Project Alpha");
@@ -179,5 +127,129 @@ public class App {
         System.out.println("\nAll Projects:");
         System.out.println(projectController.toString(projects));
         */
+
+        // Testing Project Team
+        ProjectTeam t1 = projectTeamController.createProjectTeam(projects.get(0));
+        ProjectTeam t2 = projectTeamController.createProjectTeam(projects.get(1));
+        ProjectTeam t3 = projectTeamController.createProjectTeam(projects.get(2));
+
+        /* -------------------------------------- For HdbManager -------------------------------------- */
+        // Expecting success, no manager assigned yet
+        try {
+            int success = projectTeamController.assignProjectManager(t1, m1, false);
+            if(success ==  1) System.out.println("Successfully assigned Project Manager");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting failure, manager already exists
+        try {
+            int success = projectTeamController.assignProjectManager(t1, m2, false);
+            if(success ==  1) System.out.println("Successfully assigned Project Manager");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting success, overwrite true
+        try {
+            int success = projectTeamController.assignProjectManager(t1, m3, true);
+            if(success ==  1) System.out.println("Successfully assigned Project Manager");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting success, m3 is the current manager
+        if(projectTeamController.isInTeam(t1, m3)) System.out.println("m3 is in Project Team");
+        else System.out.println("m3 is not in Project Team");
+        
+        // Expecting fail, m1 is not the current manager
+        if(projectTeamController.isInTeam(t1, m1)) System.out.println("m1 is in Project Team");
+        else System.out.println("m1 is not in Project Team");
+        /* -------------------------------------- End HdbManager -------------------------------------- */
+        
+
+
+        /* -------------------------------------- For HdbOfficer -------------------------------------- */
+        // Expecting success, first officer to be added
+        try {
+            int success = projectTeamController.assignProjectOfficer(t1, o1);
+            if(success ==  1) System.out.println("Successfully assigned Officer");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting success, no duplicate
+        try {
+            int success = projectTeamController.assignProjectOfficer(t1, o2);
+            if(success ==  1) System.out.println("Successfully assigned Officer");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting failure, first officer dupe
+        try {
+            int success = projectTeamController.assignProjectOfficer(t1, o1);
+            if(success ==  1) System.out.println("Successfully assigned Officer");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting success, o1 is part of project team
+        if(projectTeamController.isInTeam(t1, o1)) System.out.println("o1 is in Project Team");
+        else System.out.println("o1 is not in Project Team");
+        
+        // Expecting failure, o3 is not part of project team
+        if(projectTeamController.isInTeam(t1, o3)) System.out.println("o3 is in Project Team");
+        else System.out.println("o3 is not in Project Team");
+        /* -------------------------------------- End HdbOfficer -------------------------------------- */
+
+        /* ---------------------------------- For OfficerRegistration --------------------------------- */
+        OfficerRegistration r1 = null, r2 = null, r3 = null;
+        
+        // Creation of registration object (Pt 1 of 2)
+        // Expecting success, first registration
+        try {
+            r1 = officerRegistrationController.createRegistration(t1, o1);
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting success, not a duplicate
+        try {
+            r2 = officerRegistrationController.createRegistration(t1, o2);
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting failure, o1 is a duplicate
+        try {
+            r3 = officerRegistrationController.createRegistration(t1, o1);
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Adding of Registrations to Project Team (Pt 2 of 2)
+        try {
+            int success = projectTeamController.addRegistration(t1, r1);
+            if(success ==  1) System.out.println("Successfully added Registration");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        
+
+        //List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
+        /* ---------------------------------- End OfficerRegistration --------------------------------- */
+        
+        // System.out.println(projectTeamController.toString(t1));
     }
 }

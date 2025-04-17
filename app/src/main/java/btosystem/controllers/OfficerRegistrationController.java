@@ -13,6 +13,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
 {
     @Override
     public OfficerRegistration createRegistration(ProjectTeam team, HdbOfficer officer) throws Exception{
+        // need to check if dupe
         OfficerRegistration registration = new OfficerRegistration(officer);
         return registration;
     }
