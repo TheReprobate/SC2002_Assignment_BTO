@@ -273,4 +273,27 @@ public class ProjectController implements ProjectOperations {
                 + "Created by Manager: " + data.getCreatedBy().getName() + "\n";
 
     }
+
+    @Override
+    public boolean unitHasSlots(Project project, FlatType flatType) {
+        return project.getUnits().get(flatType) > 0;
+    }
+
+    @Override
+    public boolean isOpen(Project project) {
+        LocalDate now = LocalDate.now();
+        return (now.isAfter(project.getOpenTime()) || now.isEqual(project.getOpenTime()))
+            && (now.isBefore(project.getCloseTime()) || now.isEqual(project.getCloseTime()));
+    }
+
+    @Override
+    public boolean hasTimeOverlap(Project firstProject, Project secondProject) {
+        return secondProject.getOpenTime().isBefore(firstProject.getCloseTime());
+    }
+
+    @Override
+    public int addProject(List<Project> projects, Project project) {
+        projects.add(project);
+        return 1;
+    }
 }
