@@ -1,9 +1,11 @@
 package btosystem.controllers.interfaces;
 
+import java.util.List;
+
+import btosystem.classes.Project;
+
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
-import btosystem.classes.Project;
-import java.util.List;
 
 public interface OfficerRegistrationOperations
         extends ListToString<OfficerRegistration> {

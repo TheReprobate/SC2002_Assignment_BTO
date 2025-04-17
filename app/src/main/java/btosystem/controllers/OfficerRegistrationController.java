@@ -2,9 +2,11 @@ package btosystem.controllers;
 
 import java.util.List;
 
+import btosystem.classes.Project;
+
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
-import btosystem.classes.Project;
+
 import btosystem.controllers.interfaces.OfficerRegistrationOperations;
 
 public class OfficerRegistrationController implements OfficerRegistrationOperations{
