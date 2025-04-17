@@ -151,4 +151,20 @@ public class BtoApplicationController implements BtoApplicationOperations {
         project.getBtoApplications().remove(instance);
         applicant.setActiveApplication(null);
     }
+
+    @Override
+    public Project retrieveProject(BtoApplication application) {
+        return application.getProject();
+    }
+
+    @Override
+    public Applicant retrieveApplicant(BtoApplication application) {
+        return application.getApplicant();
+    }
+
+    @Override
+    public int addApplication(List<BtoApplication> applications, BtoApplication application) {
+        applications.add(application);
+        return 1;
+    }
 }

@@ -48,7 +48,6 @@ public interface BtoApplicationOperations extends
 
     Applicant retrieveApplicant(BtoApplication application);
 
-    List<BtoApplication> retrieveApplications(Project project);
     /**
      * Marks the application as <i>{@code ApplicationStatus.BOOKED}</i>
      * by the officer in charge.
