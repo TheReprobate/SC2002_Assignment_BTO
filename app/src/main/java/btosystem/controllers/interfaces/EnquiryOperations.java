@@ -20,7 +20,7 @@ public interface EnquiryOperations
 
     int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
 
-    int replyEnquiry(User user, Enquiry enquiry, String reply);
+    int replyEnquiry(Enquiry enquiry, String reply);
 
     int editEnquiry(Enquiry enquiry, String content);
 

@@ -33,7 +33,7 @@ public class EnquiryController implements EnquiryOperations {
     }
 
     @Override
-    public int replyEnquiry(User user, Enquiry enquiry, String reply) {
+    public int replyEnquiry(Enquiry enquiry, String reply) {
         if (!enquiry.hasReplied()) {
             enquiry.setReply(reply);
             enquiry.setReplied(true);
@@ -76,5 +76,26 @@ public class EnquiryController implements EnquiryOperations {
                 + "\nReply: " + (data.getReply() == null ? "N/A" : data.getReply())
                 + "\nCreated at: " + data.getCreatedAt()
                 + "\nReplied at: " + (data.getRepliedAt() == null ? "N/A" : data.getRepliedAt());
+    }
+
+    @Override
+    public Project retrieveProject(Enquiry enquiry) {
+        return enquiry.getProject();
+    }
+
+    @Override
+    public Applicant retrieveApplicant(Enquiry enquiry) {
+        return enquiry.getApplicant();
+    }
+
+    @Override
+    public boolean hasReplied(Enquiry enquiry) {
+        return enquiry.hasReplied();
+    }
+    
+    @Override
+    public int addEnquiry(List<Enquiry> enquiries, Enquiry enquiry) {
+        enquiries.add(enquiry);
+        return 1;
     }
 }
