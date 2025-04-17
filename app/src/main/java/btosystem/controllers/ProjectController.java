@@ -31,14 +31,8 @@ public class ProjectController implements ProjectOperations {
     @Override
     public Project createProject(String name, Neighborhood neighborhood,
                                  LocalDate openTime, LocalDate closeTime, HdbManager hdbManager) {
-        // Create project object first
-        Project proj = new Project(name, neighborhood, openTime, closeTime, hdbManager);
-        // Then we create ProjectTeam based on proj obj
-        ProjectTeam projTeam = new ProjectTeam(proj);
-        // Now we set project's project team to newly created projTeam
-        proj.setProjectTeam(projTeam);
 
-        return proj;
+        return new Project(name, neighborhood, openTime, closeTime, hdbManager);
     }
 
     /**
@@ -248,9 +242,24 @@ public class ProjectController implements ProjectOperations {
     @Override
     public String toString(List<Project> data) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < data.size(); i++) {
-            sb.append(i).append(". ").append(toString(data.get(i))).append("\n");
+
+        // To adjust width of each column for formatting purposes
+        String stringFormat = "%-4s %-30s %-15s %-12s %-12s%n";
+        // Table header
+        sb.append(String.format(stringFormat,
+                "No.", "Name", "Neighborhood", "Open date", "Close date"));
+
+        // Data rows
+        int count = 1;
+        for (Project p : data) {
+            sb.append(String.format(stringFormat,
+                    count++,
+                    p.getName(),
+                    p.getNeighborhood(),
+                    p.getOpenTime(),
+                    p.getCloseTime()));
         }
+
         return sb.toString();
     }
 

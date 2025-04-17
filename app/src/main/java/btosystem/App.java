@@ -92,5 +92,8 @@ public class App {
         // Print all projects
         System.out.println("\nAll Projects:");
         System.out.println(projectController.toString(projects));
+        // Print all projects
+        System.out.println("\nSingle project:");
+        System.out.println(projectController.toString(project1));
     }
 }
