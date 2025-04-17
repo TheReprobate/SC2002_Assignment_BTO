@@ -40,12 +40,12 @@ public class ProjectTeam {
     }
 
     public void assignOfficer(HdbOfficer officer) {
-        this.officers.addLast(officer);
+        this.officers.add(officer);
     }
 
     // Idk if this is supposed to be here or OfficerRegistrationController
     public void addOfficerRegistration(OfficerRegistration officerRegistration)
     {
-        this.officerRegistrations.addLast(officerRegistration);
+        this.officerRegistrations.add(officerRegistration);
     }
 }

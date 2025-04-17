@@ -5,13 +5,14 @@ import java.util.List;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
+import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.controllers.interfaces.ProjectTeamOperations;
 
 public class ProjectTeamController implements ProjectTeamOperations{
-
+    private static final int MAX_OFFICER = 10;
     @Override
-    public ProjectTeam createProjectTeam() {
+    public ProjectTeam createProjectTeam(Project project) {
         // TODO where is the project?
         ProjectTeam projTeam = new ProjectTeam(null);
         return projTeam;
@@ -95,5 +96,20 @@ public class ProjectTeamController implements ProjectTeamOperations{
         "Manager                : \n" + managerName     + "\n" +
         "Officers               : \n" + officers        + "\n" +
         "Pending registrations  : \n" + registrations   + "\n";
+    }
+
+    @Override
+    public Project retrieveAssignedProject(ProjectTeam team) {
+        return team.getProject();
+    }
+
+    @Override
+    public boolean hasMaxOfficers(ProjectTeam team) {
+        return team.getOfficers().size() > MAX_OFFICER;
+    }
+
+    @Override
+    public boolean hasManager(ProjectTeam team) {
+        return team.getManager() != null;
     }
 }

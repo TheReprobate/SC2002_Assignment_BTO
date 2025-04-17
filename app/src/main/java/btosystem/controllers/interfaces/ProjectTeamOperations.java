@@ -26,6 +26,6 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam> {
     
     boolean hasManager(ProjectTeam team);
 
-    //int addRegistration(ProjectTeam team, OfficerRegistration registration);
+    int addRegistration(ProjectTeam team, OfficerRegistration registration);
 
 }
