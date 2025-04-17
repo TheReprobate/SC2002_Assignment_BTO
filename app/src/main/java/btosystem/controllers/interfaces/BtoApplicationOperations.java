@@ -14,6 +14,10 @@ public interface BtoApplicationOperations
 
     BtoApplication retrieveApplication(List<BtoApplication> applications, int index);
 
+    Project retrieveProject(BtoApplication application);
+
+    Applicant retrieveApplicant(BtoApplication application);
+
     List<BtoApplication> retrieveApplications(Project project);
 
     int processApplication(BtoApplication application, HdbOfficer officer, FlatType flatType);
@@ -23,4 +27,6 @@ public interface BtoApplicationOperations
     int rejectApplication(BtoApplication application);
 
     int withdrawApplication(BtoApplication application);
+
+    int addApplication(List<BtoApplication> applications, BtoApplication application);  
 }

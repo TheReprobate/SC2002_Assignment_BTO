@@ -3,13 +3,16 @@ package btosystem.controllers.interfaces;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
+import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import java.util.List;
 
 public interface ProjectTeamOperations extends ToString<ProjectTeam> {
-    ProjectTeam createProjectTeam();
+    ProjectTeam createProjectTeam(Project project);
 
     List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
+    
+    Project retrieveAssignedProject(ProjectTeam team);
 
     int assignProject(ProjectTeam team, HdbManager manager);
 
@@ -19,5 +22,10 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam> {
 
     boolean isInTeam(ProjectTeam team, HdbOfficer officer);
 
-    int addRegistration(ProjectTeam team, OfficerRegistration registration);
+    boolean hasMaxOfficers(ProjectTeam team);
+    
+    boolean hasManager(ProjectTeam team);
+
+    //int addRegistration(ProjectTeam team, OfficerRegistration registration);
+
 }

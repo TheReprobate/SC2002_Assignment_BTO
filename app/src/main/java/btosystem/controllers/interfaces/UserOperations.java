@@ -8,6 +8,8 @@ import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.User;
+import btosystem.classes.enums.FlatType;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,4 +25,6 @@ public interface UserOperations extends ToString<User> {
     public ProjectTeam retrieveCurrentTeam(HdbManager manager);
 
     public List<Project> retrieveCreatedProjects(HdbManager manager);
+
+    public List<FlatType> getAllowedFlatTypes(Applicant applicant);
 }

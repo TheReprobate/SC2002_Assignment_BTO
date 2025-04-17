@@ -11,9 +11,17 @@ public interface EnquiryOperations
 
     Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index);
 
-    int deleteEnquiry(Enquiry enquiry);
+    Project retrieveProject(Enquiry enquiry);
+
+    Applicant retrieveApplicant(Enquiry enquiry);
+
+    int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
 
     int replyEnquiry(Enquiry enquiry, String reply);
 
     int editEnquiry(Enquiry enquiry, String content);
+
+    int addEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
+
+    boolean hasReplied(Enquiry enquiry);
 }

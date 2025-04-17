@@ -12,7 +12,11 @@ public interface OfficerRegistrationOperations
     OfficerRegistration retrieveOfficerRegistration(
             List<OfficerRegistration> registrations, int index);
 
+    HdbOfficer retrieveAppliedOfficer(OfficerRegistration registration);
+
     int approveRegistration(OfficerRegistration registration);
 
     int rejectRegistration(OfficerRegistration registration);
+
+    int addRegistration(List<OfficerRegistration> registrations, OfficerRegistration registration);
 }
