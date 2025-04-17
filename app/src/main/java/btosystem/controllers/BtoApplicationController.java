@@ -130,7 +130,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
         }
 
         String formattedString = "%4s %24s %9s %24s %10s";
-        int count = 0;
+        int count = 1;
         String output = String.format(
                 formattedString, "No.", "Applicant", "Type", "Officer-in-Charge", "Status"
         );
