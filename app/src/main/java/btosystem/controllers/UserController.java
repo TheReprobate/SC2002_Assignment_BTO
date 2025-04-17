@@ -4,12 +4,13 @@ import btosystem.classes.*;
 import btosystem.classes.enums.FlatType;
 import btosystem.controllers.interfaces.UserOperations;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class UserController implements UserOperations {
+    private static final int MIN_AGE_SINGLE = 35;
+    private static final int MIN_AGE_MARRIED = 21;
 
     public User authenticate(HashMap<String, User> users, String username, String password) {
         User user = users.get(username);
@@ -55,14 +56,14 @@ public class UserController implements UserOperations {
     }
 
     private List<FlatType> getSingleFlatType(Applicant applicant) throws Exception {
-        if(applicant.getAge() < 35) {
+        if(applicant.getAge() < MIN_AGE_SINGLE) {
             throw new Exception("Age under 35 for single applicants have no flats types. ");
         }
         return Arrays.asList(FlatType.TWO_ROOM);
     }
 
     private List<FlatType> getMarriedFlatType(Applicant applicant) throws Exception {
-        if(applicant.getAge() < 21) {
+        if(applicant.getAge() < MIN_AGE_MARRIED) {
             throw new Exception("Age under 21 for married applicants have no flats types. ");
         }
         return Arrays.asList(FlatType.TWO_ROOM, FlatType.THREE_ROOM);
