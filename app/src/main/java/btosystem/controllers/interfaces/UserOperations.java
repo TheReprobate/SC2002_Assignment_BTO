@@ -26,5 +26,5 @@ public interface UserOperations extends ToString<User> {
 
     public List<Project> retrieveCreatedProjects(HdbManager manager);
 
-    public List<FlatType> getAllowedFlatTypes(Applicant applicant);
+    public List<FlatType> getAllowedFlatTypes(Applicant applicant) throws Exception;
 }
