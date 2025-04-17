@@ -129,20 +129,23 @@ public class BtoApplicationController implements BtoApplicationOperations {
             return "There are currently 0 applications!";
         }
 
-        String formattedString = "%24s %9s %24s %10s";
+        String formattedString = "%4s %24s %9s %24s %10s";
+        int count = 0;
         String output = String.format(
-                formattedString, "Applicant", "Type", "Officer-in-Charge", "Status"
+                formattedString, "No.", "Applicant", "Type", "Officer-in-Charge", "Status"
         );
         for (BtoApplication application : data) {
             output = output.concat("\n").concat(
                     String.format(
                             formattedString,
+                            count,
                             application.getApplicant().getName(),
                             application.getFlatType(),
                             application.getOfficerInCharge().getName(),
                             application.getStatus()
                     )
             );
+            count++;
         }
         return output;
     }
