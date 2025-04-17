@@ -5,8 +5,8 @@ import java.util.List;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 
-import btosystem.classes.HdbOfficer;
 import btosystem.classes.HdbManager;
+import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
 
 /**
@@ -26,7 +26,7 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam>
      * Interface method for assigning of HdbManager to ProjectTeam
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    int assignProject(ProjectTeam team, HdbManager manager);
+    public int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception;
 
     /**
      * Interface method to check if HdbManager is part of ProjectTeam
@@ -40,7 +40,7 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam>
      * Interface method for assigning of HdbOfficer to ProjectTeam
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    int assignProject(ProjectTeam team, HdbOfficer officer);
+    int assignProjectOfficer(ProjectTeam team, HdbOfficer officer) throws Exception;
 
     /**
      * Interface method to check if HdbManager is part of ProjectTeam
@@ -54,7 +54,7 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam>
      * Interface method for assigning of OfficerRegistration to ProjectTeam
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    int addRegistration(ProjectTeam team, OfficerRegistration registration);
+    public int addRegistration(ProjectTeam team, OfficerRegistration registration) throws Exception;
 
     /**
      * Interface method for retrieval of OfficerRegistrations by ProjectTeam object

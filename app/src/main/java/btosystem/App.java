@@ -6,7 +6,9 @@ package btosystem;
 import btosystem.classes.*;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
+import btosystem.controllers.OfficerRegistrationController;
 import btosystem.controllers.ProjectController;
+import btosystem.controllers.ProjectTeamController;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,25 +23,109 @@ public class App {
     
     public static void main(String[] args) {
         ProjectController projectController = new ProjectController();
-        HdbManager hdbManager = new HdbManager("S9810294C", "Trump", 54, true);
+        ProjectTeamController projectTeamController = new ProjectTeamController();
+        OfficerRegistrationController officerRegistrationController = new OfficerRegistrationController();
+
+        HdbManager m1 = new HdbManager("S1111111A", "m1", 1, true);
+        HdbManager m2 = new HdbManager("S2222222B", "m2", 2, false);
+        HdbManager m3 = new HdbManager("S3333333C", "m3", 3, true);
+
+        HdbOfficer o1 = new HdbOfficer("S4444444D", "o1", 4, false);
+        HdbOfficer o2 = new HdbOfficer("S5555555E", "o2", 5, true);
+        HdbOfficer o3 = new HdbOfficer("S6666666F", "o3", 6, false);
+
+        Applicant a1 = new Applicant("S7777777G", "a1", 7, true);
+        Applicant a2 = new Applicant("S8888888H", "a2", 8, false);
+        Applicant a3 = new Applicant("S9999999I", "a3", 9, true);
 
         // Create some test projects
-        Project project1 = projectController.createProject("Project Ang Mo Kio", Neighborhood.ANG_MO_KIO, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
-        Project project2 = projectController.createProject("Project Bishan", Neighborhood.BISHAN, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
-        Project project3 = projectController.createProject("Project NTU", Neighborhood.JURONG, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
+        Project proj1 = projectController
+        .createProject(
+            "Project Ang Mo Kio", 
+            Neighborhood.ANG_MO_KIO, 
+            LocalDate.of(2025, 4, 1), 
+            LocalDate.of(2025, 5, 2), 
+            m1);
+        Project proj2 = projectController
+        .createProject(
+            "Project Bishan", 
+            Neighborhood.BISHAN, 
+            LocalDate.of(2025, 4, 1), 
+            LocalDate.of(2025, 5, 2), 
+            m2);
+        Project proj3 = projectController
+        .createProject(
+            "Project NTU", 
+            Neighborhood.JURONG, 
+            LocalDate.of(2025, 4, 1), 
+            LocalDate.of(2025, 5, 2), 
+            m3);
 
         // List to store all projects
         List<Project> projects = new ArrayList<>();
-        projects.add(project1);
-        projects.add(project2);
-        projects.add(project3);
+        projects.add(proj1);
+        projects.add(proj2);
+        projects.add(proj3);
 
+        // Testing Project Team
+        ProjectTeam t1 = projectTeamController.createProjectTeam(projects.get(0));
+        ProjectTeam t2 = projectTeamController.createProjectTeam(projects.get(1));
+        ProjectTeam t3 = projectTeamController.createProjectTeam(projects.get(2));
+
+        OfficerRegistration r1;
+
+        // Assigning project manager
+        try {
+            projectTeamController.assignProjectManager(t1, m1, false);
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try {
+            projectTeamController.assignProjectManager(t1, m2, false);
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        try {
+            r1 = officerRegistrationController.createRegistration(t1, o1);
+            projectTeamController.addRegistration(t1, r1);
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        
+
+        System.out.println(projectTeamController.toString(t1));
+
+        /* -------------------------------------- For HdbManager -------------------------------------- */
+        //int assignProject(ProjectTeam team, HdbManager manager);
+
+        //boolean isInTeam(ProjectTeam team, HdbManager manager);
+        /* -------------------------------------- End HdbManager -------------------------------------- */
+
+        /* -------------------------------------- For HdbOfficer -------------------------------------- */
+        //int assignProject(ProjectTeam team, HdbOfficer officer);
+
+        //boolean isInTeam(ProjectTeam team, HdbOfficer officer);
+        /* -------------------------------------- End HdbOfficer -------------------------------------- */
+
+        /* ---------------------------------- For OfficerRegistration --------------------------------- */
+        //int addRegistration(ProjectTeam team, OfficerRegistration registration);
+
+        //List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
+        /* ---------------------------------- End OfficerRegistration --------------------------------- */
+
+        /*
         // Test: Retrieve project by name
         Project retrievedProject = projectController.retrieveProject(projects, "Project Alpha");
         if (retrievedProject != null) {
             System.out.println("Retrieved Project by Name: " + retrievedProject.getName());
         }
-
+        
         // Test: Retrieve project by index
         Project retrievedProjectByIndex = projectController.retrieveProject(projects, 1);
         System.out.println("Retrieved Project by Index: " + retrievedProjectByIndex.getName());
@@ -92,5 +178,6 @@ public class App {
         // Print all projects
         System.out.println("\nAll Projects:");
         System.out.println(projectController.toString(projects));
+        */
     }
 }

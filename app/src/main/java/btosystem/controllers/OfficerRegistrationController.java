@@ -3,30 +3,18 @@ package btosystem.controllers;
 import java.util.List;
 
 import btosystem.classes.Project;
-
+import btosystem.classes.ProjectTeam;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
 
 import btosystem.controllers.interfaces.OfficerRegistrationOperations;
 
-public class OfficerRegistrationController implements OfficerRegistrationOperations{
-
+public class OfficerRegistrationController implements OfficerRegistrationOperations
+{
     @Override
-    public String toString(List<OfficerRegistration> data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
-    }
-
-    @Override
-    public String toString(OfficerRegistration data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'toString'");
-    }
-
-    @Override
-    public OfficerRegistration createRegistration(Project project, HdbOfficer officer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createRegistration'");
+    public OfficerRegistration createRegistration(ProjectTeam team, HdbOfficer officer) throws Exception{
+        OfficerRegistration registration = new OfficerRegistration(officer);
+        return registration;
     }
 
     @Override
@@ -45,5 +33,17 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
     public int rejectRegistration(OfficerRegistration registration) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'rejectRegistration'");
+    }
+
+    @Override
+    public String toString(OfficerRegistration data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
+    }
+
+    @Override
+    public String toString(List<OfficerRegistration> data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toString'");
     }
 }

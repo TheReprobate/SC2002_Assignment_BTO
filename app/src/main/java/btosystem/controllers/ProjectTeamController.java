@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 
-import btosystem.classes.HdbOfficer;
 import btosystem.classes.HdbManager;
+import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
 
 import btosystem.controllers.interfaces.ProjectTeamOperations;
@@ -16,7 +16,6 @@ import btosystem.controllers.interfaces.ProjectTeamOperations;
  * Controller for ProjectTeam class that implements ProjectTeamOperations interface.
  */
 public class ProjectTeamController implements ProjectTeamOperations{
-
     /**
      * Constructor for creating ProjectTeam.
      *
@@ -31,22 +30,31 @@ public class ProjectTeamController implements ProjectTeamOperations{
 
     /* -------------------------------------- For HdbManager -------------------------------------- */
     /**
-     * Assigns the HdbManager into the ProjectTeam
+     * Assigns the HdbOfficer into the ProjectTeam
      *
      * @param team ProjectTeam to assign HdbManager to
      * @param manager HdbManager to be assigned
-     * @return 1 if successful, -1 if issues with team, -2 if issues with manager
+     * @param overwrite To force HdbManager to be overwritten, even if manager already exists
+     * @return 1 if successful, throws relevant error messages if not
+     * @throws Exception Exception thrown if team does not exist, or manager already exists and overwrite is false
      */
     @Override
-    public int assignProject(ProjectTeam team, HdbManager manager) {
-        try {
-            team.setManager(manager);
-            return 1;
+    public int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception{
+        if(team == null) {
+            // Team does not exist
+            throw new Exception("Team does not exist.");
         }
-        catch(Exception e){
-            return -1;
+        if(team.getManager() != null) {
+            // Manager already exists
+            if(!overwrite) {
+                throw new Exception("Manager already exists. Overwrite?");
+            }
         }
+        // Successful
+        team.setManager(manager);
+        return 1;
     }
+    
 
     /**
      * Checks if HdbManager is part of this ProjectTeam
@@ -67,17 +75,22 @@ public class ProjectTeamController implements ProjectTeamOperations{
      *
      * @param team ProjectTeam to assign HdbOfficer to
      * @param officer HdbOfficer to be assigned
-     * @return 1 if successful, -1 if issues with team, -2 if issues with officer
+     * @return 1 if successful, throws relevant error messages if not
+     * @throws Exception Exception thrown if team does not exist, or duplicate entry found
      */
     @Override
-    public int assignProject(ProjectTeam team, HdbOfficer officer) {
-        try {
-            team.assignOfficer(officer);
-            return 1;
+    public int assignProjectOfficer(ProjectTeam team, HdbOfficer officer) throws Exception{
+        if(team == null) {
+            // Team does not exist
+            throw new Exception("Team does not exist.");
         }
-        catch(Exception e){
-            return -1;
+        if(team.getOfficers().contains(officer)) {
+            // Registration already exists
+            throw new Exception("Officer already part of team.");
         }
+        // Successful
+        team.assignOfficer(officer);
+        return 1;
     }
 
     /**
@@ -101,17 +114,22 @@ public class ProjectTeamController implements ProjectTeamOperations{
      *
      * @param team ProjectTeam to check
      * @param registration OfficerRegistration to look for
-     * @return 1 if successful, -1 if issues with team, -2 if issues with registration
+     * @return 1 if successful, throws relevant error messages if not
+     * @throws Exception Exception thrown if team does not exist, or duplicate entry found
      */
     @Override
-    public int addRegistration(ProjectTeam team, OfficerRegistration registration) {
-        try {
-            team.addOfficerRegistration(registration);
-            return 1;
+    public int addRegistration(ProjectTeam team, OfficerRegistration registration) throws Exception {
+        if(team == null) {
+            // Team does not exist
+            throw new Exception("Team does not exist.");
         }
-        catch(Exception e){
-            return -1;
+        if(team.getOfficerRegistrations().contains(registration)) {
+            // Registration already exists
+            throw new Exception("Registration already exists.");
         }
+        // Successful
+        team.addOfficerRegistration(registration);
+        return 1;
     }
     
     /**
@@ -135,22 +153,47 @@ public class ProjectTeamController implements ProjectTeamOperations{
     @Override
     public String toString(ProjectTeam data) {
         String projName = data.getProject().getName();
-        String managerName = data.getManager().getName();
 
-        String officers = data.getOfficers()
-                                .stream()
-                                .map(officer -> officer.getName())
-                                .collect(Collectors.joining("\n"));
+        String managerName;
+        try{
+            managerName = data.getManager().getName();
+        }
+        catch(Exception e) {
+            managerName = "No manager assigned to project team.";
+        }
 
-        String registrations = data.getOfficerRegistrations()
-                                .stream()
-                                .map(registration -> registration.getOfficer().getName())
-                                .collect(Collectors.joining("\n"));
+        String officers;
+        try {
+            officers = data.getOfficers()
+                            .stream()
+                            .map(officer -> officer.getName())
+                            .collect(Collectors.joining("\n"));
+            if(officers.isBlank()) {
+                throw new Exception();
+            }
+        }
+        catch(Exception e) {
+            officers = "No officer assigned to project team.";
+        }
+
+        String registrations;
+        try {
+            registrations = data.getOfficerRegistrations()
+                            .stream()
+                            .map(registration -> registration.getOfficer().getName())
+                            .collect(Collectors.joining("\n"));
+            if(registrations.isBlank()) {
+                throw new Exception();
+            }
+        }
+        catch(Exception e) {
+            registrations = "No Officer Registrations applied to project team.";
+        } 
 
         return 
-        "Project Name           : \n" + projName        + "\n" +
-        "Manager                : \n" + managerName     + "\n" +
-        "Officers               : \n" + officers        + "\n" +
+        "Project Name           : \n" + projName        + "\n\n" +
+        "Manager                : \n" + managerName     + "\n\n" +
+        "Officers               : \n" + officers        + "\n\n" +
         "Pending registrations  : \n" + registrations   + "\n";
     }
 }
