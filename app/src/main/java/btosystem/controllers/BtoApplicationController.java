@@ -125,9 +125,27 @@ public class BtoApplicationController implements BtoApplicationOperations {
 
     @Override
     public String toString(List<BtoApplication> data) {
-        String output = "";
+        if (data.isEmpty()) {
+            return "There are currently 0 applications!";
+        }
+
+        String formattedString = "%4s %24s %9s %24s %10s";
+        int count = 1;
+        String output = String.format(
+                formattedString, "No.", "Applicant", "Type", "Officer-in-Charge", "Status"
+        );
         for (BtoApplication application : data) {
-            output = output.concat(toString(application).concat("\n"));
+            output = output.concat("\n").concat(
+                    String.format(
+                            formattedString,
+                            count,
+                            application.getApplicant().getName(),
+                            application.getFlatType(),
+                            application.getOfficerInCharge().getName(),
+                            application.getStatus()
+                    )
+            );
+            count++;
         }
         return output;
     }

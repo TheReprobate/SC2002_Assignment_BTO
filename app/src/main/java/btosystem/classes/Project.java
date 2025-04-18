@@ -48,7 +48,6 @@ public class Project {
         this.units = new HashMap<FlatType, Integer>();
         this.createdBy = createdBy;
     }
-
     public String getName() {
         return name;
     }
