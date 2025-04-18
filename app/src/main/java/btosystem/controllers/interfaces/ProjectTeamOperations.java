@@ -32,7 +32,7 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam>
      * Interface method to check if HdbManager is part of ProjectTeam
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    boolean isInTeam(ProjectTeam team, HdbManager manager);
+    boolean isInTeam(ProjectTeam team, HdbManager manager) throws Exception;
     /* -------------------------------------- End HdbManager -------------------------------------- */
     
     /* -------------------------------------- For HdbOfficer -------------------------------------- */
@@ -46,7 +46,7 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam>
      * Interface method to check if HdbManager is part of ProjectTeam
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    boolean isInTeam(ProjectTeam team, HdbOfficer officer);
+    boolean isInTeam(ProjectTeam team, HdbOfficer officer) throws Exception;
     /* -------------------------------------- End HdbOfficer -------------------------------------- */
 
     /* ---------------------------------- For OfficerRegistration --------------------------------- */

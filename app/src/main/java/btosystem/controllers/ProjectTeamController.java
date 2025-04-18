@@ -66,9 +66,18 @@ public class ProjectTeamController implements ProjectTeamOperations{
      * @param team ProjectTeam to check
      * @param manager HdbManager to look for
      * @return true if successful, false if unsucessful
+     * @throws Exception Exception thrown if team or manager does not exist
      */
     @Override
-    public boolean isInTeam(ProjectTeam team, HdbManager manager) {
+    public boolean isInTeam(ProjectTeam team, HdbManager manager) throws Exception{
+        if(team == null) {
+            // Team object does not exist
+            throw new Exception("Team object does not exist.");
+        }
+        if(manager == null) {
+            // Manager object does not exist
+            throw new Exception("Manager object does not exist.");
+        }
         return team.getManager().equals(manager);
     }
     /* -------------------------------------- End HdbManager -------------------------------------- */
@@ -107,9 +116,18 @@ public class ProjectTeamController implements ProjectTeamOperations{
      * @param team ProjectTeam to check
      * @param officer Officer to look for
      * @return true if successful, false if unsucessful
+     * @throws Exception Exception thrown if team or officer does not exist
      */
     @Override
-    public boolean isInTeam(ProjectTeam team, HdbOfficer officer) {
+    public boolean isInTeam(ProjectTeam team, HdbOfficer officer) throws Exception {
+        if(team == null) {
+            // Team object does not exist
+            throw new Exception("Team object does not exist.");
+        }
+        if(officer == null) {
+            // Officer object does not exist
+            throw new Exception("Officer object does not exist.");
+        }
         List<HdbOfficer> officerList = team.getOfficers();
         return officerList.contains(officer);
     }

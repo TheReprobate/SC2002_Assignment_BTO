@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ProjectTeam class, logical implementation is handled by ProjectTeamController.
+ * ProjectTeam class, logical implementation is handled by:
  * {@link btosystem.controllers.ProjectTeamController}
  */
 public class ProjectTeam {
-    private List<HdbOfficer> officers;
-    private HdbManager manager;
-    private List<OfficerRegistration> officerRegistrations;
     private Project project;
+    
+    private HdbManager manager;
+    private List<HdbOfficer> officers;
+    private List<OfficerRegistration> officerRegistrations;
 
+    /**
+     * Constructor for ProjectTeam object.
+     * Actual implementation for creation of object is handled by:
+     * {@link btosystem.controllers.ProjectTeamController}
+     */
     public ProjectTeam(Project project) {
         this.project = project;
         this.manager = null;
