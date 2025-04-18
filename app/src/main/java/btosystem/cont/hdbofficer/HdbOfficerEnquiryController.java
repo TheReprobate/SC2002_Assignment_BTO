@@ -1,24 +1,23 @@
-package btosystem.cont.hdbmanager;
+package btosystem.cont.hdbofficer;
 
 import java.util.List;
 
 import btosystem.classes.Enquiry;
-import btosystem.classes.HdbManager;
+import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
-import btosystem.service.HdbManagerServiceManager;
+import btosystem.service.HdbOfficerServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
 
-public class HdbManagerEnquiryController extends HdbManagerController {
+public class HdbOfficerEnquiryController extends HdbOfficerController{
     private static final String[] MENU = {"Reply Enquiry", "Exit"};
-    private HdbManagerServiceManager serviceManager;
+    private HdbOfficerServiceManager serviceManager;
     private Project project;
     private List<Enquiry> enquiries;
-    public HdbManagerEnquiryController(HdbManager user, HdbManagerServiceManager serviceManager) {
+    public HdbOfficerEnquiryController(HdbOfficer user, HdbOfficerServiceManager serviceManager) {
         super(user);
         this.serviceManager = serviceManager;
     }
-
     @Override
     protected boolean load() throws Exception {
         project = serviceManager.getProjectService().getCurrentProject(getUser());

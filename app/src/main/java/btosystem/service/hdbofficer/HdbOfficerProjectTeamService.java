@@ -23,6 +23,10 @@ public class HdbOfficerProjectTeamService extends Service {
         if(getOperationsManager().getProjectManager().hasTimeOverlap(currentProject, appliedProject)) {
             throw new Exception("Unable to register for project due to time overlap. ");
         }
+        List<OfficerRegistration> registrations = getOperationsManager().getProjectTeamManager().retrieveOfficerRegistrations(currentTeam);
+        if(getOperationsManager().getRegistrationManager().hasApplied(registrations, user)){
+            throw new Exception("Already has pending application for this team. ");
+        }
         OfficerRegistration registration = getOperationsManager().getRegistrationManager().createRegistration(appliedProject, user);
         List<OfficerRegistration> teamRegistrationRef = getOperationsManager().getProjectTeamManager().retrieveOfficerRegistrations(currentTeam);
         getOperationsManager().getRegistrationManager().addRegistration(teamRegistrationRef, registration);

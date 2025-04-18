@@ -44,4 +44,22 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'rejectRegistration'");
     }
+
+    @Override
+    public HdbOfficer retrieveAppliedOfficer(OfficerRegistration registration) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'retrieveAppliedOfficer'");
+    }
+
+    @Override
+    public int addRegistration(List<OfficerRegistration> registrations, OfficerRegistration registration) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addRegistration'");
+    }
+
+    @Override
+    public boolean hasApplied(List<OfficerRegistration> registrations, HdbOfficer officer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'hasApplied'");
+    }
 }

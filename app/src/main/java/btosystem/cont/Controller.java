@@ -6,14 +6,16 @@ public abstract class Controller {
     public void execute() {
         while (true) {
             try {
-                System.out.println(getMenu());
+                if(!load()) return;
+                System.out.println(display());
                 int input = InputHandler.getIntIndexInput("Select an option: ");
                 if(process(input) == -1) return;
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
     }
+    protected abstract boolean load() throws Exception;
+    protected abstract String display();
     protected abstract int process(int input) throws Exception;
-    protected abstract String getMenu();
 }

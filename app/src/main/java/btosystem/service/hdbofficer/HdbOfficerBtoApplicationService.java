@@ -7,6 +7,7 @@ import btosystem.classes.BtoApplication;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
+import btosystem.classes.User;
 import btosystem.classes.enums.FlatType;
 import btosystem.service.applicant.ApplicantBtoApplicationService;
 import btosystem.utils.DataManager;
@@ -17,29 +18,46 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
     public HdbOfficerBtoApplicationService(DataManager dataManager, OperationsManager operationsManager) {
         super(dataManager, operationsManager);
     }
-    
-    public void createApplication(HdbOfficer user, Project project) throws Exception {
-        if(hasProjectAccess(user, project)){
+
+    @Override
+    public void createApplication(Applicant user, Project project, FlatType flatType) throws Exception {
+        if(hasProjectAccess((HdbOfficer) user, project)){
             throw new Exception("Access Denied. Not allowed to apply for this project. ");
         }
-        super.createApplication((Applicant) user, project);
+        super.createApplication(user, project, flatType);
     }
 
-    public void processApplication(Applicant applicant, HdbOfficer officer, FlatType flatType) throws Exception {
+    public BtoApplication getApplication(String nric) throws Exception {
+        Applicant applicant = getApplicant(nric);
         BtoApplication application = getOperationsManager().getUserManager().retrieveApplication(applicant);
+        if(application == null) {
+            throw new Exception("Access Denied.Applicant does not have existing application. ");
+        }
+        return application;
+    }
+
+    public void processApplication(BtoApplication application, HdbOfficer officer) throws Exception {
+        Applicant applicant = getOperationsManager().getApplicationManager().retrieveApplicant(application);
+        if(!hasApplicationAccess(officer, application)){
+            throw new Exception("Access Denied. Not allowed to process own application. ");
+        }        
+        FlatType flatType = application.getFlatType();
         if(!hasApplicationAccess(officer, application)){
             throw new Exception("Access Denied. Not allowed to access this application. ");
         }
-        List<FlatType> allowedflatTypes = getOperationsManager().getUserManager().getAllowedFlatTypes(applicant);
+        if(!getOperationsManager().getApplicationManager().isReadyToProcess(application)) {
+            throw new Exception("Application is not approved. ");
+        }
+        List<FlatType> allowedflatTypes = getOperationsManager().getApplicationManager().getEligibleFlatTypes(applicant);
         if(!allowedflatTypes.contains(flatType)) {
-            throw new Exception("Access Denied. Not allowed to choose this flat type. ");
+            throw new Exception("Not allowed to choose this flat type. ");
         }
         Project applicationProject = getOperationsManager().getApplicationManager().retrieveProject(application);
         if(!getOperationsManager().getProjectManager().unitHasSlots(applicationProject, flatType)) {
             throw new Exception("Flat type does don't have slots. ");
         }
-        getOperationsManager().getApplicationManager().processApplication(application, officer, flatType);
-        getOperationsManager().getProjectManager().processUnitCount(applicationProject, flatType);
+        getOperationsManager().getApplicationManager().processApplication(application, officer);
+        getOperationsManager().getProjectManager().decreaseUnitCount(applicationProject, flatType);
     }
     private boolean hasApplicationAccess(HdbOfficer user, BtoApplication application) {
         Project applicationProject = getOperationsManager().getApplicationManager().retrieveProject(application);
@@ -49,5 +67,12 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
         ProjectTeam currentTeam = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
         Project projectInCharge = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(currentTeam);
         return projectInCharge.equals(project);
+    }
+    private Applicant getApplicant(String nric) throws Exception {
+        User user = getOperationsManager().getUserManager().retrieveUser(getDataManager().getUsers(), nric);
+        if(!(user instanceof Applicant)){
+            throw new Exception("User is not an applicant. ");
+        }
+        return (Applicant) user;
     }
 }

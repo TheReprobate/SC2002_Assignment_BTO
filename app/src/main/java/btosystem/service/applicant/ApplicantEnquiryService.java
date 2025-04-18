@@ -59,11 +59,11 @@ public class ApplicantEnquiryService extends Service {
     }
 
     public boolean isEditable(Enquiry enquiry) throws Exception {
-        return getOperationsManager().getEnquiryManager().hasReplied(enquiry);
+        return !getOperationsManager().getEnquiryManager().hasReplied(enquiry);
     }
 
     private boolean hasPermission(Applicant user, Enquiry enquiry){
         Applicant enquiryApplicant = getOperationsManager().getEnquiryManager().retrieveApplicant(enquiry);
-        return !enquiryApplicant.equals(user);
+        return enquiryApplicant.equals(user);
     }
 }

@@ -13,11 +13,17 @@ public class GenericService extends Service{
         super(dataManager, operationsManager);
     }
 
-        public String displayEnquiry(List<Enquiry> enquiries) {
+    public String displayEnquiry(List<Enquiry> enquiries) {
+        if(enquiries == null){
+            return "";
+        }
         return getOperationsManager().getEnquiryManager().toString(enquiries);
     }
 
     public String displayEnquiry(Enquiry enquiry) {
+        if(enquiry == null){
+            return "";
+        }
         return getOperationsManager().getEnquiryManager().toString(enquiry);
     }
 
@@ -26,10 +32,16 @@ public class GenericService extends Service{
     }
 
     public String displayProject(Project project) {
+        if(project == null){
+            return "";
+        }
         return getOperationsManager().getProjectManager().toString(project);
     }
     
     public String displayProject(List<Project> projects) {
+        if(projects == null){
+            return "";
+        }
         return getOperationsManager().getProjectManager().toString(projects);
     }
 
@@ -38,7 +50,18 @@ public class GenericService extends Service{
     }
 
     public String displayApplication(BtoApplication application) {
+        if(application == null){
+            return "";
+        }
         return getOperationsManager().getApplicationManager().toString(application);
+    }
+
+    public String displayApplication(List<BtoApplication> applications) {
+        return getOperationsManager().getApplicationManager().toString(applications);
+    }
+
+    public BtoApplication getApplication(List<BtoApplication> applications, int index) {
+        return getOperationsManager().getApplicationManager().retrieveApplication(applications, index);
     }
     
 }

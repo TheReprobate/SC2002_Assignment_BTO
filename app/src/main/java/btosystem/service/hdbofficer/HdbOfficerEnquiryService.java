@@ -35,7 +35,7 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
         Project currentProj = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(team);
         Project enquiryProj = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
         if(!currentProj.equals(enquiryProj)) {
-            throw new AccessDeniedException("No permission to reply to this enquiry. ");
+            throw new AccessDeniedException("Access Denied. No permission to reply to this enquiry. ");
         }
         getOperationsManager().getEnquiryManager().replyEnquiry(enquiry, reply);
     }

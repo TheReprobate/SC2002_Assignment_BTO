@@ -1,56 +1,79 @@
 package btosystem.cont.applicant;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
+import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.Project;
-import btosystem.utils.ApplicantServiceManager;
+import btosystem.classes.enums.FlatType;
+import btosystem.service.ApplicantServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
+import btosystem.utils.RegexPatterns;
 
 public class ApplicantBtoApplicationController extends ApplicantController{
-    private static final String[] MENU = {"View Current Application", "Create Application", "Withdrawal Application", "Exit"};
+    private static final String[] MENU = {"Create Application", "Withdrawal Application", "Exit"};
     private ApplicantServiceManager serviceManager;
+    private BtoApplication application;
     
-    public ApplicantBtoApplicationController(ApplicantServiceManager serviceManager) {
+    public ApplicantBtoApplicationController(Applicant user, ApplicantServiceManager serviceManager) {
+        super(user);
         this.serviceManager = serviceManager;
+    }
+
+    @Override
+    protected boolean load() throws Exception {
+        application = serviceManager.getApplicationService().getApplication(getUser());
+        if(application == null) {
+            System.out.println("No active application");
+        }
+        return true;
+    }
+
+    @Override
+    protected String display() {
+        return serviceManager.getGenericService().displayApplication(application) + ListToStringFormatter.toString(MENU);
     }
 
     @Override
     protected int process(int input) throws Exception {
         switch(input) {
-            case 0: viewApplication(); return 0;
-            case 1: createApplication(); return 0;
-            case 2: withdrawApplication(); return 0;
-            case 3: return -1;
-            default: System.out.println("Please enter a valid input. "); return 0;
+            case 0: createApplication(); return 0;
+            case 1: withdrawApplication(); return 0;
+            case 2: return -1;
+            default: throw new Exception("Please enter a valid input. ");
         }
     }
 
-    private void viewApplication(){
-        BtoApplication application = serviceManager.getApplicationService().getApplication(getUser());
-        System.out.println(serviceManager.getGenericService().displayApplication(application));
-    }
-
     private void createApplication() throws Exception {
+        if(application != null) {
+            throw new Exception("Active application found. ");
+        }
         List<Project> projects = serviceManager.getProjectService().getVisibleProjects();
         System.out.println(serviceManager.getGenericService().displayProject(projects));
         int projectIndex = InputHandler.getIntIndexInput("Select a project to apply for: ");
         Project project = serviceManager.getGenericService().getProject(projects, projectIndex);
-        serviceManager.getApplicationService().createApplication(getUser(), project);
+        List<FlatType> flatTypes = serviceManager.getApplicationService().getAvailableFlatTypes(getUser(), project);
+        if(flatTypes.size() <= 0) {
+            throw new Exception("No flat types available for you. ");
+        }
+        System.out.println(ListToStringFormatter.toString(flatTypes));
+        int flatIndex = InputHandler.getIntIndexInput("Select a flat to apply for: ");
+        FlatType flatType = flatTypes.get(flatIndex);
+        serviceManager.getApplicationService().createApplication(getUser(), project, flatType);
+        System.out.println("Application creation success!");
     }
 
     private void withdrawApplication() throws Exception {
-        viewApplication();
-        String input = InputHandler.getStringInput("Confirm to withdraw application (Y/N)", Pattern.compile("^[YyNn]$"));
-        if(!(input == "Y" || input == "y")){
+        if(application == null) {
+            throw new Exception("No existing application found. ");
+        }
+        String input = InputHandler.getStringInput("Confirm to withdraw application (Y/N): ", RegexPatterns.YES_NO);
+        if(!(input.equals("Y") || input.equals("y"))){
+            System.out.println("Application withdrawal cancelled");
             return;
         }
         serviceManager.getApplicationService().withdrawApplication(getUser());
-    }
-    @Override
-    protected String getMenu() {
-        return ListToStringFormatter.toString(MENU);
+        System.out.println("Application withdrawal success!");
     }
 }

@@ -15,11 +15,6 @@ public class HdbManagerEnquiryService extends Service {
     public HdbManagerEnquiryService(DataManager dataManager, OperationsManager operationsManager) {
         super(dataManager, operationsManager);
     }
-    
-    public String displayProjectEnquiries(Project project) {
-        List<Enquiry> projectEnquiries = getOperationsManager().getProjectManager().retrieveEnquiries(project);
-        return getOperationsManager().getEnquiryManager().toString(projectEnquiries);
-    }
 
     public List<Enquiry> getRepliableEnquiries(HdbManager user) {
         ProjectTeam currentTeam = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
@@ -33,7 +28,7 @@ public class HdbManagerEnquiryService extends Service {
         Project currentProj = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(team);
         Project enquiryProj = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
         if(!currentProj.equals(enquiryProj)) {
-            throw new Exception("No permission to reply to this enquiry. ");
+            throw new Exception("Access Denied. No permission to reply to this enquiry. ");
         }
         getOperationsManager().getEnquiryManager().replyEnquiry(enquiry, reply);
     }

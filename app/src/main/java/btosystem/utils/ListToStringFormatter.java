@@ -6,6 +6,7 @@ import java.util.List;
 public class ListToStringFormatter {
     public static String toString(List<?> data) {
         StringBuilder sb = new StringBuilder();
+        sb.append("\n");
         for(int i = 0; i < data.size(); i++) {
             sb.append(String.format("[%d] %s\n", i+1, data.get(i)));
         }

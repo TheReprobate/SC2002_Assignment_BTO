@@ -3,7 +3,6 @@ package btosystem.controllers;
 import btosystem.classes.Applicant;
 import btosystem.classes.Enquiry;
 import btosystem.classes.Project;
-import btosystem.classes.User;
 import btosystem.controllers.interfaces.EnquiryOperations;
 
 import java.time.LocalDateTime;
@@ -97,5 +96,10 @@ public class EnquiryController implements EnquiryOperations {
     public int addEnquiry(List<Enquiry> enquiries, Enquiry enquiry) {
         enquiries.add(enquiry);
         return 1;
+    }
+
+    @Override
+    public List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied) {
+        return enquiries.stream().filter(e -> e.hasReplied() == replied).toList();
     }
 }

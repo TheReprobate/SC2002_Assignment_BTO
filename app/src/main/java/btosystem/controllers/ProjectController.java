@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for Project class that implements ProjectOperation interface.
@@ -295,5 +296,29 @@ public class ProjectController implements ProjectOperations {
     public int addProject(List<Project> projects, Project project) {
         projects.add(project);
         return 1;
+    }
+
+    @Override
+    public int decreaseUnitCount(Project project, FlatType flatType) {
+        Map<FlatType, Integer> flats = project.getUnits();
+        int count = flats.get(flatType);
+        if(count <= 0) {
+            return 0;
+        }
+        updateUnitCount(project, flatType, count-1);
+        return 1;
+    }
+
+    @Override
+    public List<FlatType> getAvailableFlatTypes(Project project) {
+        return new ArrayList<>(project.getUnits().keySet());
+    }
+
+    @Override
+    public void setProjectTeam(Project project, ProjectTeam team) throws Exception {
+        if(project.getProjectTeam() != null) {
+            throw new Exception("Project already has an existing team. ");
+        }
+        project.setProjectTeam(team);
     }
 }

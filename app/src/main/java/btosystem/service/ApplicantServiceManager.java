@@ -1,6 +1,5 @@
-package btosystem.utils;
+package btosystem.service;
 
-import btosystem.service.GenericService;
 import btosystem.service.applicant.ApplicantBtoApplicationService;
 import btosystem.service.applicant.ApplicantEnquiryService;
 import btosystem.service.applicant.ApplicantProjectService;
@@ -11,10 +10,11 @@ public class ApplicantServiceManager {
     private ApplicantProjectService projectService;
     private GenericService genericService; 
     public ApplicantServiceManager(ApplicantBtoApplicationService applicationService,
-            ApplicantEnquiryService enquiryService, ApplicantProjectService projectService) {
+            ApplicantEnquiryService enquiryService, ApplicantProjectService projectService, GenericService genericService) {
         this.applicationService = applicationService;
         this.enquiryService = enquiryService;
         this.projectService = projectService;
+        this.genericService = genericService;
     }
     public ApplicantBtoApplicationService getApplicationService() {
         return applicationService;

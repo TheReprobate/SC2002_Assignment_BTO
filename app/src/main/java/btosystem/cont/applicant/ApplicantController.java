@@ -6,11 +6,15 @@ import btosystem.cont.Controller;
 public abstract class ApplicantController extends Controller {
     private Applicant user;
 
+    public ApplicantController(Applicant user) {
+        this.user = user;
+    }
+
     public Applicant getUser() {
         return user;
     }
 
-    public void getUser(Applicant user) {
+    public void setUser(Applicant user) {
         this.user = user;
     }
     

@@ -1,12 +1,14 @@
 package btosystem.service.hdbmanager;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import btosystem.classes.BtoApplication;
+import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
+import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import btosystem.service.Service;
@@ -27,41 +29,57 @@ public class HdbManagerProjectService extends Service {
         return getOperationsManager().getUserManager().retrieveCreatedProjects(user);
     }
 
-    public Project getCurrentProject(HdbManager user) {
-        ProjectTeam currentTeam = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
-        Project projectInCharge = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(currentTeam);
-        return projectInCharge;
+    public List<BtoApplication> getApplications(Project project) {
+        return getOperationsManager().getProjectManager().retrieveApplications(project);
     }
 
-    public String filterProjects(List<Project> projects, Neighborhood neighborhood) {
-        List<Project> filteredProjects = getOperationsManager().getProjectManager().filterProject(projects, neighborhood);
-        return getOperationsManager().getProjectManager().toString(filteredProjects);
+    public List<BtoApplication> getApplications(Project project, ApplicationStatus status) {
+        return getOperationsManager().getApplicationManager().filterApplications(getApplications(project), status);
+    }
+
+    public List<Enquiry> getEnquiries(Project project) {
+        return getOperationsManager().getProjectManager().retrieveEnquiries(project);
+    }
+
+    public List<Enquiry> getEnquiries(Project project, boolean replied) {
+        return getOperationsManager().getEnquiryManager().filterEnquiries(getEnquiries(project), replied);
+    }
+
+    public Project getCurrentProject(HdbManager user) {
+        ProjectTeam currentTeam = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
+        if(currentTeam == null) {
+            return null;
+        }
+        Project projectInCharge = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(currentTeam);
+        return projectInCharge;
     }
 
     public String displayReport(HdbManager user, Project project) throws Exception {
         if(!hasProjectAccess(user, project)) {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
-        List<BtoApplication> applications = getOperationsManager().getApplicationManager().retrieveApplications(project);
+        List<BtoApplication> applications = getOperationsManager().getProjectManager().retrieveApplications(project);
         return getOperationsManager().getApplicationManager().toString(applications);
     }
     
-    public void createProject(HdbManager user, String name, Neighborhood neighborhood, LocalDateTime openTime, LocalDateTime closeTime) throws Exception {
+    public void createProject(HdbManager user, String name, Neighborhood neighborhood, LocalDate openTime, LocalDate closeTime) throws Exception {
         if(projectExist(name)) {
             return;
         }
 
         List<Project> projects = getDataManager().getProjects();
         List<Project> managerCreatedProjects = getOperationsManager().getUserManager().retrieveCreatedProjects(user);
-        Project project = getOperationsManager().getProjectManager().createProject(name, neighborhood, openTime, closeTime);
+        Project project = getOperationsManager().getProjectManager().createProject(name, neighborhood, openTime, closeTime, user);
         if(!hasValidTime(openTime, closeTime)){
             return;
         }
+        ProjectTeam team = getOperationsManager().getProjectTeamManager().createProjectTeam(project);
+        getOperationsManager().getProjectManager().setProjectTeam(project, team);
         getOperationsManager().getProjectManager().addProject(projects, project);
         getOperationsManager().getProjectManager().addProject(managerCreatedProjects, project);
     }
 
-    public void editProject(Project project, LocalDateTime openTime, LocalDateTime closeTime) throws Exception {
+    public void editProject(Project project, LocalDate openTime, LocalDate closeTime) throws Exception {
         if(!hasValidTime(openTime, closeTime)){
             return;
         }
@@ -78,14 +96,15 @@ public class HdbManagerProjectService extends Service {
 
     public boolean projectExist(String name) throws Exception{
         List<Project> projects = getDataManager().getProjects();
-        if(!getOperationsManager().getProjectManager().projectExist(projects, name)) {
+        boolean exist = getOperationsManager().getProjectManager().projectExist(projects, name);
+        if(exist) {
             throw new Exception("Project name already exist. ");
         }
-        return true;
+        return exist;
     }
 
-    public boolean hasValidTime(LocalDateTime open, LocalDateTime close) throws Exception{
-        if(open.isBefore(LocalDateTime.now())){
+    public boolean hasValidTime(LocalDate open, LocalDate close) throws Exception{
+        if(open.isBefore(LocalDate.now())){
             throw new Exception("Open time is in the past. "); 
         }
         if(close.isBefore(open)) {

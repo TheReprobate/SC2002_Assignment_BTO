@@ -5,6 +5,7 @@ import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
+import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import java.time.LocalDate;
@@ -104,4 +105,10 @@ public interface ProjectOperations
     boolean hasTimeOverlap(Project firstProject, Project secondProject);
 
     int addProject(List<Project> projects, Project project);
+
+    int decreaseUnitCount(Project project, FlatType flatType);
+
+    List<FlatType> getAvailableFlatTypes(Project project);
+
+    void setProjectTeam(Project project, ProjectTeam team) throws Exception;
 }

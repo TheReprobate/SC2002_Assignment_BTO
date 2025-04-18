@@ -19,24 +19,33 @@ public class ApplicantBtoApplicationService extends Service {
     public BtoApplication getApplication(Applicant user) {
         return getOperationsManager().getUserManager().retrieveApplication(user);
     }
+
+    public List<FlatType> getAvailableFlatTypes(Applicant user, Project project) {
+        List<FlatType> eligibleFlatTypes = getOperationsManager().getApplicationManager().getEligibleFlatTypes(user);
+        List<FlatType> availableFlatTypes = getOperationsManager().getProjectManager().getAvailableFlatTypes(project);
+        eligibleFlatTypes.removeIf(f -> !availableFlatTypes.contains(f));
+        return eligibleFlatTypes;
+    }
     
-    public void createApplication(Applicant user, Project project) throws Exception {
+    public void createApplication(Applicant user, Project project, FlatType flatType) throws Exception {
+        List<BtoApplication> projectApplicationRef = getOperationsManager().getProjectManager().retrieveApplications(project);
         BtoApplication application = getOperationsManager().getUserManager().retrieveApplication(user);
+        if(!getOperationsManager().getProjectManager().isOpen(project)) { 
+            throw new Exception("Project is unavailable. ");
+        }
+        if(getOperationsManager().getApplicationManager().hasApplied(projectApplicationRef, user)){
+            throw new Exception("Applicant has applied for this project before, unable to reapply. ");
+        }
         if(application != null) {
             throw new Exception("Applicant has an existing application. ");
         }
-        if(getOperationsManager().getProjectManager().isOpen(project)) { 
-            throw new Exception("Project is unavailable. ");
+        
+        if(!getOperationsManager().getProjectManager().unitHasSlots(project, flatType)) {
+            throw new Exception("There is no slots available for your requirements.  ");
         }
-        List<FlatType> flatOptions = getOperationsManager().getUserManager().getAllowedFlatTypes(user);
-        for(FlatType f: flatOptions) {
-            if(getOperationsManager().getProjectManager().unitHasSlots(project, f));{
-                application = getOperationsManager().getApplicationManager().createApplication(project, user);
-                List<BtoApplication> projectApplicationRef = getOperationsManager().getProjectManager().retrieveApplications(project);
-                getOperationsManager().getApplicationManager().addApplication(projectApplicationRef, application);
-            }
-        }
-        throw new Exception("There is no slots available for your requirements.  ");
+        application = getOperationsManager().getApplicationManager().createApplication(project, user, flatType);
+        getOperationsManager().getApplicationManager().addApplication(projectApplicationRef, application);
+        getOperationsManager().getUserManager().setApplication(user, application);
     }
 
     public void withdrawApplication(Applicant user) throws Exception {
@@ -45,6 +54,7 @@ public class ApplicantBtoApplicationService extends Service {
             throw new Exception("Applicant does not have an existing application. ");
         }
         getOperationsManager().getApplicationManager().withdrawApplication(application);
+        getOperationsManager().getUserManager().removeApplication(user);
     }
 
 }

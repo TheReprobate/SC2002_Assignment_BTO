@@ -8,13 +8,12 @@ import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.User;
-import btosystem.classes.enums.FlatType;
 
 import java.util.HashMap;
 import java.util.List;
 
 public interface UserOperations extends ToString<User> {
-    public User authenticate(HashMap<String, User> users, String username, String password);
+    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception;
 
     public BtoApplication retrieveApplication(Applicant applicant);
 
@@ -26,5 +25,11 @@ public interface UserOperations extends ToString<User> {
 
     public List<Project> retrieveCreatedProjects(HdbManager manager);
 
-    public List<FlatType> getAllowedFlatTypes(Applicant applicant) throws Exception;
+    public void removeApplication(Applicant applicant) throws Exception;
+
+    public User retrieveUser(HashMap<String, User> users, String nric) throws Exception;
+
+    public void addApplicant(HashMap<String, User> users, String nric,  String name, int age, boolean married) throws Exception;
+
+    public void setApplication(Applicant applicant, BtoApplication application);
 }

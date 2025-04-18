@@ -8,6 +8,7 @@ public class InputHandler {
     public static int getIntInput() throws InputMismatchException{
         try {
             int option = ScannerInstance.getInstance().nextInt();
+            ScannerInstance.getInstance().nextLine();
             return option;
         } catch (InputMismatchException e) {
             ScannerInstance.getInstance().nextLine();

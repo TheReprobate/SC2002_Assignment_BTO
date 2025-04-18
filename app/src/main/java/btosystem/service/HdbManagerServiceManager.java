@@ -1,19 +1,18 @@
-package btosystem.utils;
+package btosystem.service;
 
-import btosystem.cont.hdbmanager.HdbManagerBtoApplicationController;
-import btosystem.cont.hdbmanager.HdbManagerEnquiryController;
-import btosystem.service.GenericService;
+import btosystem.service.hdbmanager.HdbManagerBtoApplicationService;
+import btosystem.service.hdbmanager.HdbManagerEnquiryService;
 import btosystem.service.hdbmanager.HdbManagerProjectService;
 import btosystem.service.hdbmanager.HdbManagerProjectTeamService;
 
 public class HdbManagerServiceManager {
-    private HdbManagerBtoApplicationController applicationService;
-    private HdbManagerEnquiryController enquiryService;
+    private HdbManagerBtoApplicationService applicationService;
+    private HdbManagerEnquiryService enquiryService;
     private HdbManagerProjectService projectService;
     private HdbManagerProjectTeamService teamService;
     private GenericService genericService;
-    public HdbManagerServiceManager(HdbManagerBtoApplicationController applicationService,
-            HdbManagerEnquiryController enquiryService, HdbManagerProjectService projectService,
+    public HdbManagerServiceManager(HdbManagerBtoApplicationService applicationService,
+    HdbManagerEnquiryService enquiryService, HdbManagerProjectService projectService,
             HdbManagerProjectTeamService teamService, GenericService genericService) {
         this.applicationService = applicationService;
         this.enquiryService = enquiryService;
@@ -21,10 +20,10 @@ public class HdbManagerServiceManager {
         this.teamService = teamService;
         this.genericService = genericService;
     }
-    public HdbManagerBtoApplicationController getApplicationService() {
+    public HdbManagerBtoApplicationService getApplicationService() {
         return applicationService;
     }
-    public HdbManagerEnquiryController getEnquiryService() {
+    public HdbManagerEnquiryService getEnquiryService() {
         return enquiryService;
     }
     public HdbManagerProjectService getProjectService() {

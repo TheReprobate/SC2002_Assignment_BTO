@@ -1,5 +1,7 @@
 package btosystem.cont.applicant;
 
+import btosystem.classes.Applicant;
+import btosystem.service.ApplicantServiceManager;
 import btosystem.utils.ListToStringFormatter;
 
 public class ApplicantMainController extends ApplicantController {
@@ -8,11 +10,24 @@ public class ApplicantMainController extends ApplicantController {
     private ApplicantEnquiryController enquiryController;
     private ApplicantProjectController projectController;
     
-    public ApplicantMainController(ApplicantBtoApplicationController applicationController,
-            ApplicantEnquiryController enquiryController, ApplicantProjectController projectController) {
-        this.applicationController = applicationController;
-        this.enquiryController = enquiryController;
-        this.projectController = projectController;
+    public ApplicantMainController(Applicant user, ApplicantServiceManager serviceManager) {
+        super(user);
+        this.applicationController = new ApplicantBtoApplicationController(user, serviceManager);
+        this.enquiryController = new ApplicantEnquiryController(user, serviceManager);
+        this.projectController = new ApplicantProjectController(user, serviceManager);
+    }
+
+    @Override
+    protected boolean load() throws Exception {
+        applicationController.setUser(getUser());
+        enquiryController.setUser(getUser());
+        projectController.setUser(getUser());
+        return true;
+    }
+
+    @Override
+    protected String display(){
+        return ListToStringFormatter.toString(MENU);
     }
 
     @Override
@@ -21,11 +36,8 @@ public class ApplicantMainController extends ApplicantController {
             case 0: projectController.execute(); return 0;
             case 1: applicationController.execute(); return 0;
             case 2: enquiryController.execute(); return 0;
-            default: System.out.println("Please enter a valid input. "); return 0;
+            case 3: return -1;
+            default: throw new Exception("Please enter a valid input. "); 
         }
-    }
-    @Override
-    protected String getMenu() {
-        return ListToStringFormatter.toString(MENU);
     }
 }

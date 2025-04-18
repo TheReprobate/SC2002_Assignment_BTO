@@ -6,8 +6,6 @@ import btosystem.classes.Project;
 
 import java.util.List;
 
-import btosystem.classes.User;
-
 public interface EnquiryOperations
         extends ListToString<Enquiry>, CleanupOperations<Enquiry> {
     Enquiry createEnquiry(Project project, Applicant applicant, String content);
@@ -27,4 +25,6 @@ public interface EnquiryOperations
     int addEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
 
     boolean hasReplied(Enquiry enquiry);
+
+    List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied);
 }

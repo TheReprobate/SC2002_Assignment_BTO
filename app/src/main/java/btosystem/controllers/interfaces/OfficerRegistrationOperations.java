@@ -19,4 +19,6 @@ public interface OfficerRegistrationOperations
     int rejectRegistration(OfficerRegistration registration);
 
     int addRegistration(List<OfficerRegistration> registrations, OfficerRegistration registration);
+
+    boolean hasApplied(List<OfficerRegistration> registrations, HdbOfficer officer);
 }

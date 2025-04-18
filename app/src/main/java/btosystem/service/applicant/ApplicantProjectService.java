@@ -17,6 +17,12 @@ public class ApplicantProjectService extends Service {
     public List<Project> getVisibleProjects(){
         List<Project> projects = getDataManager().getProjects();
         List<Project> visibleProjects = getOperationsManager().getProjectManager().filterProject(projects, true);
+        for(Project p : visibleProjects) {
+            if(getOperationsManager().getProjectManager().isOpen(p)) {
+                continue;
+            }
+            visibleProjects.remove(p);
+        }
         return visibleProjects;
     }
 

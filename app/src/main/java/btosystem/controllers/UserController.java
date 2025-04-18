@@ -1,23 +1,19 @@
 package btosystem.controllers;
 
 import btosystem.classes.*;
-import btosystem.classes.enums.FlatType;
 import btosystem.controllers.interfaces.UserOperations;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class UserController implements UserOperations {
-    private static final int MIN_AGE_SINGLE = 35;
-    private static final int MIN_AGE_MARRIED = 21;
 
-    public User authenticate(HashMap<String, User> users, String username, String password) {
-        User user = users.get(username);
+    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception {
+        User user = retrieveUser(users, username);
         if (user != null && user.getPassword().equals(password)) {
             return user; 
         }
-        return null; 
+        throw new Exception("Password does not match. "); 
     }
 
     @Override
@@ -51,21 +47,34 @@ public class UserController implements UserOperations {
     }
 
     @Override
-    public List<FlatType> getAllowedFlatTypes(Applicant applicant) throws Exception {
-        return applicant.isMarried() ? getMarriedFlatType(applicant) : getSingleFlatType(applicant);
+    public void removeApplication(Applicant applicant) throws Exception {
+        if(applicant.getActiveApplication() == null) {
+            throw new Exception("Applicant does not have active application. ");
+        }
+        applicant.setActiveApplication(null);
     }
 
-    private List<FlatType> getSingleFlatType(Applicant applicant) throws Exception {
-        if(applicant.getAge() < MIN_AGE_SINGLE) {
-            throw new Exception("Age under 35 for single applicants have no flats types. ");
+    @Override
+    public User retrieveUser(HashMap<String, User> users, String nric) throws Exception {
+        User user = users.get(nric);
+        if (user == null) {
+            throw new Exception("User does not exist. ");
         }
-        return Arrays.asList(FlatType.TWO_ROOM);
+        return user;
     }
 
-    private List<FlatType> getMarriedFlatType(Applicant applicant) throws Exception {
-        if(applicant.getAge() < MIN_AGE_MARRIED) {
-            throw new Exception("Age under 21 for married applicants have no flats types. ");
+    @Override
+    public void addApplicant(HashMap<String, User> users, String nric, String name, int age, boolean married) throws Exception {
+        if (users.get(nric) != null) {
+            throw new Exception("User already exist. ");
         }
-        return Arrays.asList(FlatType.TWO_ROOM, FlatType.THREE_ROOM);
+        Applicant applicant = new Applicant(nric, name, age, married);
+        users.put(nric, applicant);
     }
+
+    @Override
+    public void setApplication(Applicant applicant, BtoApplication application) {
+        applicant.setActiveApplication(application);
+    }
+    
 }
