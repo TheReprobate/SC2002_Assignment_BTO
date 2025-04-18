@@ -40,6 +40,7 @@ public class Testing {
     ProjectTeam t1 = null;
     ProjectTeam t2 = null;
     ProjectTeam t3 = null;
+    ProjectTeam t4 = null;
 
     // Null objects for testing of exceptions
     Project pN = null;
@@ -75,10 +76,6 @@ public class Testing {
         projects.add(proj1);
         projects.add(proj2);
         projects.add(proj3);
-
-        t1 = projectTeamController.createProjectTeam(projects.get(0));
-        t2 = projectTeamController.createProjectTeam(projects.get(1));
-        t3 = projectTeamController.createProjectTeam(projects.get(2));
     }
     
     
@@ -147,6 +144,46 @@ public class Testing {
     }
     
     public void testProjectTeamController() {
+        System.out.println("Testing Project Team Controller");
+        System.out.println("Testing: ProjectTeam createProjectTeam(Project proj) throws Exception");
+        // Standard case
+        try {
+            t1 = projectTeamController.createProjectTeam(projects.get(0));
+            projects.get(0).setProjectTeam(t1);
+            System.out.println("Standard case 1 pass");
+
+            t2 = projectTeamController.createProjectTeam(projects.get(1));
+            projects.get(0).setProjectTeam(t2);
+            System.out.println("Standard case 2 pass");
+
+            t3 = projectTeamController.createProjectTeam(projects.get(2));
+            projects.get(0).setProjectTeam(t3);
+            System.out.println("Standard case 3 pass");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Duplicate case
+        try {
+            t4 = projectTeamController.createProjectTeam(projects.get(0));
+            System.out.println("Duplicate case pass");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Null case
+        try {
+            t1 = projectTeamController.createProjectTeam(null);
+            System.out.println("Null case pass");
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
         /* -------------------------------------- For HdbManager -------------------------------------- */
         System.out.println("For HdbManager");
         System.out.println("Testing: int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception");
@@ -362,9 +399,10 @@ public class Testing {
         catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+        //List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
+        /* ---------------------------------- End OfficerRegistration --------------------------------- */
+        
+        System.out.printf("\nTesting toString\n");
+        System.out.println(projectTeamController.toString(t1));
     }
-    //List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
-    /* ---------------------------------- End OfficerRegistration --------------------------------- */
-    
-    // System.out.println(projectTeamController.toString(t1));
 }

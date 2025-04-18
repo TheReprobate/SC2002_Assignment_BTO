@@ -33,10 +33,6 @@ public class ProjectController implements ProjectOperations {
                                  LocalDate openTime, LocalDate closeTime, HdbManager hdbManager) {
         // Create project object first
         Project proj = new Project(name, neighborhood, openTime, closeTime, hdbManager);
-        // Then we create ProjectTeam based on proj obj
-        ProjectTeam projTeam = new ProjectTeam(proj);
-        // Now we set project's project team to newly created projTeam
-        proj.setProjectTeam(projTeam);
 
         return proj;
     }

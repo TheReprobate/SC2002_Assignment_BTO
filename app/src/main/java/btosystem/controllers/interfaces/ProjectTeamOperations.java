@@ -19,7 +19,7 @@ public interface ProjectTeamOperations extends ToString<ProjectTeam>
      * Interface method for ProjectTeam creation.
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    ProjectTeam createProjectTeam(Project project);
+    ProjectTeam createProjectTeam(Project project) throws Exception;
 
     /* -------------------------------------- For HdbManager -------------------------------------- */
     /**

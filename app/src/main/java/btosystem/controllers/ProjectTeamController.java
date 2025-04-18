@@ -21,9 +21,18 @@ public class ProjectTeamController implements ProjectTeamOperations{
      *
      * @param proj Project that this ProjectTeam is assigned to
      * @return ProjectTeam object created
+     * @throws Exception Exception thrown if ProjectTeam already exists in proj or if project does not exist
      */
     @Override
-    public ProjectTeam createProjectTeam(Project proj) {
+    public ProjectTeam createProjectTeam(Project proj) throws Exception{
+        if(proj == null) {
+            // Project object does not exist
+            throw new Exception("Project object does not exist.");
+        }
+        if(proj.getProjectTeam() != null) {
+            // ProjectTeam object already exists
+            throw new Exception("ProjectTeam object already exists.");
+        }
         ProjectTeam projTeam = new ProjectTeam(proj);
         return projTeam;
     }

@@ -2,15 +2,25 @@ package btosystem.controllers;
 
 import java.util.List;
 
-import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
+
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
 
 import btosystem.controllers.interfaces.OfficerRegistrationOperations;
 
+/**
+ * Controller for OfficerRegistration class that implements OfficerRegistrationOperations interface.
+ */
 public class OfficerRegistrationController implements OfficerRegistrationOperations
 {
+    /**
+     * Constructor for creating OfficerRegistration.
+     *
+     * @param team ProjectTeam that this officer is applying to
+     * @param officer Officer that intends to apply for ProjectTeam
+     * @return OfficerRegistration object
+     */
     @Override
     public OfficerRegistration createRegistration(ProjectTeam team, HdbOfficer officer) throws Exception{
         // need to check if dupe
@@ -20,8 +30,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
 
     @Override
     public OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'retrieveOfficerRegistration'");
+        return registrations.get(index);
     }
 
     @Override
