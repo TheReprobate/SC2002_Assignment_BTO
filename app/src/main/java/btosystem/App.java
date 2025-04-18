@@ -31,6 +31,7 @@ public class App {
      * @param args Command-line arguments passed to the application
      */
     public static void main(String[] args) {
+        /*
         final ProjectController projectController = new ProjectController();
         final EnquiryController enquiryController = new EnquiryController();
 
@@ -251,8 +252,9 @@ public class App {
 
         // Test: Manager not able reply enquiry he handled
         System.out.println("\nIn current system, manager can reply to all enquiries");
-      
+      */
         Testing test = new Testing();
-        test.testProjectTeamController();
+        test.testProjectTeamControllerInitialise();
+        test.testProjectTeamControllerHdbManager();
     }
 }

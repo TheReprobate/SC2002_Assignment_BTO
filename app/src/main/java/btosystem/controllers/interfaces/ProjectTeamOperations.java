@@ -13,7 +13,9 @@ import btosystem.classes.OfficerRegistration;
  * An interface that extends {@link ToString},
  * providing various operations related to ProjectTeam management.
  */
-public interface ProjectTeamOperations extends ToString<ProjectTeam> 
+public interface ProjectTeamOperations extends 
+                ToString<ProjectTeam>, 
+                CleanupOperations<ProjectTeam>
 {
     /**
      * Interface method for ProjectTeam creation.

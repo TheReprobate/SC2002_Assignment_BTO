@@ -58,4 +58,12 @@ public class ProjectTeam {
     {
         this.officerRegistrations.addLast(officerRegistration);
     }
+
+    public void removeOfficers() {
+        this.officers.clear();
+    }
+
+    public void removeOfficerRegistrations() {
+        this.officerRegistrations.clear();
+    }
 }

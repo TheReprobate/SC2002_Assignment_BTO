@@ -1,7 +1,6 @@
 package btosystem.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
@@ -201,38 +200,46 @@ public class ProjectTeamController implements ProjectTeamOperations{
             managerName = "No manager assigned to project team.";
         }
 
-        String officers;
-        try {
-            officers = data.getOfficers()
-                            .stream()
-                            .map(officer -> officer.getName())
-                            .collect(Collectors.joining("\n"));
-            if(officers.isBlank()) {
-                throw new Exception();
-            }
+        List<HdbOfficer> listOfficers = data.getOfficers();
+        String officers = "";
+
+        for (int i = 0; i < listOfficers.size(); i++) {
+            officers += (i + 1) + ") " + listOfficers.get(i).getName() + "\n";
         }
-        catch(Exception e) {
+
+        if(officers.isBlank()) {
             officers = "No officer assigned to project team.";
         }
 
-        String registrations;
-        try {
-            registrations = data.getOfficerRegistrations()
-                            .stream()
-                            .map(registration -> registration.getOfficer().getName())
-                            .collect(Collectors.joining("\n"));
-            if(registrations.isBlank()) {
-                throw new Exception();
-            }
+        List<OfficerRegistration> listRegistrations = data.getOfficerRegistrations();
+        String registrations = "";
+
+        for (int i = 0; i < listRegistrations.size(); i++) {
+            registrations += (i + 1) + ") " + listRegistrations.get(i).getOfficer().getName() + "\n";
         }
-        catch(Exception e) {
-            registrations = "No Officer Registrations applied to project team.";
-        } 
+
+        if(registrations.isBlank()) {
+            registrations = "No Officers applied to project team.";
+        }
 
         return 
         "Project Name           : \n" + projName        + "\n\n" +
         "Manager                : \n" + managerName     + "\n\n" +
         "Officers               : \n" + officers        + "\n\n" +
         "Pending registrations  : \n" + registrations   + "\n";
+    }
+
+    /**
+     * Cleans up the ProjectTeam object, resetting its fields.
+     *
+     * @param instance ProjectTeam object to clean
+     */
+    @Override
+    public void cleanup(ProjectTeam instance) {
+        instance.setProject(null);
+
+        instance.setManager(null);
+        instance.removeOfficers();
+        instance.removeOfficerRegistrations();
     }
 }

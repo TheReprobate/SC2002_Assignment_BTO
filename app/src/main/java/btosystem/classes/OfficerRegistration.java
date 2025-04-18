@@ -26,4 +26,8 @@ public class OfficerRegistration {
     public void setStatus(RegistrationStatus status) {
         this.status = status;
     }
+
+    public void setOfficer(HdbOfficer officer) {
+        this.officer = officer;
+    }
 }

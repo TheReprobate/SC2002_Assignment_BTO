@@ -12,7 +12,10 @@ import btosystem.classes.OfficerRegistration;
  * providing various operations related to OfficerRegistration management.
  */
 
-public interface OfficerRegistrationOperations extends ListToString<OfficerRegistration> {
+public interface OfficerRegistrationOperations extends 
+                ListToString<OfficerRegistration>,
+                CleanupOperations<OfficerRegistration> 
+{
     /**
      * Interface method for OfficerRegistration creation.
      * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
@@ -29,11 +32,11 @@ public interface OfficerRegistrationOperations extends ListToString<OfficerRegis
      * Interface method for approval of OfficerRegistration
      * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
      */
-    int approveRegistration(OfficerRegistration registration);
+    int approveRegistration(OfficerRegistration registration) throws Exception;
 
     /**
      * Interface method for rejection of OfficerRegistration
      * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
      */
-    int rejectRegistration(OfficerRegistration registration);
+    int rejectRegistration(OfficerRegistration registration) throws Exception;
 }
