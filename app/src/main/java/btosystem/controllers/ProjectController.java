@@ -123,6 +123,21 @@ public class ProjectController implements ProjectOperations {
     }
 
     /**
+     * Method for setting project team handling this project.
+     *
+     * @param project Project object
+     * @return ProjectTeam object
+     */
+    @Override
+    public int setProjectTeam(Project project, ProjectTeam team) {
+        if (project.getProjectTeam() == null) {
+            project.setProjectTeam(team);
+            return 1;
+        }
+        else throw new IllegalArgumentException("Project already has a team!");
+    }
+
+    /**
      * Method for retrieving enquiries for this project.
      *
      * @param project Project object
@@ -186,8 +201,14 @@ public class ProjectController implements ProjectOperations {
      */
     @Override
     public int editProject(Project project, LocalDate openTime, LocalDate closeTime) {
-        project.setOpenTime(openTime);
-        project.setCloseTime(closeTime);
+        if (project.getOpenTime().isBefore(openTime)) {
+            project.setOpenTime(openTime);
+            project.setCloseTime(closeTime);
+        }
+        else {
+            throw new IllegalArgumentException("Open date cannot be before close date! Are you a time traveller?");
+        }
+
         return 1;
     }
 
