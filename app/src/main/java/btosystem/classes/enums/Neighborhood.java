@@ -29,5 +29,4 @@ public enum Neighborhood {
     TANJONG_PAGAR,
     TOA_PAYOH,
     WOODLANDS,
-    YISHUN
 }

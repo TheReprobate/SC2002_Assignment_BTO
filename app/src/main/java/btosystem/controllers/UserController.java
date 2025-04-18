@@ -1,17 +1,37 @@
 package btosystem.controllers;
 
-import btosystem.classes.*;
+import btosystem.classes.Applicant;
+import btosystem.classes.BtoApplication;
+import btosystem.classes.Enquiry;
+import btosystem.classes.HdbManager;
+import btosystem.classes.HdbOfficer;
+import btosystem.classes.Project;
+import btosystem.classes.ProjectTeam;
+import btosystem.classes.User;
 import btosystem.controllers.interfaces.UserOperations;
-
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Controller class for handling user-related operations. Implements the
+ * UserOperations interface to provide functionality for authentication and data
+ * retrieval for different user types.
+ */
 public class UserController implements UserOperations {
 
+    /**
+     * Authenticates a user based on username and password.
+     *
+     * @param users HashMap of registered users
+     * @param username Username to authenticate
+     * @param password Password to verify
+     * @return Authenticated User object if successful, null otherwise
+     * @throws Exception 
+     */
     public User authenticate(HashMap<String, User> users, String username, String password) throws Exception {
         User user = retrieveUser(users, username);
         if (user != null && user.getPassword().equals(password)) {
-            return user; 
+            return user;
         }
         throw new Exception("Password does not match. "); 
     }

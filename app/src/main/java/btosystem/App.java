@@ -62,7 +62,8 @@ import btosystem.utils.DataManager;
 import btosystem.utils.OperationsManager;
 
 /**
- * The main application class serving as the entry point for the program.
+ * The main application class serving as the entry point for the program. This
+ * implementation focuses on testing the Enquiry functionality.
  */
 public class App {
 
@@ -71,7 +72,6 @@ public class App {
      *
      * @param args Command-line arguments passed to the application
      */
-
     public static void main(String[] args) {
         // Fake Data
         HdbOfficer officer = new HdbOfficer("T1200000A", "OFFICER1", 40, false);
