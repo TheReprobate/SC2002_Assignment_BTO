@@ -32,7 +32,6 @@ public class ProjectController implements ProjectOperations {
     @Override
     public Project createProject(String name, Neighborhood neighborhood,
                                  LocalDate openTime, LocalDate closeTime, HdbManager hdbManager) {
-
         return new Project(name, neighborhood, openTime, closeTime, hdbManager);
     }
 

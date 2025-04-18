@@ -1,22 +1,46 @@
 package btosystem.controllers.interfaces;
 
-import btosystem.classes.HdbOfficer;
-import btosystem.classes.OfficerRegistration;
-import btosystem.classes.Project;
 import java.util.List;
 
-public interface OfficerRegistrationOperations
-        extends ListToString<OfficerRegistration> {
-    OfficerRegistration createRegistration(Project project, HdbOfficer officer);
+import btosystem.classes.ProjectTeam;
 
-    OfficerRegistration retrieveOfficerRegistration(
-            List<OfficerRegistration> registrations, int index);
+import btosystem.classes.HdbOfficer;
+import btosystem.classes.OfficerRegistration;
+
+/**
+ * An interface that extends {@link ListToString},
+ * providing various operations related to OfficerRegistration management.
+ */
+
+public interface OfficerRegistrationOperations extends 
+                ListToString<OfficerRegistration>,
+                CleanupOperations<OfficerRegistration> 
+{
+    /**
+     * Interface method for OfficerRegistration creation.
+     * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
+     */
+    public OfficerRegistration createRegistration(ProjectTeam team, HdbOfficer officer) throws Exception;
+
+    /**
+     * Interface method for retrieval of OfficerRegistration
+     * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
+     */
+    OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index) throws Exception;
+
+    /**
+     * Interface method for approval of OfficerRegistration
+     * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
+     */
+    int approveRegistration(OfficerRegistration registration) throws Exception;
+
+    /**
+     * Interface method for rejection of OfficerRegistration
+     * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
+     */
+    int rejectRegistration(OfficerRegistration registration) throws Exception;
 
     HdbOfficer retrieveAppliedOfficer(OfficerRegistration registration);
-
-    int approveRegistration(OfficerRegistration registration);
-
-    int rejectRegistration(OfficerRegistration registration);
 
     int addRegistration(List<OfficerRegistration> registrations, OfficerRegistration registration);
 

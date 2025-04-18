@@ -12,6 +12,7 @@ import btosystem.classes.BtoApplication;
 import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
+import btosystem.classes.OfficerRegistration;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.User;
