@@ -57,6 +57,12 @@ public interface ProjectOperations
     ProjectTeam retrieveProjectTeam(Project project);
 
     /**
+     * Interface method for setting project team .
+     * Details can be found in {@link btosystem.controllers.ProjectController}
+     */
+    int setProjectTeam(Project project, ProjectTeam team);
+
+    /**
      * Interface method for project's enquiries retrieval.
      * Details can be found in {@link btosystem.controllers.ProjectController}
      */

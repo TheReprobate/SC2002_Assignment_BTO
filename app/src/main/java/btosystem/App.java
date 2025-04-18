@@ -62,8 +62,7 @@ import btosystem.utils.DataManager;
 import btosystem.utils.OperationsManager;
 
 /**
- * The main application class serving as the entry point for the program. This
- * implementation focuses on testing the Enquiry functionality.
+ * The main application class serving as the entry point for the program.
  */
 public class App {
 

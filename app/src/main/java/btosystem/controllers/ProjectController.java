@@ -32,14 +32,8 @@ public class ProjectController implements ProjectOperations {
     @Override
     public Project createProject(String name, Neighborhood neighborhood,
                                  LocalDate openTime, LocalDate closeTime, HdbManager hdbManager) {
-        // Create project object first
-        Project proj = new Project(name, neighborhood, openTime, closeTime, hdbManager);
-        // Then we create ProjectTeam based on proj obj
-        ProjectTeam projTeam = new ProjectTeam(proj);
-        // Now we set project's project team to newly created projTeam
-        proj.setProjectTeam(projTeam);
 
-        return proj;
+        return new Project(name, neighborhood, openTime, closeTime, hdbManager);
     }
 
     /**
@@ -130,6 +124,21 @@ public class ProjectController implements ProjectOperations {
     }
 
     /**
+     * Method for setting project team handling this project.
+     *
+     * @param project Project object
+     * @return ProjectTeam object
+     */
+    @Override
+    public int setProjectTeam(Project project, ProjectTeam team) {
+        if (project.getProjectTeam() == null) {
+            project.setProjectTeam(team);
+            return 1;
+        }
+        else throw new IllegalArgumentException("Project already has a team!");
+    }
+
+    /**
      * Method for retrieving enquiries for this project.
      *
      * @param project Project object
@@ -193,8 +202,14 @@ public class ProjectController implements ProjectOperations {
      */
     @Override
     public int editProject(Project project, LocalDate openTime, LocalDate closeTime) {
-        project.setOpenTime(openTime);
-        project.setCloseTime(closeTime);
+        if (project.getOpenTime().isBefore(openTime)) {
+            project.setOpenTime(openTime);
+            project.setCloseTime(closeTime);
+        }
+        else {
+            throw new IllegalArgumentException("Open date cannot be before close date! Are you a time traveller?");
+        }
+
         return 1;
     }
 
@@ -249,9 +264,24 @@ public class ProjectController implements ProjectOperations {
     @Override
     public String toString(List<Project> data) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < data.size(); i++) {
-            sb.append(i).append(". ").append(toString(data.get(i))).append("\n");
+
+        // To adjust width of each column for formatting purposes
+        String stringFormat = "%-8s %-30s %-15s %-12s %-12s%n";
+        // Table header
+        sb.append(String.format(stringFormat,
+                "No.", "Name", "Neighborhood", "Open date", "Close date"));
+
+        // Data rows
+        int count = 1;
+        for (Project p : data) {
+            sb.append(String.format(stringFormat,
+                    "[" + count++ +"]",
+                    p.getName(),
+                    p.getNeighborhood(),
+                    p.getOpenTime(),
+                    p.getCloseTime()));
         }
+
         return sb.toString();
     }
 
