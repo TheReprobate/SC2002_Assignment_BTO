@@ -26,7 +26,7 @@ public interface OfficerRegistrationOperations extends
      * Interface method for retrieval of OfficerRegistration
      * Details can be found in {@link btosystem.controllers.OfficerRegistrationController}
      */
-    OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index);
+    OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index) throws Exception;
 
     /**
      * Interface method for approval of OfficerRegistration

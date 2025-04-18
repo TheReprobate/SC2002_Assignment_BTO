@@ -4,7 +4,7 @@ import java.util.List;
 
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
-
+import btosystem.classes.enums.RegistrationStatus;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
@@ -66,7 +66,6 @@ public class ProjectTeamController implements ProjectTeamOperations{
         team.setManager(manager);
         return 1;
     }
-    
 
     /**
      * Checks if HdbManager is part of this ProjectTeam
@@ -88,6 +87,7 @@ public class ProjectTeamController implements ProjectTeamOperations{
         }
         return team.getManager().equals(manager);
     }
+    
     /* -------------------------------------- End HdbManager -------------------------------------- */
 
     /* -------------------------------------- For HdbOfficer -------------------------------------- */
@@ -97,7 +97,10 @@ public class ProjectTeamController implements ProjectTeamOperations{
      * @param team ProjectTeam to assign HdbOfficer to
      * @param officer HdbOfficer to be assigned
      * @return 1 if successful, throws relevant error messages if not
-     * @throws Exception Exception thrown if team or officer does not exist, or officer duplicate is found
+     * @throws Exception Exception thrown if team or officer does not exist, 
+     *                      officer duplicate is found,
+     *                      officer has not applied for project,
+     *                      or officer registration status is not accepted
      */
     @Override
     public int assignProjectOfficer(ProjectTeam team, HdbOfficer officer) throws Exception{
@@ -109,11 +112,36 @@ public class ProjectTeamController implements ProjectTeamOperations{
             // Officer does not exist
             throw new Exception("Officer object does not exist.");
         }
-        if(team.getOfficers().contains(officer)) {
-            // Registration already exists
-            throw new Exception("Officer already part of team.");
+        if(team.getOfficers().stream()
+                    .anyMatch(o -> o.equals(officer))) {
+            // Officer already in Project Team
+            throw new Exception("Officer already in Project Team.");
         }
-        // Successful
+        if(!team.getOfficerRegistrations().stream()
+                    .anyMatch(registration -> registration.getOfficer().equals(officer))) {
+            // No registration, cannot assign
+            throw new Exception("Officer has not applied for Project.");
+        }
+
+        OfficerRegistration matchedRegistration = null;
+
+        for(OfficerRegistration reg : team.getOfficerRegistrations()) {
+            if(reg.getOfficer().equals(officer)) {
+                matchedRegistration = reg;
+                break;
+            }
+        }
+
+        if(matchedRegistration == null) {
+            // No registration, cannot assign
+            throw new Exception("Officer has not applied for Project.");
+        }
+
+        if(matchedRegistration.getStatus() != RegistrationStatus.ACCEPTED) {
+            // Registration not accepted (Yet)
+            throw new Exception("Officer Registration is not Accepted for this project.");
+        }
+
         team.assignOfficer(officer);
         return 1;
     }
@@ -139,6 +167,7 @@ public class ProjectTeamController implements ProjectTeamOperations{
         List<HdbOfficer> officerList = team.getOfficers();
         return officerList.contains(officer);
     }
+    
     /* -------------------------------------- End HdbOfficer -------------------------------------- */
     
     // For OfficerRegistration
@@ -190,6 +219,8 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public String toString(ProjectTeam data) {
+        if(data == null) return "Project Team is empty.";
+
         String projName = data.getProject().getName();
 
         String managerName;
@@ -236,10 +267,13 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public void cleanup(ProjectTeam instance) {
-        instance.setProject(null);
-
-        instance.setManager(null);
-        instance.removeOfficers();
-        instance.removeOfficerRegistrations();
+        if(instance != null)
+        {
+            instance.setProject(null);
+    
+            instance.setManager(null);
+            instance.removeOfficers();
+            instance.removeOfficerRegistrations();
+        }
     }
 }

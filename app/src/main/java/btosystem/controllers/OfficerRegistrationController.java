@@ -45,10 +45,18 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      * @param registration Registration object to accept
      * @param index index in list to return
      * @return OfficerRegistration object
-     * @throws Exception Exception thrown if registration does not exist, or registration already accepted
+     * @throws Exception Exception thrown if registrations does not exist, or index out of bounds
      */
     @Override
-    public OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index) {
+    public OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index) throws Exception{
+        if(registrations == null)
+        {
+            throw new Exception("List<OfficerRegistration> object does not exist.");
+        }
+        if(index > registrations.size())
+        {
+            throw new Exception("Index out of bounds.");
+        }
         return registrations.get(index);
     }
 
@@ -152,13 +160,32 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
     }
 
     /**
-     * Cleans up the enquiry object, resetting its fields.
+     * Cleans up the OfficerRegistration object, resetting its fields.
      *
-     * @param instance OfficerRegistration object to clean
+     * @param instance OfficerRegistration objects to clean
      */
     @Override
     public void cleanup(OfficerRegistration instance) {
-        instance.setOfficer(null);
-        instance.setStatus(null);
+        if(instance != null)
+        {
+            instance.setOfficer(null);
+            instance.setStatus(null);
+        }
+    }
+
+    /**
+     * Cleans up a list of OfficerRegistration objects, resetting its fields.
+     *
+     * @param instance List of OfficerRegistration objects to clean
+     */
+    public void cleanup(List<OfficerRegistration> instance) {
+        if(instance != null)
+        {
+            for(OfficerRegistration registration : instance)
+            {
+                this.cleanup(registration);
+            }
+            instance.clear();
+        }
     }
 }

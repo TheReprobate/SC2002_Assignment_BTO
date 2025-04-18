@@ -5,6 +5,7 @@ import btosystem.classes.BtoApplication;
 import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
+import btosystem.classes.OfficerRegistration;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.enums.FlatType;
@@ -30,18 +31,22 @@ public class App {
      *
      * @param args Command-line arguments passed to the application
      */
-    public static void main(String[] args) {
-        /*
+    
+     public static void main(String[] args) {
         final ProjectController projectController = new ProjectController();
+        final ProjectTeamController projectTeamController = new ProjectTeamController();
+        final OfficerRegistrationController officerRegistrationController = new OfficerRegistrationController();
         final EnquiryController enquiryController = new EnquiryController();
 
         final HdbManager hdbManager = new HdbManager("S9810294C", "Trump", 54, true);
+
         final HdbOfficer officerAmk = new HdbOfficer(
                 "S1111111A", "Officer Tan", 30, false);
         final HdbOfficer officerBishan = new HdbOfficer(
                 "S2222222B", "Officer Lim", 35, true);
         final HdbOfficer officerJurong = new HdbOfficer(
                 "S3333333C", "Officer Wong", 40, false);
+
         final Applicant applicant1 = new Applicant(
                 "S4444444D", "John Doe", 25, false);
         final Applicant applicant2 = new Applicant(
@@ -59,31 +64,75 @@ public class App {
         final Project projectJurong = projectController.createProject(
                 "Jurong Heights", Neighborhood.JURONG,
                 LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
-
-        // Set up project teams
-        ProjectTeam teamAmk = new ProjectTeam(projectAngmokio);
-        teamAmk.setManager(hdbManager);
-        teamAmk.getOfficers().add(officerAmk);
-        projectAngmokio.setProjectTeam(teamAmk);
-        officerAmk.setCurrentTeam(teamAmk);
-
-        ProjectTeam teamBishan = new ProjectTeam(projectBishan);
-        teamBishan.setManager(hdbManager);
-        teamBishan.getOfficers().add(officerBishan);
-        projectBishan.setProjectTeam(teamBishan);
-        officerBishan.setCurrentTeam(teamBishan);
-
-        ProjectTeam teamJurong = new ProjectTeam(projectJurong);
-        teamJurong.setManager(hdbManager);
-        teamJurong.getOfficers().add(officerJurong);
-        projectJurong.setProjectTeam(teamJurong);
-        officerJurong.setCurrentTeam(teamJurong);
+        
 
         // List to store all projects
         List<Project> projects = new ArrayList<>();
         projects.add(projectAngmokio);
         projects.add(projectBishan);
         projects.add(projectJurong);
+        
+        // Just to make my life easier (pt 1)
+        ProjectTeam teamAmk = null, teamBishan = null, teamJurong = null;
+        List<ProjectTeam> projTeams = new ArrayList<>();
+        projTeams.add(teamAmk);
+        projTeams.add(teamBishan);
+        projTeams.add(teamJurong);
+
+        // Just to make my life easier (pt 2)
+        List<HdbOfficer> officers = new ArrayList<>();
+        officers.add(officerAmk);
+        officers.add(officerBishan);
+        officers.add(officerJurong);
+
+        for(int i = 0; i < projTeams.size(); i++) {
+                // Set up project teams
+                System.out.println(i);
+                try {
+                        // Initialise one ProjectTeam
+                        projTeams.set(i, projectTeamController.createProjectTeam(projects.get(i)));
+
+                        try {
+                                projectTeamController.assignProjectManager(projTeams.get(i), hdbManager, false);
+                        }
+                        catch (Exception e) {
+                                if(e.getMessage().equals("Manager already exists. Overwrite?")) {
+                                        // Prompt for overwrite y/n input
+                                        // If yes,
+                                        char rawInput = 'y';
+                                        if(rawInput == 'y') {
+                                                projectTeamController.assignProjectManager(projTeams.get(i), hdbManager, true);
+                                        }
+                                        else {
+                                                // do something else
+                                        }
+                                }
+                                System.out.println("Error: " + e.getMessage());
+                        }
+
+                        // Create Registration object
+                        OfficerRegistration r1 = officerRegistrationController.createRegistration(projTeams.get(i), officers.get(i));
+
+                        // Add registration to projectTeam
+                        int success = projectTeamController.addRegistration(projTeams.get(i), r1);
+                        // honestly idk if the success variables are necessary, but ig good to have?
+                        if(success != 0) {
+                                // Manager sets that registration to approved
+                                int success2 = officerRegistrationController.approveRegistration(r1);
+                                if(success2 != 0) {
+                                        // projectTeamController actually adds officer to team
+                                        int success3 = projectTeamController.assignProjectOfficer(projTeams.get(i), officers.get(i));
+                                }
+                        }
+
+                        // Project Controller probably takes over here
+                        projects.get(i).setProjectTeam(projTeams.get(i));
+                        officers.get(i).setCurrentTeam(projTeams.get(i));
+                }
+                catch(Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                }
+        }
 
         // Test: Retrieve project by name
         Project retrievedProject = projectController.retrieveProject(
@@ -250,11 +299,28 @@ public class App {
         System.out.println("\nManager reply to AMK enquiry (should succeed): "
                 + managerReply);
 
+        /*
         // Test: Manager not able reply enquiry he handled
         System.out.println("\nIn current system, manager can reply to all enquiries");
-      */
-        Testing test = new Testing();
+
+        // Must be all run in sequence to show every/most cases
+        TestProjTeamXOfficerReg test = new TestProjTeamXOfficerReg();
         test.testProjectTeamControllerInitialise();
+
         test.testProjectTeamControllerHdbManager();
+
+        // Registration first, else all test cases for officer will fail
+        test.testProjectTeamControllerOfficerRegistration();
+        test.testProjectTeamControllerHdbOfficer();
+
+        test.toStringTeams();
+        try {
+                test.cleanupProjectTeam();
+        }
+        catch(Exception e) {
+                System.out.println("Error: " + e.getMessage());
+        }
+        test.toStringTeams();
+        */
     }
 }

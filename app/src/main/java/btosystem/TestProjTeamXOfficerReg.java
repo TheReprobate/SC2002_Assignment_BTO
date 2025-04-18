@@ -15,7 +15,7 @@ import btosystem.controllers.OfficerRegistrationController;
 import btosystem.controllers.ProjectController;
 import btosystem.controllers.ProjectTeamController;
 
-public class Testing {
+public class TestProjTeamXOfficerReg {
     // Initialise
     ProjectController projectController = new ProjectController();
     ProjectTeamController projectTeamController = new ProjectTeamController();
@@ -49,7 +49,7 @@ public class Testing {
     HdbOfficer oN = null;
     Applicant aN = null;
 
-    public Testing() {
+    public TestProjTeamXOfficerReg() {
         // Create some test projects
         Project proj1 = projectController
         .createProject(
@@ -78,75 +78,10 @@ public class Testing {
         projects.add(proj3);
     }
     
-    
-    // Testing ProjectController functions
-    public void testProjectController() {
-        /*
-        // Test: Retrieve project by name
-        Project retrievedProject = projectController.retrieveProject(projects, "Project Alpha");
-        if (retrievedProject != null) {
-            System.out.println("Retrieved Project by Name: " + retrievedProject.getName());
-        }
-        
-        // Test: Retrieve project by index
-        Project retrievedProjectByIndex = projectController.retrieveProject(projects, 1);
-        System.out.println("Retrieved Project by Index: " + retrievedProjectByIndex.getName());
-
-        // Test: Filter projects by neighborhood
-        List<Project> northProjects = projectController.filterProject(projects, Neighborhood.ANG_MO_KIO);
-        System.out.println("Filtered Projects in ANG MO KIO: ");
-        northProjects.forEach(project -> System.out.println(project.getName()));
-
-        // Test: Filter projects by visibility (true)
-        List<Project> visibleProjects = projectController.filterProject(projects, true);
-        System.out.println("Filtered Visible Projects: ");
-        visibleProjects.forEach(project -> System.out.println(project.getName()));
-
-        // Test: Update unit count for a project
-        projectController.updateUnitCount(project1, FlatType.THREE_ROOM, 50);
-        System.out.println("Updated unit count for " + project1.getName() + ": " + project1.getUnits());
-
-        // Test: Edit project neighborhood
-        projectController.editProject(project1, Neighborhood.JURONG);
-        System.out.println("Updated Neighborhood for " + project1.getName() + ": " + project1.getNeighborhood());
-
-        // Test: Edit project open and close times
-        LocalDate newOpenTime = LocalDate.of(2025, 4, 10);
-        LocalDate newCloseTime = LocalDate.of(2025, 5, 11);
-        projectController.editProject(project2, newOpenTime, newCloseTime);
-        System.out.println("Updated Open and Close Times for " + project2.getName() + ": "
-                + project2.getOpenTime() + " - " + project2.getCloseTime());
-
-        // Test: Delete a project
-        int deleteResult = projectController.deleteProject(projects, project3);
-        System.out.println("Delete result for Project NTU: " + deleteResult);
-
-        // Test: Check if project exists by name
-        boolean exists = projectController.projectExist(projects, "Project Bishan");
-        System.out.println("Does 'Project Bishan' exist? " + exists);
-
-        // Test: Get ProjectTeam
-        ProjectTeam projectTeam = projectController.retrieveProjectTeam(project1);
-        System.out.println("Project Team for " + project1.getName() + ": " + projectTeam);
-
-        // Test: Get Enquiries
-        List<Enquiry> enquiries = projectController.retrieveEnquiries(project1);
-        System.out.println("Enquiries for " + project1.getName() + ": " + enquiries.size());
-
-        // Test: Get Applications
-        List<BtoApplication> applications = projectController.retrieveApplications(project1);
-        System.out.println("Applications for " + project1.getName() + ": " + applications.size());
-
-        // Print all projects
-        System.out.println("\nAll Projects:");
-        System.out.println(projectController.toString(projects));
-        */
-    }
-    
     // Testing ProjectTeamController methods
     public void testProjectTeamControllerInitialise() {
         System.out.println("Testing Project Team Controller");
-        System.out.println("Testing: ProjectTeam createProjectTeam(Project proj) throws Exception");
+        System.out.println("Testing: ProjectTeam createProjectTeam(Project proj)");
         // Standard case
         try {
             t1 = projectTeamController.createProjectTeam(projects.get(0));
@@ -190,7 +125,7 @@ public class Testing {
     public void testProjectTeamControllerHdbManager() {
         /* -------------------------------------- For HdbManager -------------------------------------- */
         System.out.println("For HdbManager");
-        System.out.println("Testing: int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception");
+        System.out.println("Testing: int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite)");
         // Testing: int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception
         // Expecting success, no manager assigned yet
         try {
@@ -237,7 +172,7 @@ public class Testing {
             System.out.println("Error: " + e.getMessage());
         }
 
-        System.out.println("Testing: boolean isInTeam(ProjectTeam team, HdbManager manager) throws Exception");
+        System.out.println("Testing: boolean isInTeam(ProjectTeam team, HdbManager manager)");
         // Testing: boolean isInTeam(ProjectTeam team, HdbManager manager) throws Exception
         // Expecting success, m3 is the current manager
         try {
@@ -281,8 +216,8 @@ public class Testing {
         System.out.printf("\nFor HdbOfficer\n");
         /* -------------------------------------- For HdbOfficer -------------------------------------- */
         // Testing: int assignProjectOfficer(ProjectTeam team, HdbOfficer officer) throws Exception
-        System.out.println("Testing: int assignProjectOfficer(ProjectTeam team, HdbOfficer officer) throws Exception");
-        // Expecting success, first officer to be added
+        System.out.println("Testing: int assignProjectOfficer(ProjectTeam team, HdbOfficer officer)");
+        // Expecting success, registration accepted in projectteams
         try {
             int success = projectTeamController.assignProjectOfficer(t1, o1);
             if(success ==  1) System.out.println("Successfully assigned o1 to t1");
@@ -291,19 +226,19 @@ public class Testing {
             System.out.println("Error: " + e.getMessage());
         }
 
-        // Expecting success, no duplicate
+        // Expecting failure, duplicate
         try {
-            int success = projectTeamController.assignProjectOfficer(t1, o2);
-            if(success ==  1) System.out.println("Successfully assigned o2 to t1");
+            int success = projectTeamController.assignProjectOfficer(t1, o1);
+            if(success ==  1) System.out.println("Successfully assigned o1 to t1");
         }
         catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
 
-        // Expecting failure, first officer dupe
+        // Expecting failure, no registration approval
         try {
-            int success = projectTeamController.assignProjectOfficer(t1, o1);
-            if(success ==  1) System.out.println("Successfully assigned o1 to t1");
+            int success = projectTeamController.assignProjectOfficer(t1, o3);
+            if(success ==  1) System.out.println("Successfully assigned o3 to t1");
         }
         catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -327,7 +262,7 @@ public class Testing {
             System.out.println("Error: " + e.getMessage());
         }
 
-        System.out.println("boolean isInTeam(ProjectTeam team, HdbOfficer officer) throws Exception");
+        System.out.println("Testing: boolean isInTeam(ProjectTeam team, HdbOfficer officer)");
         // Testing: boolean isInTeam(ProjectTeam team, HdbOfficer officer) throws Exception
         // Expecting success, o1 is part of project team
         try {
@@ -376,11 +311,28 @@ public class Testing {
         // Expecting success, first registration
         try {
             // Creation of registration object (Pt 1 of 2)
-            r1 = officerRegistrationController.createRegistration(t3, o1);
+            r1 = officerRegistrationController.createRegistration(t1, o1);
             
             // Adding of Registrations to Project Team (Pt 2 of 2)
-            int success = projectTeamController.addRegistration(t3, r1);
-            if(success ==  1) System.out.println("Successfully added o1 Registration to t3");
+            int success = projectTeamController.addRegistration(t1, r1);
+            int success2 = officerRegistrationController.approveRegistration(r1);
+
+            if(success ==  1) System.out.println("Successfully added o1 Registration to t1");
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Expecting success, not a duplicate
+        try {
+            // Creation of registration object (Pt 1 of 2)
+            r2 = officerRegistrationController.createRegistration(t3, o2);
+            
+            // Adding of Registrations to Project Team (Pt 2 of 2)
+            int success = projectTeamController.addRegistration(t3, r2);
+            int success2 = officerRegistrationController.approveRegistration(r2);
+
+            if(success ==  1) System.out.println("Successfully added o2 Registration to t3");
         }
         catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -392,7 +344,9 @@ public class Testing {
             r2 = officerRegistrationController.createRegistration(t3, o1);
             
             // Adding of Registrations to Project Team (Pt 2 of 2)
-            int success = projectTeamController.addRegistration(t3, r1);
+            int success = projectTeamController.addRegistration(t3, r2);
+            int success2 = officerRegistrationController.approveRegistration(r2);
+
             if(success ==  1) System.out.println("Successfully added o1 Registration to t3");
         }
         catch (Exception e) {
@@ -401,11 +355,16 @@ public class Testing {
 
         // Expecting failure, o2 already part of t1
         try {
+            // forcefully inserting officer first
+            t1.assignOfficer(o2);
+
             // Creation of registration object (Pt 1 of 2)
             r3 = officerRegistrationController.createRegistration(t1, o2);
             
             // Adding of Registrations to Project Team (Pt 2 of 2)
-            int success = projectTeamController.addRegistration(t1, r3);
+            int success = projectTeamController.addRegistration(t3, r3);
+            int success2 = officerRegistrationController.approveRegistration(r3);
+
             if(success ==  1) System.out.println("Successfully added o2 Registration to t1");
         }
         catch (Exception e) {
@@ -414,6 +373,7 @@ public class Testing {
 
         // Testing retrieveOfficerRegistrations
         List<OfficerRegistration> listOfficerRegistration = projectTeamController.retrieveOfficerRegistrations(t3);
+
         // Testing toString(List<OfficerRegistration>)
         System.out.println(officerRegistrationController.toString(listOfficerRegistration));
 
@@ -434,11 +394,27 @@ public class Testing {
         catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-        System.out.println(officerRegistrationController.toString(listOfficerRegistration.get(0)));
+        try {
+            // Testing retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index)
+            System.out.println(officerRegistrationController
+                .toString(officerRegistrationController.retrieveOfficerRegistration(listOfficerRegistration, 0)));
+        }
+        catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
         /* ---------------------------------- End OfficerRegistration --------------------------------- */
-        
-        // System.out.printf("\nTesting toString\n");
-        // System.out.println(projectTeamController.toString(t1));
+    }
+
+    public void toStringTeams() {
+        System.out.printf("\nTesting toString\n");
+        System.out.println(projectTeamController.toString(t1));
+    }
+
+    public void cleanupProjectTeam() throws Exception {
+        officerRegistrationController.cleanup(t1.getOfficerRegistrations());
+
+        projectTeamController.cleanup(t1);
+        t1 = null;
     }
 }
