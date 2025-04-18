@@ -9,9 +9,13 @@ import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
+
 import btosystem.controllers.EnquiryController;
 import btosystem.controllers.ProjectController;
 import btosystem.controllers.UserController;
+import btosystem.controllers.OfficerRegistrationController;
+import btosystem.controllers.ProjectTeamController;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -247,5 +251,8 @@ public class App {
 
         // Test: Manager not able reply enquiry he handled
         System.out.println("\nIn current system, manager can reply to all enquiries");
+      
+        Testing test = new Testing();
+        test.testProjectTeamController();
     }
 }
