@@ -1,22 +1,5 @@
 package btosystem;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-
-import btosystem.classes.Applicant;
-import btosystem.classes.BtoApplication;
-import btosystem.classes.Enquiry;
-import btosystem.classes.HdbManager;
-import btosystem.classes.HdbOfficer;
-import btosystem.classes.Project;
-import btosystem.classes.ProjectTeam;
-import btosystem.classes.User;
-import btosystem.classes.enums.ApplicationStatus;
-import btosystem.classes.enums.FlatType;
-import btosystem.classes.enums.Neighborhood;
 import btosystem.clients.MainClient;
 import btosystem.controllers.BtoApplicationController;
 import btosystem.controllers.EnquiryController;
@@ -47,8 +30,6 @@ import btosystem.service.hdbofficer.HdbOfficerProjectService;
 import btosystem.service.hdbofficer.HdbOfficerProjectTeamService;
 import btosystem.service.user.UserAccountService;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
-
 /**
  * The main application class serving as the entry point for the program.
  */
@@ -69,24 +50,23 @@ public class App {
         UserOperations userManager = new UserController();
 
         DataManager dManager = new DataManager();
-        OperationsManager oManager = new OperationsManager(applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
-        GenericService gService = new GenericService(dManager, oManager);
+        GenericService gService = new GenericService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
         
-        ApplicantBtoApplicationService applicantAppService = new ApplicantBtoApplicationService(dManager, oManager);
-        ApplicantEnquiryService applicantEnquiryService = new ApplicantEnquiryService(dManager, oManager);
-        ApplicantProjectService applicantProjectService = new ApplicantProjectService(dManager, oManager);
+        ApplicantBtoApplicationService applicantAppService = new ApplicantBtoApplicationService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        ApplicantEnquiryService applicantEnquiryService = new ApplicantEnquiryService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        ApplicantProjectService applicantProjectService = new ApplicantProjectService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
         
-        HdbManagerBtoApplicationService managerAppService = new HdbManagerBtoApplicationService(dManager, oManager);
-        HdbManagerEnquiryService managerEnquiryService = new HdbManagerEnquiryService(dManager, oManager);
-        HdbManagerProjectService managerProjectService = new HdbManagerProjectService(dManager, oManager);
-        HdbManagerProjectTeamService managerTeamService = new HdbManagerProjectTeamService(dManager, oManager);
+        HdbManagerBtoApplicationService managerAppService = new HdbManagerBtoApplicationService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbManagerEnquiryService managerEnquiryService = new HdbManagerEnquiryService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbManagerProjectService managerProjectService = new HdbManagerProjectService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbManagerProjectTeamService managerTeamService = new HdbManagerProjectTeamService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
 
-        HdbOfficerBtoApplicationService officerAppService = new HdbOfficerBtoApplicationService(dManager, oManager);
-        HdbOfficerEnquiryService officerEnquiryService = new HdbOfficerEnquiryService(dManager, oManager);
-        HdbOfficerProjectService officerProjectService = new HdbOfficerProjectService(dManager, oManager);
-        HdbOfficerProjectTeamService officerProjectTeamService = new HdbOfficerProjectTeamService(dManager, oManager);
+        HdbOfficerBtoApplicationService officerAppService = new HdbOfficerBtoApplicationService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbOfficerEnquiryService officerEnquiryService = new HdbOfficerEnquiryService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbOfficerProjectService officerProjectService = new HdbOfficerProjectService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbOfficerProjectTeamService officerProjectTeamService = new HdbOfficerProjectTeamService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
 
-        UserAccountService accountService = new UserAccountService(dManager, oManager);
+        UserAccountService accountService = new UserAccountService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
 
         ApplicantServiceManager applicantServiceManager = new ApplicantServiceManager(applicantAppService, applicantEnquiryService, applicantProjectService, gService);
         HdbManagerServiceManager hdbMangerServiceManager = new HdbManagerServiceManager(managerAppService, managerEnquiryService, managerProjectService, managerTeamService, gService);

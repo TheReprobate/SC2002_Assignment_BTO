@@ -5,30 +5,38 @@ import java.util.List;
 import btosystem.classes.Applicant;
 import btosystem.classes.Enquiry;
 import btosystem.classes.Project;
+import btosystem.controllers.interfaces.BtoApplicationOperations;
+import btosystem.controllers.interfaces.EnquiryOperations;
+import btosystem.controllers.interfaces.OfficerRegistrationOperations;
+import btosystem.controllers.interfaces.ProjectOperations;
+import btosystem.controllers.interfaces.ProjectTeamOperations;
+import btosystem.controllers.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
 import btosystem.utils.OperationsManager;
 
 public class ApplicantEnquiryService extends Service {
-    public ApplicantEnquiryService(DataManager dataManager, OperationsManager operationsManager) {
-        super(dataManager, operationsManager);
+    public ApplicantEnquiryService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
+            OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
+            UserOperations userOperations, ProjectOperations projectOperations) {
+        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
     }
     
     public List<Enquiry> getPersonalEnquiries(Applicant user) {
-        return operationsManager.getUserManager().retrieveEnquiries(user);
+        return userManager.retrieveEnquiries(user);
     }
     
     public void createEnquiry(Applicant user, Project project, String content) throws Exception {
-        Enquiry enquiry = operationsManager.getEnquiryManager().createEnquiry(project, user, content);
-        List<Enquiry> projectEnquiryRef = operationsManager.getProjectManager().retrieveEnquiries(project);
+        Enquiry enquiry = enquiryManager.createEnquiry(project, user, content);
+        List<Enquiry> projectEnquiryRef = projectManager.retrieveEnquiries(project);
         List<Enquiry> applicantEnquiryRef = getPersonalEnquiries(user);
-        operationsManager.getEnquiryManager().addEnquiry(projectEnquiryRef, enquiry);
-        operationsManager.getEnquiryManager().addEnquiry(applicantEnquiryRef, enquiry);
+        enquiryManager.addEnquiry(projectEnquiryRef, enquiry);
+        enquiryManager.addEnquiry(applicantEnquiryRef, enquiry);
     }
 
     public void editEnquiry(Applicant user, Enquiry enquiry, String content) throws Exception {
-        Project enquiryProject = operationsManager.getEnquiryManager().retrieveProject(enquiry);
-        if(!operationsManager.getProjectManager().isOpen(enquiryProject)) {
+        Project enquiryProject = enquiryManager.retrieveProject(enquiry);
+        if(!projectManager.isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
         if (!(hasPermission(user, enquiry))) {
@@ -37,12 +45,12 @@ public class ApplicantEnquiryService extends Service {
         if (!isEditable(enquiry)) {
             throw new Exception("Enquiry has reply unable to process. ");
         }
-        operationsManager.getEnquiryManager().editEnquiry(enquiry, content);
+        enquiryManager.editEnquiry(enquiry, content);
     }
 
     public void deleteEnquiry(Applicant user, Enquiry enquiry) throws Exception {
-        Project enquiryProject = operationsManager.getEnquiryManager().retrieveProject(enquiry);
-        if(!operationsManager.getProjectManager().isOpen(enquiryProject)) {
+        Project enquiryProject = enquiryManager.retrieveProject(enquiry);
+        if(!projectManager.isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
         if (!(hasPermission(user, enquiry))) {
@@ -51,19 +59,19 @@ public class ApplicantEnquiryService extends Service {
         if (!isEditable(enquiry)) {
             throw new Exception("Enquiry has reply unable to process. ");
         }
-        Project project = operationsManager.getEnquiryManager().retrieveProject(enquiry);
-        List<Enquiry> projectEnquiryRef = operationsManager.getProjectManager().retrieveEnquiries(project);
+        Project project = enquiryManager.retrieveProject(enquiry);
+        List<Enquiry> projectEnquiryRef = projectManager.retrieveEnquiries(project);
         List<Enquiry> applicantEnquiryRef = getPersonalEnquiries(user);
-        operationsManager.getEnquiryManager().deleteEnquiry(projectEnquiryRef, enquiry);
-        operationsManager.getEnquiryManager().deleteEnquiry(applicantEnquiryRef, enquiry);
+        enquiryManager.deleteEnquiry(projectEnquiryRef, enquiry);
+        enquiryManager.deleteEnquiry(applicantEnquiryRef, enquiry);
     }
 
     public boolean isEditable(Enquiry enquiry) throws Exception {
-        return !operationsManager.getEnquiryManager().hasReplied(enquiry);
+        return !enquiryManager.hasReplied(enquiry);
     }
 
     private boolean hasPermission(Applicant user, Enquiry enquiry){
-        Applicant enquiryApplicant = operationsManager.getEnquiryManager().retrieveApplicant(enquiry);
+        Applicant enquiryApplicant = enquiryManager.retrieveApplicant(enquiry);
         return enquiryApplicant.equals(user);
     }
 }
