@@ -17,9 +17,12 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
         super(dataManager, operationsManager);
     }
 
-    public String displayProjectEnquiries(HdbOfficer user) {
-        List<Enquiry> enquiries = getViewableProjectEnquiries(user);
-        return getOperationsManager().getEnquiryManager().toString(enquiries);
+    public List<Enquiry> getEnquiries(Project project) {
+        return operationsManager.getProjectManager().retrieveEnquiries(project);
+    }
+
+    public List<Enquiry> getEnquiries(Project project, boolean replied) {
+        return operationsManager.getEnquiryManager().filterEnquiries(getEnquiries(project), replied);
     }
 
     public List<Enquiry> getRepliableEnquiries(HdbOfficer user) {
@@ -27,23 +30,23 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
     }
 
     public void replyEnquiry(HdbOfficer user, Enquiry enquiry, String reply) throws Exception {
-        Project enquiryProject = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
-        if(!getOperationsManager().getProjectManager().isOpen(enquiryProject)) {
+        Project enquiryProject = operationsManager.getEnquiryManager().retrieveProject(enquiry);
+        if(!operationsManager.getProjectManager().isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
-        ProjectTeam team = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
-        Project currentProj = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(team);
-        Project enquiryProj = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
+        ProjectTeam team = operationsManager.getUserManager().retrieveCurrentTeam(user);
+        Project currentProj = operationsManager.getProjectTeamManager().retrieveAssignedProject(team);
+        Project enquiryProj = operationsManager.getEnquiryManager().retrieveProject(enquiry);
         if(!currentProj.equals(enquiryProj)) {
             throw new AccessDeniedException("Access Denied. No permission to reply to this enquiry. ");
         }
-        getOperationsManager().getEnquiryManager().replyEnquiry(enquiry, reply);
+        operationsManager.getEnquiryManager().replyEnquiry(enquiry, reply);
     }
 
     private List<Enquiry> getViewableProjectEnquiries(HdbOfficer user) {
-        ProjectTeam currentTeam = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
-        Project currentProject = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(currentTeam);
-        List<Enquiry> projectEnquiries = getOperationsManager().getProjectManager().retrieveEnquiries(currentProject);
+        ProjectTeam currentTeam = operationsManager.getUserManager().retrieveCurrentTeam(user);
+        Project currentProject = operationsManager.getProjectTeamManager().retrieveAssignedProject(currentTeam);
+        List<Enquiry> projectEnquiries = operationsManager.getProjectManager().retrieveEnquiries(currentProject);
         return projectEnquiries;
     }
     

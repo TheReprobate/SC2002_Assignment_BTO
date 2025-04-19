@@ -11,10 +11,9 @@ import btosystem.utils.RegexPatterns;
 
 public class HdbOfficerBtoApplicationController extends HdbOfficerController{
     private static final String[] MENU = {"Process Application", "Exit"};
-    private HdbOfficerServiceManager serviceManager;
+
     public HdbOfficerBtoApplicationController(HdbOfficer user, HdbOfficerServiceManager serviceManager) {
-        super(user);
-        this.serviceManager = serviceManager;
+        super(user, serviceManager);
     }
 
     @Override
@@ -40,12 +39,12 @@ public class HdbOfficerBtoApplicationController extends HdbOfficerController{
         String nric = InputHandler.getStringInput("Input Applicant's NRIC: ", RegexPatterns.NRIC);
         BtoApplication application = serviceManager.getApplicationService().getApplication(nric);
         System.out.println(serviceManager.getGenericService().displayApplication(application));
-        String input = InputHandler.getStringInput("Confirm to process application [Y/N]: ", Pattern.compile("^[YyNn]$"));
+        String input = InputHandler.getStringInput("Confirm to process application [Y/N]: ", RegexPatterns.YES_NO);
         if(!(input.equals("Y") || input.equals("y"))){
             System.out.println("Process application cancelled");
             return;
         }
-        serviceManager.getApplicationService().processApplication(application, getUser());
+        serviceManager.getApplicationService().processApplication(application, user);
         System.out.println("Process application successful!");
     }
     

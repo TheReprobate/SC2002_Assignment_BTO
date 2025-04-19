@@ -12,7 +12,7 @@ public class HdbManagerMainController extends HdbManagerController {
     private HdbManagerCurrentProjectController currentProjectController;
     
     public HdbManagerMainController(HdbManager user, HdbManagerServiceManager serviceManager) {
-        super(user);
+        super(user, serviceManager);
         this.applicationController = new HdbManagerBtoApplicationController(user, serviceManager);
         this.enquiryController = new HdbManagerEnquiryController(user, serviceManager);
         this.systemProjectController = new HdbManagerSystemProjectController(user, serviceManager);
@@ -21,10 +21,6 @@ public class HdbManagerMainController extends HdbManagerController {
     
     @Override
     protected boolean load() throws Exception {
-        applicationController.setUser(getUser());
-        enquiryController.setUser(getUser());
-        systemProjectController.setUser(getUser());
-        currentProjectController.setUser(getUser());
         return true;
     }
 

@@ -9,11 +9,12 @@ public class HdbOfficerMainController extends HdbOfficerController{
     private HdbOfficerBtoApplicationController applicationController;
     private HdbOfficerEnquiryController enquiryController;
     private HdbOfficerProjectController projectController;
+
     public HdbOfficerMainController(HdbOfficer user, HdbOfficerServiceManager serviceManager) {
-        super(user);
+        super(user, serviceManager);
         this.applicationController = new HdbOfficerBtoApplicationController(user, serviceManager);
         this.enquiryController = new HdbOfficerEnquiryController(user, serviceManager);
-        //this.projectController = new HdbOfficerProjectController();
+        this.projectController = new HdbOfficerProjectController(user, serviceManager);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class HdbOfficerMainController extends HdbOfficerController{
         switch(input) {
             case 0: applicationController.execute(); return 0;
             case 1: enquiryController.execute(); return 0;
-            //case 2: projectController.execute(); return 0;
+            case 2: projectController.execute(); return 0;
             case 3: return -1;
             default: System.out.println("Please enter a valid input. "); return 0;
         }

@@ -9,16 +9,10 @@ import btosystem.utils.DataManager;
 import btosystem.utils.OperationsManager;
 
 public abstract class Service {
-    DataManager dataManager;
-    OperationsManager operationsManager;
+    protected DataManager dataManager;
+    protected OperationsManager operationsManager;
     public Service(DataManager dataManager, OperationsManager operationsManager) {
         this.dataManager = dataManager;
         this.operationsManager = operationsManager;
-    }
-    public DataManager getDataManager() {
-        return dataManager;
-    }
-    public OperationsManager getOperationsManager() {
-        return operationsManager;
     }
 }

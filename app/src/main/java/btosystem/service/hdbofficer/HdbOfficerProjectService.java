@@ -1,5 +1,6 @@
 package btosystem.service.hdbofficer;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import btosystem.classes.BtoApplication;
@@ -17,22 +18,16 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
     public HdbOfficerProjectService(DataManager dataManager, OperationsManager operationsManager) {
         super(dataManager, operationsManager);
     }
+    public List<Project> getProjects() {
+        return dataManager.getProjects();
+    }
+    public List<Project> getProjects(LocalDate start, LocalDate end) {
+        return operationsManager.getProjectManager().filterProject(getProjects(), start, end);
+    }
 
     public Project getCurrentProject(HdbOfficer user) throws Exception {
-        ProjectTeam currentTeam = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
-        Project projectInCharge = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(currentTeam);
+        ProjectTeam currentTeam = operationsManager.getUserManager().retrieveCurrentTeam(user);
+        Project projectInCharge = operationsManager.getProjectTeamManager().retrieveAssignedProject(currentTeam);
         return projectInCharge;
-    }
-
-    public List<BtoApplication> getApplications(Project project) {
-        return getOperationsManager().getProjectManager().retrieveApplications(project);
-    }
-
-    public List<Enquiry> getEnquiries(Project project) {
-        return getOperationsManager().getProjectManager().retrieveEnquiries(project);
-    }
-
-    public List<Enquiry> getEnquiries(Project project, boolean replied) {
-        return getOperationsManager().getEnquiryManager().filterEnquiries(getEnquiries(project), replied);
     }
 }

@@ -16,20 +16,28 @@ public class HdbManagerEnquiryService extends Service {
         super(dataManager, operationsManager);
     }
 
+    public List<Enquiry> getEnquiries(Project project) {
+        return operationsManager.getProjectManager().retrieveEnquiries(project);
+    }
+
+    public List<Enquiry> getEnquiries(Project project, boolean replied) {
+        return operationsManager.getEnquiryManager().filterEnquiries(getEnquiries(project), replied);
+    }
+
     public List<Enquiry> getRepliableEnquiries(HdbManager user) {
-        ProjectTeam currentTeam = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
-        Project currentProject = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(currentTeam);
-        List<Enquiry> projectEnquiries = getOperationsManager().getProjectManager().retrieveEnquiries(currentProject);
+        ProjectTeam currentTeam = operationsManager.getUserManager().retrieveCurrentTeam(user);
+        Project currentProject = operationsManager.getProjectTeamManager().retrieveAssignedProject(currentTeam);
+        List<Enquiry> projectEnquiries = operationsManager.getProjectManager().retrieveEnquiries(currentProject);
         return projectEnquiries;
     }
 
     public void replyEnquiry(HdbManager user, Enquiry enquiry, String reply) throws Exception{
-        ProjectTeam team = getOperationsManager().getUserManager().retrieveCurrentTeam(user);
-        Project currentProj = getOperationsManager().getProjectTeamManager().retrieveAssignedProject(team);
-        Project enquiryProj = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
+        ProjectTeam team = operationsManager.getUserManager().retrieveCurrentTeam(user);
+        Project currentProj = operationsManager.getProjectTeamManager().retrieveAssignedProject(team);
+        Project enquiryProj = operationsManager.getEnquiryManager().retrieveProject(enquiry);
         if(!currentProj.equals(enquiryProj)) {
             throw new Exception("Access Denied. No permission to reply to this enquiry. ");
         }
-        getOperationsManager().getEnquiryManager().replyEnquiry(enquiry, reply);
+        operationsManager.getEnquiryManager().replyEnquiry(enquiry, reply);
     }
 }

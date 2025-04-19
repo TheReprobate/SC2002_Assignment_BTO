@@ -2,21 +2,17 @@ package btosystem.cont.hdbmanager;
 
 import btosystem.classes.HdbManager;
 import btosystem.cont.Controller;
+import btosystem.service.HdbManagerServiceManager;
 
 public abstract class HdbManagerController extends Controller{
-    private HdbManager user;
+    protected HdbManager user;
+    protected HdbManagerServiceManager serviceManager;
 
-    public HdbManagerController(HdbManager user) {
+    public HdbManagerController(HdbManager user, HdbManagerServiceManager serviceManager) {
         this.user = user;
+        this.serviceManager = serviceManager;
     }
 
-    public HdbManager getUser() {
-        return user;
-    }
-
-    public void setUser(HdbManager user) {
-        this.user = user;
-    }
     
     @Override
     public void execute() { 

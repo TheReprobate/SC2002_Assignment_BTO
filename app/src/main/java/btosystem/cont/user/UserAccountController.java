@@ -50,7 +50,7 @@ public class UserAccountController extends Controller{
         String nric = InputHandler.getStringInput("Input NRIC: ", RegexPatterns.NRIC);
         String name = InputHandler.getStringInput("Input name: ");
         int age = InputHandler.getIntInput("Input age: ");
-        String marriedString = InputHandler.getStringInput("Are you married(Y/N) ?", RegexPatterns.YES_NO);
+        String marriedString = InputHandler.getStringInput("Are you married? [Y/N]", RegexPatterns.YES_NO);
         boolean married = false;
         if(marriedString.equals("Y") || marriedString.equals("y")){
             married = true;

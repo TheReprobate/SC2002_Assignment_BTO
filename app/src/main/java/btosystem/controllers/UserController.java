@@ -96,5 +96,14 @@ public class UserController implements UserOperations {
     public void setApplication(Applicant applicant, BtoApplication application) {
         applicant.setActiveApplication(application);
     }
-    
+
+    @Override
+    public void setTeam(ProjectTeam team, HdbManager user) {
+        user.setCurrentTeam(team);
+    }
+
+    @Override
+    public void setTeam(ProjectTeam team, HdbOfficer user) {
+        user.setCurrentTeam(team);
+    }
 }

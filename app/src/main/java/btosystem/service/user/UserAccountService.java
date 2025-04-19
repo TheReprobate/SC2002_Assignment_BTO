@@ -12,10 +12,10 @@ public class UserAccountService extends Service{
     }
 
     public User login(String nric, String password) throws Exception{
-        return getOperationsManager().getUserManager().authenticate(getDataManager().getUsers(), nric, password);
+        return operationsManager.getUserManager().authenticate(dataManager.getUsers(), nric, password);
     }
     
     public void registerApplicant(String nric, String name, int age, boolean married) throws Exception {
-        getOperationsManager().getUserManager().addApplicant(getDataManager().getUsers(), nric, name, age, married);
+        operationsManager.getUserManager().addApplicant(dataManager.getUsers(), nric, name, age, married);
     }
 }

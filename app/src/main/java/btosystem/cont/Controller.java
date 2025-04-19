@@ -13,6 +13,7 @@ public abstract class Controller {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+            System.out.println("=".repeat(150));
         }
     }
     protected abstract boolean load() throws Exception;

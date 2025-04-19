@@ -3,24 +3,20 @@ package btosystem.cont.hdbmanager;
 import java.time.LocalDate;
 import java.util.List;
 
-import btosystem.classes.BtoApplication;
-import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
 import btosystem.classes.enums.Neighborhood;
 import btosystem.service.HdbManagerServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
+import btosystem.utils.RegexPatterns;
 
 public class HdbManagerSystemProjectController extends HdbManagerProjectController {
-    private static final String[] MENU = {"View Project Details", "View Created Projects", "Create Project", "Exit"};
-    private static final String[] PROJECT_MENU = {"View Enquiries", "View Applications", "View Project Team", "Exit"};
-    private HdbManagerServiceManager serviceManager;
+    private static final String[] MENU = {"View Project Details", "View Created Projects", "Join Team", "Create Project", "Exit"};
     private List<Project> projects;
 
     public HdbManagerSystemProjectController(HdbManager user, HdbManagerServiceManager serviceManager) {
-        super(user);
-        this.serviceManager = serviceManager;
+        super(user, serviceManager);
     }
 
     @Override
@@ -42,45 +38,15 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
         switch(input) {
             case 0: viewProject(); return 0;
             case 1: viewCreatedProjects(); return 0;
-            case 2: createProject(); return 0;
-            case 3: return -1;
+            case 2: joinTeam(); return 0;
+            case 3: createProject(); return 0;
+            case 4: return -1;
             default: throw new Exception("Please enter a valid input. ");
-        }
-    }
-
-    private void viewProject() throws Exception {
-        Project project = getProject();
-        System.out.println(serviceManager.getGenericService().displayProject(project));
-        System.out.println(ListToStringFormatter.toString(PROJECT_MENU));
-        int input = InputHandler.getIntIndexInput("Select an option: ");
-        switch(input) {
-            case 0:
-                List<Enquiry> enquiries = serviceManager.getProjectService().getEnquiries(project);
-                if(enquiries.size() <= 0) {
-                    System.out.println("No enquiries found. ");
-                    break;
-                }
-                System.out.println(serviceManager.getGenericService().displayEnquiry(enquiries));
-                break;
-            case 1:
-                List<BtoApplication> applications = serviceManager.getProjectService().getApplications(project);
-                if(applications.size() <= 0) {
-                    System.out.println("No enquiries found. ");
-                    break;
-                }
-                System.out.println(serviceManager.getGenericService().displayApplication(applications));
-                break;
-            case 2:
-                // not implemented
-            case 3:
-                break;
-            default:
-                throw new Exception("Option does not exist. ");
         }
     }
     
     private void viewCreatedProjects() throws Exception {
-        List<Project> createdProjects = serviceManager.getProjectService().getCreatedProject(getUser());
+        List<Project> createdProjects = serviceManager.getProjectService().getCreatedProject(user);
         if(createdProjects.size() <= 0) {
             System.out.println("No created projects found. ");
         }
@@ -98,8 +64,23 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
         if(!serviceManager.getProjectService().hasValidTime(start, end)){
             return;
         }
-        serviceManager.getProjectService().createProject(getUser(), name, neighborhood, start, end);
+        serviceManager.getProjectService().createProject(user, name, neighborhood, start, end);
         System.out.println("Project creation successful!");
+    }
+
+    private void joinTeam() throws Exception {
+        Project project = getProject();
+        String input = InputHandler.getStringInput("Confirm to join team [Y/N]: ", RegexPatterns.YES_NO);
+        if(!(input.equals("Y") || input.equals("y"))){
+            return;
+        }
+        serviceManager.getTeamService().joinTeam(user, project);
+        System.out.println("User has joined the team!");
+    }
+
+    private void viewProject() throws Exception {
+        Project project = getProject();
+        super.viewProject(project);
     }
 
     private Project getProject() throws Exception {

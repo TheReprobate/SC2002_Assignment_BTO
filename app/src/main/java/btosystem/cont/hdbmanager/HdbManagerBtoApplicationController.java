@@ -12,23 +12,21 @@ import btosystem.utils.ListToStringFormatter;
 
 public class HdbManagerBtoApplicationController extends HdbManagerController{
     private static final String[] MENU = {"Approve Application", "Reject Application", "Exit"};
-    private HdbManagerServiceManager serviceManager;
     private Project project;
     private List<BtoApplication> applications;
 
     public HdbManagerBtoApplicationController(HdbManager user, HdbManagerServiceManager serviceManager) {
-        super(user);
-        this.serviceManager = serviceManager;
+        super(user, serviceManager);
     }
 
     @Override
     protected boolean load() throws Exception {
-        project = serviceManager.getProjectService().getCurrentProject(getUser());
+        project = serviceManager.getProjectService().getCurrentProject(user);
         if(project == null) {
             System.out.println("No current project found. ");
             return false;
         }
-        applications = serviceManager.getProjectService().getApplications(project, ApplicationStatus.PENDING);
+        applications = serviceManager.getApplicationService().getApplications(project, ApplicationStatus.PENDING);
         if(applications.size() <= 0) {
             System.out.println("No applications found. ");
             return false;
@@ -54,13 +52,13 @@ public class HdbManagerBtoApplicationController extends HdbManagerController{
 
     private void approveApplication() throws Exception {
         BtoApplication application = getApplication();
-        serviceManager.getApplicationService().approveApplication(getUser(), application);
+        serviceManager.getApplicationService().approveApplication(user, application);
         System.out.println("Approve application successful!");
     }
 
     private void rejectApplication() throws Exception {
         BtoApplication application = getApplication();
-        serviceManager.getApplicationService().rejectApplication(getUser(), application);
+        serviceManager.getApplicationService().rejectApplication(user, application);
         System.out.println("Reject application successful!");
     }
 

@@ -3,7 +3,7 @@ package btosystem.controllers.interfaces;
 import java.util.List;
 
 import btosystem.classes.ProjectTeam;
-
+import btosystem.classes.enums.RegistrationStatus;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
 
@@ -45,4 +45,6 @@ public interface OfficerRegistrationOperations extends
     int addRegistration(List<OfficerRegistration> registrations, OfficerRegistration registration);
 
     boolean hasApplied(List<OfficerRegistration> registrations, HdbOfficer officer);
+
+    List<OfficerRegistration> filterRegistrations(List<OfficerRegistration> registrations, RegistrationStatus status);
 }

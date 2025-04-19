@@ -75,4 +75,8 @@ public interface UserOperations extends ToString<User> {
     public void addApplicant(HashMap<String, User> users, String nric,  String name, int age, boolean married) throws Exception;
 
     public void setApplication(Applicant applicant, BtoApplication application);
+
+    public void setTeam(ProjectTeam team, HdbManager user);
+
+    public void setTeam(ProjectTeam team, HdbOfficer user);
 }

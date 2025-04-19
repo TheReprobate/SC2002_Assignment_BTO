@@ -11,12 +11,10 @@ import btosystem.utils.ListToStringFormatter;
 // missing - filters
 public class ApplicantProjectController extends ApplicantController{
     private static final String[] MENU = {"View Project Details", "Exit"};
-    private ApplicantServiceManager serviceManager;
     private List<Project> projects;
 
     public ApplicantProjectController(Applicant user, ApplicantServiceManager serviceManager) {
-        super(user);
-        this.serviceManager = serviceManager;
+        super(user, serviceManager);
     }
 
     @Override

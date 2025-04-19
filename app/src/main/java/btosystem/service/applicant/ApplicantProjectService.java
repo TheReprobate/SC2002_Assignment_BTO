@@ -15,10 +15,10 @@ public class ApplicantProjectService extends Service {
     }
 
     public List<Project> getVisibleProjects(){
-        List<Project> projects = getDataManager().getProjects();
-        List<Project> visibleProjects = getOperationsManager().getProjectManager().filterProject(projects, true);
+        List<Project> projects = dataManager.getProjects();
+        List<Project> visibleProjects = operationsManager.getProjectManager().filterProject(projects, true);
         for(Project p : visibleProjects) {
-            if(getOperationsManager().getProjectManager().isOpen(p)) {
+            if(operationsManager.getProjectManager().isOpen(p)) {
                 continue;
             }
             visibleProjects.remove(p);
@@ -27,6 +27,6 @@ public class ApplicantProjectService extends Service {
     }
 
     public List<Project> filterProject(List<Project> projects, Neighborhood neighborhood) {
-        return getOperationsManager().getProjectManager().filterProject(projects, neighborhood);
+        return operationsManager.getProjectManager().filterProject(projects, neighborhood);
     }
 }

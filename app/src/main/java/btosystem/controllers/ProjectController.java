@@ -344,10 +344,17 @@ public class ProjectController implements ProjectOperations {
     }
 
     @Override
-    public void setProjectTeam(Project project, ProjectTeam team) throws Exception {
-        if(project.getProjectTeam() != null) {
-            throw new Exception("Project already has an existing team. ");
+    public List<Project> filterProject(List<Project> projects, LocalDate start, LocalDate end) {
+        List<Project> out = new ArrayList<>();
+        for(Project p : projects) {
+            if(start != null && start.isBefore(p.getOpenTime())) {
+                continue;
+            }
+            if(end != null && end.isAfter(p.getCloseTime())) {
+                continue;
+            }
+            out.add(p);
         }
-        project.setProjectTeam(team);
+        return out;
     }
 }

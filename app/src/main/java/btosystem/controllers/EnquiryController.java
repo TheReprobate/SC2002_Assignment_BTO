@@ -6,6 +6,7 @@ import btosystem.classes.Project;
 import btosystem.controllers.interfaces.EnquiryOperations;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for handling Enquiry operations. Implements the EnquiryOperations
@@ -179,6 +180,6 @@ public class EnquiryController implements EnquiryOperations {
 
     @Override
     public List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied) {
-        return enquiries.stream().filter(e -> e.hasReplied() == replied).toList();
+        return enquiries.stream().filter(e -> e.hasReplied() == replied).collect(Collectors.toList());
     }
 }

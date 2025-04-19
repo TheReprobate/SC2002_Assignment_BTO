@@ -15,20 +15,20 @@ public class ApplicantEnquiryService extends Service {
     }
     
     public List<Enquiry> getPersonalEnquiries(Applicant user) {
-        return getOperationsManager().getUserManager().retrieveEnquiries(user);
+        return operationsManager.getUserManager().retrieveEnquiries(user);
     }
     
     public void createEnquiry(Applicant user, Project project, String content) throws Exception {
-        Enquiry enquiry = getOperationsManager().getEnquiryManager().createEnquiry(project, user, content);
-        List<Enquiry> projectEnquiryRef = getOperationsManager().getProjectManager().retrieveEnquiries(project);
+        Enquiry enquiry = operationsManager.getEnquiryManager().createEnquiry(project, user, content);
+        List<Enquiry> projectEnquiryRef = operationsManager.getProjectManager().retrieveEnquiries(project);
         List<Enquiry> applicantEnquiryRef = getPersonalEnquiries(user);
-        getOperationsManager().getEnquiryManager().addEnquiry(projectEnquiryRef, enquiry);
-        getOperationsManager().getEnquiryManager().addEnquiry(applicantEnquiryRef, enquiry);
+        operationsManager.getEnquiryManager().addEnquiry(projectEnquiryRef, enquiry);
+        operationsManager.getEnquiryManager().addEnquiry(applicantEnquiryRef, enquiry);
     }
 
     public void editEnquiry(Applicant user, Enquiry enquiry, String content) throws Exception {
-        Project enquiryProject = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
-        if(!getOperationsManager().getProjectManager().isOpen(enquiryProject)) {
+        Project enquiryProject = operationsManager.getEnquiryManager().retrieveProject(enquiry);
+        if(!operationsManager.getProjectManager().isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
         if (!(hasPermission(user, enquiry))) {
@@ -37,12 +37,12 @@ public class ApplicantEnquiryService extends Service {
         if (!isEditable(enquiry)) {
             throw new Exception("Enquiry has reply unable to process. ");
         }
-        getOperationsManager().getEnquiryManager().editEnquiry(enquiry, content);
+        operationsManager.getEnquiryManager().editEnquiry(enquiry, content);
     }
 
     public void deleteEnquiry(Applicant user, Enquiry enquiry) throws Exception {
-        Project enquiryProject = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
-        if(!getOperationsManager().getProjectManager().isOpen(enquiryProject)) {
+        Project enquiryProject = operationsManager.getEnquiryManager().retrieveProject(enquiry);
+        if(!operationsManager.getProjectManager().isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
         if (!(hasPermission(user, enquiry))) {
@@ -51,19 +51,19 @@ public class ApplicantEnquiryService extends Service {
         if (!isEditable(enquiry)) {
             throw new Exception("Enquiry has reply unable to process. ");
         }
-        Project project = getOperationsManager().getEnquiryManager().retrieveProject(enquiry);
-        List<Enquiry> projectEnquiryRef = getOperationsManager().getProjectManager().retrieveEnquiries(project);
+        Project project = operationsManager.getEnquiryManager().retrieveProject(enquiry);
+        List<Enquiry> projectEnquiryRef = operationsManager.getProjectManager().retrieveEnquiries(project);
         List<Enquiry> applicantEnquiryRef = getPersonalEnquiries(user);
-        getOperationsManager().getEnquiryManager().deleteEnquiry(projectEnquiryRef, enquiry);
-        getOperationsManager().getEnquiryManager().deleteEnquiry(applicantEnquiryRef, enquiry);
+        operationsManager.getEnquiryManager().deleteEnquiry(projectEnquiryRef, enquiry);
+        operationsManager.getEnquiryManager().deleteEnquiry(applicantEnquiryRef, enquiry);
     }
 
     public boolean isEditable(Enquiry enquiry) throws Exception {
-        return !getOperationsManager().getEnquiryManager().hasReplied(enquiry);
+        return !operationsManager.getEnquiryManager().hasReplied(enquiry);
     }
 
     private boolean hasPermission(Applicant user, Enquiry enquiry){
-        Applicant enquiryApplicant = getOperationsManager().getEnquiryManager().retrieveApplicant(enquiry);
+        Applicant enquiryApplicant = operationsManager.getEnquiryManager().retrieveApplicant(enquiry);
         return enquiryApplicant.equals(user);
     }
 }

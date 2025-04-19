@@ -2,19 +2,15 @@ package btosystem.cont.hdbofficer;
 
 import btosystem.classes.HdbOfficer;
 import btosystem.cont.Controller;
+import btosystem.service.HdbOfficerServiceManager;
 
 public abstract class HdbOfficerController extends Controller{
-    private HdbOfficer user;
-    public HdbOfficerController(HdbOfficer user) {
+    protected HdbOfficer user;
+    protected HdbOfficerServiceManager serviceManager;
+    
+    public HdbOfficerController(HdbOfficer user, HdbOfficerServiceManager serviceManager) {
         this.user = user;
-    }
-
-    public HdbOfficer getUser() {
-        return user;
-    }
-
-    public void setUser(HdbOfficer user) {
-        this.user = user;
+        this.serviceManager = serviceManager;
     }
     
     @Override

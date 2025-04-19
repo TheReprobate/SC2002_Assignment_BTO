@@ -10,6 +10,7 @@ import btosystem.controllers.interfaces.BtoApplicationOperations;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for {@link BtoApplication} class that implements {@link BtoApplicationOperations}.
@@ -142,7 +143,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
                             count,
                             application.getApplicant().getName(),
                             application.getFlatType(),
-                            application.getOfficerInCharge().getName(),
+                            (application.getOfficerInCharge() != null ? application.getOfficerInCharge().getName() : "N/A"),
                             application.getStatus()
                     )
             );
@@ -199,7 +200,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
 
     @Override
     public List<BtoApplication> filterApplications(List<BtoApplication> applications, ApplicationStatus status) {
-        return applications.stream().filter(app -> app.getStatus() == status).toList();
+        return applications.stream().filter(app -> app.getStatus() == status).collect(Collectors.toList());
     }
 
     @Override

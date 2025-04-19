@@ -2,20 +2,15 @@ package btosystem.cont.applicant;
 
 import btosystem.classes.Applicant;
 import btosystem.cont.Controller;
+import btosystem.service.ApplicantServiceManager;
 
 public abstract class ApplicantController extends Controller {
-    private Applicant user;
+    protected Applicant user;
+    protected ApplicantServiceManager serviceManager;
 
-    public ApplicantController(Applicant user) {
+    public ApplicantController(Applicant user, ApplicantServiceManager serviceManager) {
         this.user = user;
-    }
-
-    public Applicant getUser() {
-        return user;
-    }
-
-    public void setUser(Applicant user) {
-        this.user = user;
+        this.serviceManager = serviceManager;
     }
     
     @Override

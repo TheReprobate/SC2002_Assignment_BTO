@@ -2,7 +2,6 @@ package btosystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import btosystem.classes.BtoApplication;
 import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
-import btosystem.classes.OfficerRegistration;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.User;
@@ -20,17 +18,6 @@ import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import btosystem.clients.MainClient;
-import btosystem.cont.Controller;
-import btosystem.cont.applicant.ApplicantMainController;
-import btosystem.cont.hdbmanager.HdbManagerBtoApplicationController;
-import btosystem.cont.hdbmanager.HdbManagerCurrentProjectController;
-import btosystem.cont.hdbmanager.HdbManagerEnquiryController;
-import btosystem.cont.hdbmanager.HdbManagerMainController;
-import btosystem.cont.hdbmanager.HdbManagerSystemProjectController;
-import btosystem.cont.hdbofficer.HdbOfficerBtoApplicationController;
-import btosystem.cont.hdbofficer.HdbOfficerEnquiryController;
-import btosystem.cont.hdbofficer.HdbOfficerMainController;
-import btosystem.cont.user.UserAccountController;
 import btosystem.controllers.BtoApplicationController;
 import btosystem.controllers.EnquiryController;
 import btosystem.controllers.OfficerRegistrationController;
@@ -73,72 +60,6 @@ public class App {
      * @param args Command-line arguments passed to the application
      */
     public static void main(String[] args) {
-        // Fake Data
-        HdbOfficer officer = new HdbOfficer("T1200000A", "OFFICER1", 40, false);
-
-
-        HdbManager manager1 = new HdbManager("T0200000A", "MANAGER1", 90, false);
-        Project p1 = new Project("Project 1", Neighborhood.ANG_MO_KIO, LocalDate.now().minusDays(1), LocalDate.now().plusDays(5), manager1);
-        ProjectTeam team1 = new ProjectTeam(p1);
-        manager1.setCurrentTeam(team1);
-        officer.setCurrentTeam(team1);
-        team1.assignOfficer(officer);
-        p1.setProjectTeam(team1);
-        p1.setVisible(true);
-        p1.getUnits().put(FlatType.TWO_ROOM, 2);
-        p1.getUnits().put(FlatType.THREE_ROOM, 2);
-
-
-        HdbManager manager2 = new HdbManager("T0300000A", "MANAGER2", 100, false);
-        Project p2 = new Project("Project 2", Neighborhood.ANG_MO_KIO, LocalDate.now().minusDays(1), LocalDate.now().plusDays(5), manager2);
-        ProjectTeam team2 = new ProjectTeam(p2);
-        manager1.setCurrentTeam(team1);
-        p2.setProjectTeam(team2);
-        p2.setVisible(true);
-        p2.getUnits().put(FlatType.TWO_ROOM, 100);
-        p2.getUnits().put(FlatType.THREE_ROOM, 100);
-
-        Applicant app1 = new Applicant("T0100000A", "TESTER1", 25, true);
-        BtoApplication application1 = new BtoApplication(p1, app1, FlatType.THREE_ROOM);
-        p1.addBtoApplication(application1);
-        Enquiry notreplied = new Enquiry(p1, app1, "notreplied");
-        Enquiry replied = new Enquiry(p1, app1, "replied");
-        replied.setReplied(true);
-        replied.setContent("hi");
-        application1.setStatus(ApplicationStatus.SUCCESSFUL);
-        app1.getEnquiries().add(notreplied);
-        app1.getEnquiries().add(replied);
-        app1.setActiveApplication(application1);
-
-        Applicant app2 = new Applicant("T0200000A", "TESTER1", 40, false);
-        BtoApplication application2 = new BtoApplication(p2, app2, FlatType.THREE_ROOM);
-        p1.addBtoApplication(application2);
-        Enquiry notreplied2 = new Enquiry(p2, app2, "notreplied2");
-        Enquiry replied2 = new Enquiry(p2, app2, "replied2");
-        replied2.setReplied(true);
-        replied2.setContent("hi2");
-        app2.getEnquiries().add(notreplied2);
-        app2.getEnquiries().add(replied2);
-        application2.setStatus(ApplicationStatus.SUCCESSFUL);
-        app2.setActiveApplication(application2);
-
-        p1.getEnquiries().add(replied);
-        p1.getEnquiries().add(replied2);
-        p1.getEnquiries().add(notreplied);
-        p1.getEnquiries().add(notreplied2);
-
-
-        List<Project> projects = new ArrayList<>();
-        projects.add(p1);
-        projects.add(p2);
-
-        HashMap<String, User> users = new HashMap<>();
-        users.put("T0200000A", manager1);
-        users.put("T1200000A", officer);
-        users.put("T0300000A", manager2);
-        users.put("T0100000A", app1);
-        users.put("T0500000A", app2);
-
         // Init Managers and Services
         BtoApplicationOperations applicationManager = new BtoApplicationController();
         EnquiryOperations enquiryManager = new EnquiryController();
@@ -148,8 +69,6 @@ public class App {
         UserOperations userManager = new UserController();
 
         DataManager dManager = new DataManager();
-        dManager.setProjects(projects); // testing
-        dManager.setUsers(users); // testing
         OperationsManager oManager = new OperationsManager(applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
         GenericService gService = new GenericService(dManager, oManager);
         

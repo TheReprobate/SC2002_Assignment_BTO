@@ -2,12 +2,11 @@ package btosystem.controllers.interfaces;
 
 import java.util.List;
 
-import btosystem.classes.Project;
-import btosystem.classes.ProjectTeam;
-
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
+import btosystem.classes.Project;
+import btosystem.classes.ProjectTeam;
 
 /**
  * An interface that extends {@link ToString},
@@ -28,7 +27,9 @@ public interface ProjectTeamOperations extends
      * Interface method for assigning of HdbManager to ProjectTeam
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    public int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception;
+    // public int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception;
+
+    public int assignProject(ProjectTeam team, HdbManager manager) throws Exception;
 
     /**
      * Interface method to check if HdbManager is part of ProjectTeam
@@ -42,7 +43,8 @@ public interface ProjectTeamOperations extends
      * Interface method for assigning of HdbOfficer to ProjectTeam
      * Details can be found in {@link btosystem.controllers.ProjectTeamController}
      */
-    int assignProjectOfficer(ProjectTeam team, HdbOfficer officer) throws Exception;
+    // int assignProjectOfficer(ProjectTeam team, HdbOfficer officer) throws Exception;
+    int assignProject(ProjectTeam team, HdbOfficer officer) throws Exception;
 
     /**
      * Interface method to check if HdbManager is part of ProjectTeam
@@ -65,10 +67,6 @@ public interface ProjectTeamOperations extends
     List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
     
     Project retrieveAssignedProject(ProjectTeam team);
-
-    int assignProject(ProjectTeam team, HdbManager manager);
-
-    int assignProject(ProjectTeam team, HdbOfficer officer);
 
     boolean hasMaxOfficers(ProjectTeam team);
     

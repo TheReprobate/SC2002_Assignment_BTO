@@ -1,6 +1,8 @@
 package btosystem.controllers;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.enums.RegistrationStatus;
@@ -191,19 +193,29 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
 
     @Override
     public HdbOfficer retrieveAppliedOfficer(OfficerRegistration registration) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'retrieveAppliedOfficer'");
+        return registration.getOfficer();
     }
 
     @Override
     public int addRegistration(List<OfficerRegistration> registrations, OfficerRegistration registration) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addRegistration'");
+        registrations.add(registration);
+        return 1;
     }
 
     @Override
     public boolean hasApplied(List<OfficerRegistration> registrations, HdbOfficer officer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hasApplied'");
+        for(OfficerRegistration r: registrations) {
+            if(!r.getOfficer().equals(officer)){
+                continue;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<OfficerRegistration> filterRegistrations(List<OfficerRegistration> registrations,
+            RegistrationStatus status) {
+        return registrations.stream().filter(r -> r.getStatus() == status).collect(Collectors.toList());
     }
 }

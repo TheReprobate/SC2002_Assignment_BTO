@@ -13,17 +13,15 @@ import btosystem.utils.RegexPatterns;
 // missing filters
 public class ApplicantEnquiryController extends ApplicantController{
     private static final String[] MENU = {"View Enquiry Details", "Create Enquiry", "Edit Enquiry", "Delete Enquiry", "Exit"};
-    private ApplicantServiceManager serviceManager;
     private List<Enquiry> enquiries;
     
     public ApplicantEnquiryController(Applicant user, ApplicantServiceManager serviceManager) {
-        super(user);
-        this.serviceManager = serviceManager;
+        super(user, serviceManager);
     }
 
     @Override
     protected boolean load() throws Exception{
-        enquiries = serviceManager.getEnquiryService().getPersonalEnquiries(getUser());
+        enquiries = serviceManager.getEnquiryService().getPersonalEnquiries(user);
         if(enquiries.size() <= 0) {
             System.out.println("No personal enquiries found. ");
         }
@@ -58,7 +56,7 @@ public class ApplicantEnquiryController extends ApplicantController{
         int projectIndex = InputHandler.getIntIndexInput("Select a project to enquire for: ");
         Project project = serviceManager.getGenericService().getProject(projects, projectIndex);
         String input = InputHandler.getStringInput("Input message: ");
-        serviceManager.getEnquiryService().createEnquiry(getUser(), project, input);
+        serviceManager.getEnquiryService().createEnquiry(user, project, input);
         System.out.println("Enquiry create success!");
     }
     
@@ -69,7 +67,7 @@ public class ApplicantEnquiryController extends ApplicantController{
         }
         // System.out.println(serviceManager.getGenericService().displayEnquiry(enquiry));
         String input = InputHandler.getStringInput("Input new message: ");
-        serviceManager.getEnquiryService().editEnquiry(getUser(), enquiry, input);
+        serviceManager.getEnquiryService().editEnquiry(user, enquiry, input);
         System.out.println("Enquiry edit success!");
     }
 
@@ -84,7 +82,7 @@ public class ApplicantEnquiryController extends ApplicantController{
             System.out.println("Enquiry deletion cancelled");
             return;
         }
-        serviceManager.getEnquiryService().deleteEnquiry(getUser(), enquiry);
+        serviceManager.getEnquiryService().deleteEnquiry(user, enquiry);
         System.out.println("Enquiry delete success!");
     }
 

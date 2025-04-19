@@ -116,5 +116,5 @@ public interface ProjectOperations
 
     List<FlatType> getAvailableFlatTypes(Project project);
 
-    void setProjectTeam(Project project, ProjectTeam team) throws Exception;
+    List<Project> filterProject(List<Project> projects, LocalDate start, LocalDate end);
 }

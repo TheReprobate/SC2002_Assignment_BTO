@@ -11,7 +11,7 @@ public class ApplicantMainController extends ApplicantController {
     private ApplicantProjectController projectController;
     
     public ApplicantMainController(Applicant user, ApplicantServiceManager serviceManager) {
-        super(user);
+        super(user, serviceManager);
         this.applicationController = new ApplicantBtoApplicationController(user, serviceManager);
         this.enquiryController = new ApplicantEnquiryController(user, serviceManager);
         this.projectController = new ApplicantProjectController(user, serviceManager);
@@ -19,9 +19,6 @@ public class ApplicantMainController extends ApplicantController {
 
     @Override
     protected boolean load() throws Exception {
-        applicationController.setUser(getUser());
-        enquiryController.setUser(getUser());
-        projectController.setUser(getUser());
         return true;
     }
 
