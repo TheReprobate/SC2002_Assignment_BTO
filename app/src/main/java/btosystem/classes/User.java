@@ -12,6 +12,7 @@ public abstract class User {
         this.name = name;
         this.age = age;
         this.married = married;
+        this.password = "password";
     }
 
     public String getNric() {

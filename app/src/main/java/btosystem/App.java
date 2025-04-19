@@ -1,96 +1,79 @@
 package btosystem;
 
-/**
-* The main application class serving as the entry point for the program.
-*/
-import btosystem.classes.*;
-import btosystem.classes.enums.FlatType;
-import btosystem.classes.enums.Neighborhood;
+import btosystem.clients.MainClient;
+import btosystem.controllers.BtoApplicationController;
+import btosystem.controllers.EnquiryController;
+import btosystem.controllers.OfficerRegistrationController;
 import btosystem.controllers.ProjectController;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import btosystem.controllers.ProjectTeamController;
+import btosystem.controllers.UserController;
+import btosystem.controllers.interfaces.BtoApplicationOperations;
+import btosystem.controllers.interfaces.EnquiryOperations;
+import btosystem.controllers.interfaces.OfficerRegistrationOperations;
+import btosystem.controllers.interfaces.ProjectOperations;
+import btosystem.controllers.interfaces.ProjectTeamOperations;
+import btosystem.controllers.interfaces.UserOperations;
+import btosystem.service.ApplicantServiceManager;
+import btosystem.service.GenericService;
+import btosystem.service.HdbManagerServiceManager;
+import btosystem.service.HdbOfficerServiceManager;
+import btosystem.service.applicant.ApplicantBtoApplicationService;
+import btosystem.service.applicant.ApplicantEnquiryService;
+import btosystem.service.applicant.ApplicantProjectService;
+import btosystem.service.hdbmanager.HdbManagerBtoApplicationService;
+import btosystem.service.hdbmanager.HdbManagerEnquiryService;
+import btosystem.service.hdbmanager.HdbManagerProjectService;
+import btosystem.service.hdbmanager.HdbManagerProjectTeamService;
+import btosystem.service.hdbofficer.HdbOfficerBtoApplicationService;
+import btosystem.service.hdbofficer.HdbOfficerEnquiryService;
+import btosystem.service.hdbofficer.HdbOfficerProjectService;
+import btosystem.service.hdbofficer.HdbOfficerProjectTeamService;
+import btosystem.service.user.UserAccountService;
+import btosystem.utils.DataManager;
+/**
+ * The main application class serving as the entry point for the program.
+ */
 public class App {
+
     /**
-    * The main method serving as the program entry point.
-    *
-    * @param args Command-line arguments passed to the application 
-    */
-    
+     * The main method serving as the program entry point.
+     *
+     * @param args Command-line arguments passed to the application
+     */
     public static void main(String[] args) {
-        ProjectController projectController = new ProjectController();
-        HdbManager hdbManager = new HdbManager("S9810294C", "Trump", 54, true);
+        // Init Managers and Services
+        BtoApplicationOperations applicationManager = new BtoApplicationController();
+        EnquiryOperations enquiryManager = new EnquiryController();
+        OfficerRegistrationOperations officerManager = new OfficerRegistrationController();
+        ProjectOperations projectManager = new ProjectController();
+        ProjectTeamOperations projectTeamManager = new ProjectTeamController();
+        UserOperations userManager = new UserController();
 
-        // Create some test projects
-        Project project1 = projectController.createProject("Project Ang Mo Kio", Neighborhood.ANG_MO_KIO, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
-        Project project2 = projectController.createProject("Project Bishan", Neighborhood.BISHAN, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
-        Project project3 = projectController.createProject("Project NTU", Neighborhood.JURONG, LocalDate.of(2025, 4, 1), LocalDate.of(2025, 5, 2), hdbManager);
+        DataManager dManager = new DataManager();
+        GenericService gService = new GenericService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        
+        ApplicantBtoApplicationService applicantAppService = new ApplicantBtoApplicationService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        ApplicantEnquiryService applicantEnquiryService = new ApplicantEnquiryService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        ApplicantProjectService applicantProjectService = new ApplicantProjectService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        
+        HdbManagerBtoApplicationService managerAppService = new HdbManagerBtoApplicationService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbManagerEnquiryService managerEnquiryService = new HdbManagerEnquiryService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbManagerProjectService managerProjectService = new HdbManagerProjectService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbManagerProjectTeamService managerTeamService = new HdbManagerProjectTeamService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
 
-        // List to store all projects
-        List<Project> projects = new ArrayList<>();
-        projects.add(project1);
-        projects.add(project2);
-        projects.add(project3);
+        HdbOfficerBtoApplicationService officerAppService = new HdbOfficerBtoApplicationService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbOfficerEnquiryService officerEnquiryService = new HdbOfficerEnquiryService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbOfficerProjectService officerProjectService = new HdbOfficerProjectService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
+        HdbOfficerProjectTeamService officerProjectTeamService = new HdbOfficerProjectTeamService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
 
-        // Test: Retrieve project by name
-        Project retrievedProject = projectController.retrieveProject(projects, "Project Alpha");
-        if (retrievedProject != null) {
-            System.out.println("Retrieved Project by Name: " + retrievedProject.getName());
-        }
+        UserAccountService accountService = new UserAccountService(dManager, applicationManager, enquiryManager, officerManager, projectTeamManager, userManager, projectManager);
 
-        // Test: Retrieve project by index
-        Project retrievedProjectByIndex = projectController.retrieveProject(projects, 1);
-        System.out.println("Retrieved Project by Index: " + retrievedProjectByIndex.getName());
+        ApplicantServiceManager applicantServiceManager = new ApplicantServiceManager(applicantAppService, applicantEnquiryService, applicantProjectService, gService);
+        HdbManagerServiceManager hdbMangerServiceManager = new HdbManagerServiceManager(managerAppService, managerEnquiryService, managerProjectService, managerTeamService, gService);
+        HdbOfficerServiceManager hdbOfficerServiceManager = new HdbOfficerServiceManager(officerAppService, officerEnquiryService, officerProjectService, officerProjectTeamService, gService);
 
-        // Test: Filter projects by neighborhood
-        List<Project> northProjects = projectController.filterProject(projects, Neighborhood.ANG_MO_KIO);
-        System.out.println("Filtered Projects in ANG MO KIO: ");
-        northProjects.forEach(project -> System.out.println(project.getName()));
-
-        // Test: Filter projects by visibility (true)
-        List<Project> visibleProjects = projectController.filterProject(projects, true);
-        System.out.println("Filtered Visible Projects: ");
-        visibleProjects.forEach(project -> System.out.println(project.getName()));
-
-        // Test: Update unit count for a project
-        projectController.updateUnitCount(project1, FlatType.THREE_ROOM, 50);
-        System.out.println("Updated unit count for " + project1.getName() + ": " + project1.getUnits());
-
-        // Test: Edit project neighborhood
-        projectController.editProject(project1, Neighborhood.JURONG);
-        System.out.println("Updated Neighborhood for " + project1.getName() + ": " + project1.getNeighborhood());
-
-        // Test: Edit project open and close times
-        LocalDate newOpenTime = LocalDate.of(2025, 4, 10);
-        LocalDate newCloseTime = LocalDate.of(2025, 5, 11);
-        projectController.editProject(project2, newOpenTime, newCloseTime);
-        System.out.println("Updated Open and Close Times for " + project2.getName() + ": "
-                + project2.getOpenTime() + " - " + project2.getCloseTime());
-
-        // Test: Delete a project
-        int deleteResult = projectController.deleteProject(projects, project3);
-        System.out.println("Delete result for Project NTU: " + deleteResult);
-
-        // Test: Check if project exists by name
-        boolean exists = projectController.projectExist(projects, "Project Bishan");
-        System.out.println("Does 'Project Bishan' exist? " + exists);
-
-        // Test: Get ProjectTeam
-        ProjectTeam projectTeam = projectController.retrieveProjectTeam(project1);
-        System.out.println("Project Team for " + project1.getName() + ": " + projectTeam);
-
-        // Test: Get Enquiries
-        List<Enquiry> enquiries = projectController.retrieveEnquiries(project1);
-        System.out.println("Enquiries for " + project1.getName() + ": " + enquiries.size());
-
-        // Test: Get Applications
-        List<BtoApplication> applications = projectController.retrieveApplications(project1);
-        System.out.println("Applications for " + project1.getName() + ": " + applications.size());
-
-        // Print all projects
-        System.out.println("\nAll Projects:");
-        System.out.println(projectController.toString(projects));
+        
+        MainClient client = new MainClient(applicantServiceManager, hdbOfficerServiceManager, hdbMangerServiceManager, accountService);
+        client.run();
     }
 }

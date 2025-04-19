@@ -7,8 +7,10 @@ import btosystem.classes.Project;
 import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.controllers.interfaces.BtoApplicationOperations;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for {@link BtoApplication} class that implements {@link BtoApplicationOperations}.
@@ -55,8 +57,8 @@ public class BtoApplicationController implements BtoApplicationOperations {
         }
 
         BtoApplication application = new BtoApplication(project, applicant, flatType);
-        project.addBtoApplication(application);
-        applicant.setActiveApplication(application);
+        // project.addBtoApplication(application);
+        // applicant.setActiveApplication(application);
         return application;
     }
 
@@ -141,7 +143,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
                             count,
                             application.getApplicant().getName(),
                             application.getFlatType(),
-                            application.getOfficerInCharge().getName(),
+                            (application.getOfficerInCharge() != null ? application.getOfficerInCharge().getName() : "N/A"),
                             application.getStatus()
                     )
             );
@@ -157,7 +159,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
                 "Flat Type: " + data.getFlatType(),
                 "Applicant: " + data.getApplicant().getName(),
                 "Application Status: " + data.getStatus().toString(),
-                "Officer-in-Charge: " + data.getOfficerInCharge().getName()
+                "Officer-in-Charge: " + (data.getOfficerInCharge() != null ? data.getOfficerInCharge().getName() : "N/A")
                 );
     }
 
@@ -168,5 +170,51 @@ public class BtoApplicationController implements BtoApplicationOperations {
 
         project.getBtoApplications().remove(instance);
         applicant.setActiveApplication(null);
+    }
+
+    @Override
+    public Project retrieveProject(BtoApplication application) {
+        return application.getProject();
+    }
+
+    @Override
+    public Applicant retrieveApplicant(BtoApplication application) {
+        return application.getApplicant();
+    }
+
+    @Override
+    public int addApplication(List<BtoApplication> applications, BtoApplication application) {
+        applications.add(application);
+        return 1;
+    }
+
+    @Override
+    public FlatType retrieveFlatType(BtoApplication application) {
+        return application.getFlatType();
+    }
+
+    @Override
+    public boolean isReadyToProcess(BtoApplication application) {
+        return application.getStatus() == ApplicationStatus.SUCCESSFUL;
+    }
+
+    @Override
+    public List<BtoApplication> filterApplications(List<BtoApplication> applications, ApplicationStatus status) {
+        return applications.stream().filter(app -> app.getStatus() == status).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isPending(BtoApplication application) {
+        return application.getStatus() == ApplicationStatus.PENDING;
+    }
+
+    @Override
+    public boolean hasApplied(List<BtoApplication> applications, Applicant applicant) {
+        for(BtoApplication application : applications) {
+            if(application.getApplicant().equals(applicant)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

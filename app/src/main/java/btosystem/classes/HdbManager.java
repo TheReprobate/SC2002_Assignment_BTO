@@ -16,6 +16,10 @@ public class HdbManager extends User {
         return currentTeam;
     }
 
+    public void setCurrentTeam(ProjectTeam currentTeam) {
+        this.currentTeam = currentTeam;
+    }
+
     public List<Project> getCreatedProjects() {
         return createdProjects;
     }

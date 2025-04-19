@@ -2,8 +2,6 @@ package btosystem.classes;
 
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
-import btosystem.controllers.interfaces.CleanupOperations;
-import btosystem.controllers.interfaces.ListToString;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +46,6 @@ public class Project {
         this.units = new HashMap<FlatType, Integer>();
         this.createdBy = createdBy;
     }
-
     public String getName() {
         return name;
     }

@@ -5,6 +5,7 @@ import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
+import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import java.time.LocalDate;
@@ -56,6 +57,12 @@ public interface ProjectOperations
     ProjectTeam retrieveProjectTeam(Project project);
 
     /**
+     * Interface method for setting project team .
+     * Details can be found in {@link btosystem.controllers.ProjectController}
+     */
+    int setProjectTeam(Project project, ProjectTeam team);
+
+    /**
      * Interface method for project's enquiries retrieval.
      * Details can be found in {@link btosystem.controllers.ProjectController}
      */
@@ -96,4 +103,18 @@ public interface ProjectOperations
      * Details can be found in {@link btosystem.controllers.ProjectController}
      */
     boolean projectExist(List<Project> projects, String name);
+
+    boolean unitHasSlots(Project project, FlatType flatType);
+
+    boolean isOpen(Project project);
+
+    boolean hasTimeOverlap(Project firstProject, Project secondProject);
+
+    int addProject(List<Project> projects, Project project);
+
+    int decreaseUnitCount(Project project, FlatType flatType);
+
+    List<FlatType> getAvailableFlatTypes(Project project);
+
+    List<Project> filterProject(List<Project> projects, LocalDate start, LocalDate end);
 }
