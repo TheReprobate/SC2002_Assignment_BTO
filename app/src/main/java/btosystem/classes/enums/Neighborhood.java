@@ -1,5 +1,8 @@
 package btosystem.classes.enums;
 
+/**
+ * Represents the different types of neighborhood in Singapore.
+ */
 public enum Neighborhood {
     ANG_MO_KIO,
     BEDOK,

@@ -8,7 +8,6 @@ import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.User;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +25,8 @@ public interface UserOperations extends ToString<User> {
      * @param password Password to verify
      * @return Authenticated User object if successful, null otherwise
      */
-    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception;
+    public User authenticate(HashMap<String, User> users, String username, String password)
+            throws Exception;
 
     /**
      * Retrieves the active application for an applicant.
@@ -68,15 +68,59 @@ public interface UserOperations extends ToString<User> {
      */
     public List<Project> retrieveCreatedProjects(HdbManager manager);
 
+    /**
+     * Removes the application associated with the specified applicant.
+     *
+     * @param applicant the applicant whose application should be removed
+     * @throws Exception if the removal operation fails or if applicant is not found
+     */
     public void removeApplication(Applicant applicant) throws Exception;
 
+    /**
+     * Retrieves a user from the user registry based on NRIC.
+     *
+     * @param users the user registry to search in
+     * @param nric the NRIC number to search for
+     * @return the User object matching the NRIC
+     * @throws Exception if user is not found or retrieval fails
+     */
     public User retrieveUser(HashMap<String, User> users, String nric) throws Exception;
 
-    public void addApplicant(HashMap<String, User> users, String nric,  String name, int age, boolean married) throws Exception;
+    /**
+     * Adds a new applicant to the user registry.
+     *
+     * @param users the user registry to add to
+     * @param nric the NRIC of the new applicant
+     * @param name the full name of the applicant
+     * @param age the age of the applicant
+     * @param married marital status of the applicant
+     * @throws Exception if addition fails (e.g., duplicate NRIC or invalid data)
+     */
+    public void addApplicant(HashMap<String, User> users, String nric,
+                             String name, int age, boolean married)
+            throws Exception;
 
+    /**
+     * Associates an application with an applicant.
+     *
+     * @param applicant the applicant to associate with
+     * @param application the application to set
+     */
     public void setApplication(Applicant applicant, BtoApplication application);
 
+    /**
+     * Adds an HDB manager to the specified project team.
+     *
+     * @param team the project team to modify
+     * @param user the HDB manager to add to the team
+     */
     public void setTeam(ProjectTeam team, HdbManager user);
 
+    /**
+     * Adds an HDB officer to the specified project team.
+     *
+     * @param team the project team to modify
+     * @param user the HDB officer to add to the team
+     */
     public void setTeam(ProjectTeam team, HdbOfficer user);
 }
