@@ -111,6 +111,21 @@ public class ProjectController implements ProjectOperations {
         return filteredProjects;
     }
 
+    @Override
+    public List<Project> filterProject(List<Project> projects, LocalDate start, LocalDate end) {
+        List<Project> out = new ArrayList<>();
+        for (Project p : projects) {
+            if (start != null && start.isBefore(p.getOpenTime())) {
+                continue;
+            }
+            if (end != null && end.isAfter(p.getCloseTime())) {
+                continue;
+            }
+            out.add(p);
+        }
+        return out;
+    }
+
     /**
      * Method for retrieving project team handling this project.
      *
@@ -133,8 +148,9 @@ public class ProjectController implements ProjectOperations {
         if (project.getProjectTeam() == null) {
             project.setProjectTeam(team);
             return 1;
+        } else {
+            throw new IllegalArgumentException("Project already has a team!");
         }
-        else throw new IllegalArgumentException("Project already has a team!");
     }
 
     /**
@@ -204,9 +220,9 @@ public class ProjectController implements ProjectOperations {
         if (project.getOpenTime().isBefore(openTime)) {
             project.setOpenTime(openTime);
             project.setCloseTime(closeTime);
-        }
-        else {
-            throw new IllegalArgumentException("Open date cannot be before close date! Are you a time traveller?");
+        } else {
+            throw new IllegalArgumentException(
+                    "Open date cannot be before close date! Are you a time traveller?");
         }
 
         return 1;
@@ -274,7 +290,7 @@ public class ProjectController implements ProjectOperations {
         int count = 1;
         for (Project p : data) {
             sb.append(String.format(stringFormat,
-                    "[" + count++ +"]",
+                    "[" + count++ + "]",
                     p.getName(),
                     p.getNeighborhood(),
                     p.getOpenTime(),
@@ -331,30 +347,15 @@ public class ProjectController implements ProjectOperations {
     public int decreaseUnitCount(Project project, FlatType flatType) {
         Map<FlatType, Integer> flats = project.getUnits();
         int count = flats.get(flatType);
-        if(count <= 0) {
+        if (count <= 0) {
             return 0;
         }
-        updateUnitCount(project, flatType, count-1);
+        updateUnitCount(project, flatType, count - 1);
         return 1;
     }
 
     @Override
     public List<FlatType> getAvailableFlatTypes(Project project) {
         return new ArrayList<>(project.getUnits().keySet());
-    }
-
-    @Override
-    public List<Project> filterProject(List<Project> projects, LocalDate start, LocalDate end) {
-        List<Project> out = new ArrayList<>();
-        for(Project p : projects) {
-            if(start != null && start.isBefore(p.getOpenTime())) {
-                continue;
-            }
-            if(end != null && end.isAfter(p.getCloseTime())) {
-                continue;
-            }
-            out.add(p);
-        }
-        return out;
     }
 }
