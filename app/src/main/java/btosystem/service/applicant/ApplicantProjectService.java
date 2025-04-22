@@ -22,11 +22,11 @@ public class ApplicantProjectService extends Service {
         super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
     }
 
-    public List<Project> getVisibleProjects(){
+    public List<Project> getVisibleProjects() {
         List<Project> projects = dataManager.getProjects();
         List<Project> visibleProjects = projectManager.filterProject(projects, true);
         for(Project p : visibleProjects) {
-            if(projectManager.isOpen(p)) {
+            if (projectManager.isOpen(p)) {
                 continue;
             }
             visibleProjects.remove(p);

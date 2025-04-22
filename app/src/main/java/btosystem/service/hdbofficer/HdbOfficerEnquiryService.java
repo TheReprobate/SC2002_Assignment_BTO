@@ -39,13 +39,13 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
 
     public void replyEnquiry(HdbOfficer user, Enquiry enquiry, String reply) throws Exception {
         Project enquiryProject = enquiryManager.retrieveProject(enquiry);
-        if(!projectManager.isOpen(enquiryProject)) {
+        if (!projectManager.isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
         ProjectTeam team = userManager.retrieveCurrentTeam(user);
         Project currentProj = projectTeamManager.retrieveAssignedProject(team);
         Project enquiryProj = enquiryManager.retrieveProject(enquiry);
-        if(!currentProj.equals(enquiryProj)) {
+        if (!currentProj.equals(enquiryProj)) {
             throw new AccessDeniedException("Access Denied. No permission to reply to this enquiry. ");
         }
         enquiryManager.replyEnquiry(enquiry, reply);

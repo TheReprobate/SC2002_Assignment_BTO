@@ -43,14 +43,14 @@ public class HdbManagerProjectTeamService extends Service {
     // do we invalidate all his previous registartions when approved?????????????????????????
     public void approveRegistration(HdbManager user, ProjectTeam team, OfficerRegistration registration) throws Exception {
         Project project = projectTeamManager.retrieveAssignedProject(team);
-        if(!hasProjectAccess(user, project)){
+        if (!hasProjectAccess(user, project)) {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         HdbOfficer officer = registrationManager.retrieveAppliedOfficer(registration);
-        if(userManager.retrieveCurrentTeam(officer) != null) {
+        if (userManager.retrieveCurrentTeam(officer) != null) {
             throw new Exception("Officer is currently assigned to a team. ");
         }
-        if(projectTeamManager.hasMaxOfficers(team)) {
+        if (projectTeamManager.hasMaxOfficers(team)) {
             throw new Exception("Maximum possible officers in team.  ");
         }
         registrationManager.approveRegistration(registration);
@@ -60,7 +60,7 @@ public class HdbManagerProjectTeamService extends Service {
 
     public void rejectRegistration(HdbManager user, ProjectTeam team, OfficerRegistration registration) throws Exception {
         Project project = projectTeamManager.retrieveAssignedProject(team);
-        if(!hasProjectAccess(user, project)){
+        if (!hasProjectAccess(user, project)) {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         registrationManager.rejectRegistration(registration);
@@ -68,10 +68,10 @@ public class HdbManagerProjectTeamService extends Service {
 
     public void joinTeam(HdbManager user, Project project) throws Exception {
         ProjectTeam team = projectManager.retrieveProjectTeam(project);
-        if(userManager.retrieveCurrentTeam(user) != null){
+        if (userManager.retrieveCurrentTeam(user) != null) {
             throw new Exception("User is currently assigned to a team. ");
         }
-        if(projectTeamManager.hasManager(team)) {
+        if (projectTeamManager.hasManager(team)) {
             throw new Exception("Existing manager in team. ");
         }
         projectTeamManager.assignProject(team, user);

@@ -68,7 +68,7 @@ public class UserController implements UserOperations {
 
     @Override
     public void removeApplication(Applicant applicant) throws Exception {
-        if(applicant.getActiveApplication() == null) {
+        if (applicant.getActiveApplication() == null) {
             throw new Exception("Applicant does not have active application. ");
         }
         applicant.setActiveApplication(null);

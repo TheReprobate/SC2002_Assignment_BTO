@@ -1,7 +1,5 @@
 package btosystem.cont.applicant;
 
-import java.util.List;
-
 import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.Project;
@@ -10,11 +8,24 @@ import btosystem.service.ApplicantServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
 import btosystem.utils.RegexPatterns;
+import java.util.List;
 
-public class ApplicantBtoApplicationController extends ApplicantController{
-    private static final String[] MENU = {"Create Application", "Withdrawal Application", "Exit"};
+/**
+ * High-level controller class specific to the {@link Applicant} role
+ * handling BTO application related functionality.
+ */
+public class ApplicantBtoApplicationController extends ApplicantController {
+    private static final String[] MENU = {
+            "Create Application", "Withdrawal Application", "Exit"
+    };
     private BtoApplication application;
-    
+
+    /**
+     * Constructor for the {@link Applicant} BTOApplications controller.
+     *
+     * @param user reference to a {@link Applicant} object
+     * @param serviceManager reference to a {@link ApplicantServiceManager}
+     */
     public ApplicantBtoApplicationController(Applicant user, ApplicantServiceManager serviceManager) {
         super(user, serviceManager);
     }
@@ -22,7 +33,7 @@ public class ApplicantBtoApplicationController extends ApplicantController{
     @Override
     protected boolean load() throws Exception {
         application = serviceManager.getApplicationService().getApplication(user);
-        if(application == null) {
+        if (application == null) {
             System.out.println("No active application");
         }
         return true;
@@ -30,21 +41,35 @@ public class ApplicantBtoApplicationController extends ApplicantController{
 
     @Override
     protected String display() {
-        return serviceManager.getGenericService().displayApplication(application) + ListToStringFormatter.toString(MENU);
+        return serviceManager.getGenericService().displayApplication(application)
+                + ListToStringFormatter.toString(MENU);
     }
 
     @Override
     protected int process(int input) throws Exception {
-        switch(input) {
-            case 0: createApplication(); return 0;
-            case 1: withdrawApplication(); return 0;
-            case 2: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+        switch (input) {
+            case 0:
+                createApplication();
+                return 0;
+            case 1:
+                withdrawApplication();
+                return 0;
+            case 2:
+                return -1;
+            default:
+                throw new Exception("Please enter a valid input. ");
         }
     }
 
+    /**
+     * Invokes service classes to perform the operations required
+     * in application process.
+     *
+     * @throws Exception when no flat-types are available or
+     * propagated errors from service calls
+     */
     private void createApplication() throws Exception {
-        if(application != null) {
+        if (application != null) {
             throw new Exception("Active application found. ");
         }
         List<Project> projects = serviceManager.getProjectService().getVisibleProjects();
@@ -52,7 +77,7 @@ public class ApplicantBtoApplicationController extends ApplicantController{
         int projectIndex = InputHandler.getIntIndexInput("Select a project to apply for: ");
         Project project = serviceManager.getGenericService().getProject(projects, projectIndex);
         List<FlatType> flatTypes = serviceManager.getApplicationService().getAvailableFlatTypes(user, project);
-        if(flatTypes.size() <= 0) {
+        if (flatTypes.size() <= 0) {
             throw new Exception("No flat types available for you. ");
         }
         System.out.println(ListToStringFormatter.toString(flatTypes));
@@ -62,12 +87,21 @@ public class ApplicantBtoApplicationController extends ApplicantController{
         System.out.println("Application creation success!");
     }
 
+    /**
+     * Invokes service classes to perform the operations required
+     * for withdrawal of an application.
+     *
+     * @throws Exception when no flat-types are available or
+     * propagated errors from service calls
+     */
     private void withdrawApplication() throws Exception {
-        if(application == null) {
+        if (application == null) {
             throw new Exception("No existing application found. ");
         }
-        String input = InputHandler.getStringInput("Confirm to withdraw application? [Y/N] ", RegexPatterns.YES_NO);
-        if(!(input.equals("Y") || input.equals("y"))){
+        String input = InputHandler.getStringInput(
+                "Confirm to withdraw application? [Y/N] ", RegexPatterns.YES_NO
+        );
+        if (!(input.equals("Y") || input.equals("y"))) {
             System.out.println("Application withdrawal cancelled");
             return;
         }

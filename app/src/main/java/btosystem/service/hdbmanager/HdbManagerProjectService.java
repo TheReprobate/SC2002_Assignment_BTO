@@ -40,7 +40,7 @@ public class HdbManagerProjectService extends Service {
 
     public Project getCurrentProject(HdbManager user) {
         ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
-        if(currentTeam == null) {
+        if (currentTeam == null) {
             return null;
         }
         Project projectInCharge = projectTeamManager.retrieveAssignedProject(currentTeam);
@@ -48,7 +48,7 @@ public class HdbManagerProjectService extends Service {
     }
 
     public String displayReport(HdbManager user, Project project) throws Exception {
-        if(!hasProjectAccess(user, project)) {
+        if (!hasProjectAccess(user, project)) {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         List<BtoApplication> applications = projectManager.retrieveApplications(project);
@@ -56,14 +56,14 @@ public class HdbManagerProjectService extends Service {
     }
     
     public void createProject(HdbManager user, String name, Neighborhood neighborhood, LocalDate openTime, LocalDate closeTime) throws Exception {
-        if(projectExist(name)) {
+        if (projectExist(name)) {
             return;
         }
 
         List<Project> projects = dataManager.getProjects();
         List<Project> managerCreatedProjects = userManager.retrieveCreatedProjects(user);
         Project project = projectManager.createProject(name, neighborhood, openTime, closeTime, user);
-        if(!hasValidTime(openTime, closeTime)){
+        if (!hasValidTime(openTime, closeTime)) {
             return;
         }
         ProjectTeam team = projectTeamManager.createProjectTeam(project);
@@ -73,7 +73,7 @@ public class HdbManagerProjectService extends Service {
     }
 
     public void editProject(Project project, LocalDate openTime, LocalDate closeTime) throws Exception {
-        if(!hasValidTime(openTime, closeTime)){
+        if (!hasValidTime(openTime, closeTime)) {
             return;
         }
         projectManager.editProject(project, openTime, closeTime);
@@ -90,17 +90,17 @@ public class HdbManagerProjectService extends Service {
     public boolean projectExist(String name) throws Exception{
         List<Project> projects = dataManager.getProjects();
         boolean exist = projectManager.projectExist(projects, name);
-        if(exist) {
+        if (exist) {
             throw new Exception("Project name already exist. ");
         }
         return exist;
     }
 
     public boolean hasValidTime(LocalDate open, LocalDate close) throws Exception{
-        if(open.isBefore(LocalDate.now())){
+        if (open.isBefore(LocalDate.now())) {
             throw new Exception("Open time is in the past. "); 
         }
-        if(close.isBefore(open)) {
+        if (close.isBefore(open)) {
             throw new Exception("Close time has to be after open time. "); 
         }
         return true;

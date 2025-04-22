@@ -27,11 +27,11 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public ProjectTeam createProjectTeam(Project proj) throws Exception{
-        if(proj == null) {
+        if (proj == null) {
             // Project object does not exist
             throw new Exception("Project object does not exist.");
         }
-        // if(proj.getProjectTeam() != null) {
+        // if (proj.getProjectTeam() != null) {
         //     // ProjectTeam object already exists
         //     throw new Exception("ProjectTeam object already exists.");
         // }
@@ -51,17 +51,17 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     // @Override
     // public int assignProjectManager(ProjectTeam team, HdbManager manager, boolean overwrite) throws Exception{
-    //     if(team == null) {
+    //     if (team == null) {
     //         // Team object does not exist
     //         throw new Exception("Team object does not exist.");
     //     }
-    //     if(manager == null) {
+    //     if (manager == null) {
     //         // Manager object does not exist
     //         throw new Exception("Manager object does not exist.");
     //     }
-    //     if(team.getManager() != null) {
+    //     if (team.getManager() != null) {
     //         // Manager already exists
-    //         if(!overwrite) {
+    //         if (!overwrite) {
     //             throw new Exception("Manager already exists. Overwrite?");
     //         }
     //     }
@@ -72,17 +72,17 @@ public class ProjectTeamController implements ProjectTeamOperations{
 
     @Override
     public int assignProject(ProjectTeam team, HdbManager manager) throws Exception{
-        if(team == null) {
+        if (team == null) {
             // Team object does not exist
             throw new Exception("Team object does not exist.");
         }
-        if(manager == null) {
+        if (manager == null) {
             // Manager object does not exist
             throw new Exception("Manager object does not exist.");
         }
-        if(team.getManager() != null) {
+        if (team.getManager() != null) {
             // Manager already exists
-            // if(!overwrite) {
+            // if (!overwrite) {
             //     throw new Exception("Manager already exists. Overwrite?");
             // }
             throw new Exception("Manager already exists. ");
@@ -102,11 +102,11 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public boolean isInTeam(ProjectTeam team, HdbManager manager) throws Exception{
-        if(team == null) {
+        if (team == null) {
             // Team object does not exist
             throw new Exception("Team object does not exist.");
         }
-        if(manager == null) {
+        if (manager == null) {
             // Manager object does not exist
             throw new Exception("Manager object does not exist.");
         }
@@ -129,20 +129,20 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public int assignProject(ProjectTeam team, HdbOfficer officer) throws Exception{
-        if(team == null) {
+        if (team == null) {
             // Team object does not exist.
             throw new Exception("Team object does not exist.");
         }
-        if(officer == null) {
+        if (officer == null) {
             // Officer does not exist
             throw new Exception("Officer object does not exist.");
         }
-        if(team.getOfficers().stream()
+        if (team.getOfficers().stream()
                     .anyMatch(o -> o.equals(officer))) {
             // Officer already in Project Team
             throw new Exception("Officer already in Project Team.");
         }
-        if(!team.getOfficerRegistrations().stream()
+        if (!team.getOfficerRegistrations().stream()
                     .anyMatch(registration -> registration.getOfficer().equals(officer))) {
             // No registration, cannot assign
             throw new Exception("Officer has not applied for Project.");
@@ -151,18 +151,18 @@ public class ProjectTeamController implements ProjectTeamOperations{
         OfficerRegistration matchedRegistration = null;
 
         for(OfficerRegistration reg : team.getOfficerRegistrations()) {
-            if(reg.getOfficer().equals(officer)) {
+            if (reg.getOfficer().equals(officer)) {
                 matchedRegistration = reg;
                 break;
             }
         }
 
-        if(matchedRegistration == null) {
+        if (matchedRegistration == null) {
             // No registration, cannot assign
             throw new Exception("Officer has not applied for Project.");
         }
 
-        if(matchedRegistration.getStatus() != RegistrationStatus.ACCEPTED) {
+        if (matchedRegistration.getStatus() != RegistrationStatus.ACCEPTED) {
             // Registration not accepted (Yet)
             throw new Exception("Officer Registration is not Accepted for this project.");
         }
@@ -181,11 +181,11 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public boolean isInTeam(ProjectTeam team, HdbOfficer officer) throws Exception {
-        if(team == null) {
+        if (team == null) {
             // Team object does not exist
             throw new Exception("Team object does not exist.");
         }
-        if(officer == null) {
+        if (officer == null) {
             // Officer object does not exist
             throw new Exception("Officer object does not exist.");
         }
@@ -207,15 +207,15 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public int addRegistration(ProjectTeam team, OfficerRegistration registration) throws Exception {
-        if(team == null) {
+        if (team == null) {
             // Team object does not exist.
             throw new Exception("Team object does not exist.");
         }
-        if(registration == null) {
+        if (registration == null) {
             // Registration object does not exist
             throw new Exception("Registration object does not exist.");
         }
-        if(team.getOfficerRegistrations().contains(registration)) {
+        if (team.getOfficerRegistrations().contains(registration)) {
             // Registration already exists
             throw new Exception("Registration already exists.");
         }
@@ -244,7 +244,7 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public String toString(ProjectTeam data) {
-        if(data == null) return "Project Team is empty.";
+        if (data == null) return "Project Team is empty.";
 
         String projName = data.getProject().getName();
 
@@ -263,7 +263,7 @@ public class ProjectTeamController implements ProjectTeamOperations{
             officers += (i + 1) + ") " + listOfficers.get(i).getName() + "\n";
         }
 
-        if(officers.isBlank()) {
+        if (officers.isBlank()) {
             officers = "No officer assigned to project team.";
         }
 
@@ -274,7 +274,7 @@ public class ProjectTeamController implements ProjectTeamOperations{
             registrations += (i + 1) + ") " + listRegistrations.get(i).getOfficer().getName() + "\n";
         }
 
-        if(registrations.isBlank()) {
+        if (registrations.isBlank()) {
             registrations = "No Officers applied to project team.";
         }
 
@@ -306,7 +306,7 @@ public class ProjectTeamController implements ProjectTeamOperations{
      */
     @Override
     public void cleanup(ProjectTeam instance) {
-        if(instance != null)
+        if (instance != null)
         {
             instance.setProject(null);
     

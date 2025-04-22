@@ -29,7 +29,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
 
     @Override
     public void createApplication(Applicant user, Project project, FlatType flatType) throws Exception {
-        if(hasProjectAccess((HdbOfficer) user, project)){
+        if (hasProjectAccess((HdbOfficer) user, project)) {
             throw new Exception("Access Denied. Not allowed to apply for this project. ");
         }
         super.createApplication(user, project, flatType);
@@ -42,7 +42,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
     public BtoApplication getApplication(String nric) throws Exception {
         Applicant applicant = getApplicant(nric);
         BtoApplication application = userManager.retrieveApplication(applicant);
-        if(application == null) {
+        if (application == null) {
             throw new Exception("Access Denied.Applicant does not have existing application. ");
         }
         return application;
@@ -50,22 +50,22 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
 
     public void processApplication(BtoApplication application, HdbOfficer officer) throws Exception {
         Applicant applicant = applicationManager.retrieveApplicant(application);
-        if(!hasApplicationAccess(officer, application)){
+        if (!hasApplicationAccess(officer, application)) {
             throw new Exception("Access Denied. Not allowed to process own application. ");
         }        
         FlatType flatType = application.getFlatType();
-        if(!hasApplicationAccess(officer, application)){
+        if (!hasApplicationAccess(officer, application)) {
             throw new Exception("Access Denied. Not allowed to access this application. ");
         }
-        if(!applicationManager.isReadyToProcess(application)) {
+        if (!applicationManager.isReadyToProcess(application)) {
             throw new Exception("Application is not approved. ");
         }
         List<FlatType> allowedflatTypes = applicationManager.getEligibleFlatTypes(applicant);
-        if(!allowedflatTypes.contains(flatType)) {
+        if (!allowedflatTypes.contains(flatType)) {
             throw new Exception("Not allowed to choose this flat type. ");
         }
         Project applicationProject = applicationManager.retrieveProject(application);
-        if(!projectManager.unitHasSlots(applicationProject, flatType)) {
+        if (!projectManager.unitHasSlots(applicationProject, flatType)) {
             throw new Exception("Flat type does don't have slots. ");
         }
         applicationManager.processApplication(application, officer);
@@ -83,7 +83,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
     }
     private Applicant getApplicant(String nric) throws Exception {
         User user = userManager.retrieveUser(dataManager.getUsers(), nric);
-        if(!(user instanceof Applicant)){
+        if (!(user instanceof Applicant)) {
             throw new Exception("User is not an applicant. ");
         }
         return (Applicant) user;

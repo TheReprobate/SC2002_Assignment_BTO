@@ -31,7 +31,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
     @Override
     protected boolean load() throws Exception {
         project = serviceManager.getProjectService().getCurrentProject(user);
-        if(project == null) {
+        if (project == null) {
             System.out.println("No current project found, join a team. ");
             return false;
         }
@@ -63,7 +63,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
     private void approveRegistration() throws Exception {
         OfficerRegistration registration = getRegistration();
         String input = InputHandler.getStringInput("Confirm to approve registration [Y/N]: ", RegexPatterns.YES_NO);
-        if(!(input.equals("Y") || input.equals("y"))){
+        if (!(input.equals("Y") || input.equals("y"))) {
             return;
         }
         ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
@@ -74,7 +74,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
     private void rejectRegistration() throws Exception {
         OfficerRegistration registration = getRegistration();
         String input = InputHandler.getStringInput("Confirm to reject registration [Y/N]: ", RegexPatterns.YES_NO);
-        if(!(input.equals("Y") || input.equals("y"))){
+        if (!(input.equals("Y") || input.equals("y"))) {
             return;
         }
         ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
@@ -84,7 +84,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
 
 
     private void editProject() throws Exception {
-        if(project == null) {
+        if (project == null) {
             throw new Exception("No current project found. ");
         }
         Project project = serviceManager.getProjectService().getCurrentProject(user);
@@ -94,7 +94,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
             case 0: 
                 LocalDate start = getInputTime("open");
                 LocalDate end = getInputTime("close");
-                if(!serviceManager.getProjectService().hasValidTime(start, end)){
+                if (!serviceManager.getProjectService().hasValidTime(start, end)) {
                     return;
                 }
                 serviceManager.getProjectService().editProject(project, start, end);

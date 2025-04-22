@@ -211,7 +211,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
     @Override
     public boolean hasApplied(List<BtoApplication> applications, Applicant applicant) {
         for(BtoApplication application : applications) {
-            if(application.getApplicant().equals(applicant)) {
+            if (application.getApplicant().equals(applicant)) {
                 return true;
             }
         }

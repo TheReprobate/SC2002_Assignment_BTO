@@ -43,7 +43,7 @@ public class HdbManagerEnquiryService extends Service {
         ProjectTeam team = userManager.retrieveCurrentTeam(user);
         Project currentProj = projectTeamManager.retrieveAssignedProject(team);
         Project enquiryProj = enquiryManager.retrieveProject(enquiry);
-        if(!currentProj.equals(enquiryProj)) {
+        if (!currentProj.equals(enquiryProj)) {
             throw new Exception("Access Denied. No permission to reply to this enquiry. ");
         }
         enquiryManager.replyEnquiry(enquiry, reply);

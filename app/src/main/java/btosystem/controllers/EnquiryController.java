@@ -60,7 +60,6 @@ public class EnquiryController implements EnquiryOperations {
     /**
      * Adds a reply to an enquiry.
      *
-     * @param user User replying to the enquiry
      * @param enquiry Enquiry to be replied to
      * @param reply Reply content
      * @return 1 if reply was successful, else 0

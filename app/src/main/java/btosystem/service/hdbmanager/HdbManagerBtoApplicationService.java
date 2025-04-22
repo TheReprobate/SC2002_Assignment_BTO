@@ -35,25 +35,25 @@ public class HdbManagerBtoApplicationService extends Service {
     }
     
     public void approveApplication(HdbManager user, BtoApplication application) throws Exception {
-        if(!hasApplicationAccess(user, application)) {
+        if (!hasApplicationAccess(user, application)) {
             throw new Exception("Access Denied. Not allowed to access this application. ");
         }
-        if(!applicationManager.isPending(application)) {
+        if (!applicationManager.isPending(application)) {
             throw new Exception("Application has been processed. ");
         }
         Project project = applicationManager.retrieveProject(application);
         FlatType flatType = applicationManager.retrieveFlatType(application);
-        if(!projectManager.unitHasSlots(project, flatType)) {
+        if (!projectManager.unitHasSlots(project, flatType)) {
             throw new Exception("No slots for unit type, unable to approve applicaton. ");
         } 
         applicationManager.approveApplication(application);
     }
 
     public void rejectApplication(HdbManager user, BtoApplication application) throws Exception {
-        if(!hasApplicationAccess(user, application)) {
+        if (!hasApplicationAccess(user, application)) {
             throw new Exception("Access Denied. Not allowed to access this application. ");
         }
-        if(!applicationManager.isPending(application)) {
+        if (!applicationManager.isPending(application)) {
             throw new Exception("Application has been processed. ");
         }
         applicationManager.rejectApplication(application);

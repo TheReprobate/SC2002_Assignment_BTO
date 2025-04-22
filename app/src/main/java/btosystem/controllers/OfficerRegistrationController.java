@@ -24,14 +24,14 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      * @return OfficerRegistration object
      */
     @Override
-    public OfficerRegistration createRegistration(ProjectTeam team, HdbOfficer officer) throws Exception{
+    public OfficerRegistration createRegistration(ProjectTeam team, HdbOfficer officer) throws Exception {
         
-        if(team.getOfficers().stream()
+        if (team.getOfficers().stream()
                     .anyMatch(o -> o.equals(officer))) {
             // Officer already part of project team
             throw new Exception("Officer already part of project team.");
         }
-        if(team.getOfficerRegistrations().stream()
+        if (team.getOfficerRegistrations().stream()
                     .anyMatch(registration -> registration.getOfficer().equals(officer))) {
             // officer already in registration list
             throw new Exception("Officer already applied for registration.");
@@ -44,18 +44,18 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
     /**
      * Approves registration for Officer
      *
-     * @param registration Registration object to accept
+     * @param registrations List of registrations
      * @param index index in list to return
      * @return OfficerRegistration object
      * @throws Exception Exception thrown if registrations does not exist, or index out of bounds
      */
     @Override
-    public OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index) throws Exception{
-        if(registrations == null)
+    public OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, int index) throws Exception {
+        if (registrations == null)
         {
             throw new Exception("List<OfficerRegistration> object does not exist.");
         }
-        if(index > registrations.size())
+        if (index > registrations.size())
         {
             throw new Exception("Index out of bounds.");
         }
@@ -71,11 +71,11 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      */
     @Override
     public int approveRegistration(OfficerRegistration registration) throws Exception {
-        if(registration == null) {
+        if (registration == null) {
             // OfficerRegistration object does not exist
             throw new Exception("Registration object does not exist.");
         }
-        if(registration.getStatus() == RegistrationStatus.ACCEPTED) {
+        if (registration.getStatus() == RegistrationStatus.ACCEPTED) {
             // Registration has already been accepted
             throw new Exception("Registration has already been accepted.");
         }
@@ -92,11 +92,11 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      */
     @Override
     public int rejectRegistration(OfficerRegistration registration) throws Exception {
-        if(registration == null) {
+        if (registration == null) {
             // OfficerRegistration object does not exist
             throw new Exception("Registration object does not exist.");
         }
-        if(registration.getStatus() == RegistrationStatus.REJECTED) {
+        if (registration.getStatus() == RegistrationStatus.REJECTED) {
             // Registration has already been rejected
             throw new Exception("Registration has already been rejected.");
         }
@@ -112,7 +112,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      */
     @Override
     public String toString(OfficerRegistration data) {
-        if(data == null) {
+        if (data == null) {
             // Invalid OfficerRegistration data
             return "Invalid OfficerRegistration data";
         }
@@ -136,7 +136,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      */
     @Override
     public String toString(List<OfficerRegistration> data) {
-        if(data == null) {
+        if (data == null) {
             // Invalid OfficerRegistration data
             return "Invalid List of data.";
         }
@@ -150,7 +150,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
                     data.get(i).getStatus().toString());
         }
 
-        if(registrations.isBlank()) {
+        if (registrations.isBlank()) {
             registrations = "No Officer Registrations applied to project team.";
         }
 
@@ -168,7 +168,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      */
     @Override
     public void cleanup(OfficerRegistration instance) {
-        if(instance != null)
+        if (instance != null)
         {
             instance.setOfficer(null);
             instance.setStatus(null);
@@ -181,7 +181,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      * @param instance List of OfficerRegistration objects to clean
      */
     public void cleanup(List<OfficerRegistration> instance) {
-        if(instance != null)
+        if (instance != null)
         {
             for(OfficerRegistration registration : instance)
             {
@@ -205,7 +205,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
     @Override
     public boolean hasApplied(List<OfficerRegistration> registrations, HdbOfficer officer) {
         for(OfficerRegistration r: registrations) {
-            if(!r.getOfficer().equals(officer)){
+            if (!r.getOfficer().equals(officer)) {
                 continue;
             }
             return true;

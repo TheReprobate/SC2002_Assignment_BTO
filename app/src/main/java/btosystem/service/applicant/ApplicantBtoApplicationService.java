@@ -38,17 +38,17 @@ public class ApplicantBtoApplicationService extends Service {
     public void createApplication(Applicant user, Project project, FlatType flatType) throws Exception {
         List<BtoApplication> projectApplicationRef = projectManager.retrieveApplications(project);
         BtoApplication application = userManager.retrieveApplication(user);
-        if(!projectManager.isOpen(project)) { 
+        if (!projectManager.isOpen(project)) { 
             throw new Exception("Project is unavailable. ");
         }
-        if(applicationManager.hasApplied(projectApplicationRef, user)){
+        if (applicationManager.hasApplied(projectApplicationRef, user)) {
             throw new Exception("Applicant has applied for this project before, unable to reapply. ");
         }
-        if(application != null) {
+        if (application != null) {
             throw new Exception("Applicant has an existing application. ");
         }
         
-        if(!projectManager.unitHasSlots(project, flatType)) {
+        if (!projectManager.unitHasSlots(project, flatType)) {
             throw new Exception("There is no slots available for your requirements.  ");
         }
         application = applicationManager.createApplication(project, user, flatType);
@@ -58,7 +58,7 @@ public class ApplicantBtoApplicationService extends Service {
 
     public void withdrawApplication(Applicant user) throws Exception {
         BtoApplication application = userManager.retrieveApplication(user);
-        if(application == null) {
+        if (application == null) {
             throw new Exception("Applicant does not have an existing application. ");
         }
         applicationManager.withdrawApplication(application);

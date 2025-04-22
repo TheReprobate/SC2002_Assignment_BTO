@@ -36,7 +36,7 @@ public class ApplicantEnquiryService extends Service {
 
     public void editEnquiry(Applicant user, Enquiry enquiry, String content) throws Exception {
         Project enquiryProject = enquiryManager.retrieveProject(enquiry);
-        if(!projectManager.isOpen(enquiryProject)) {
+        if (!projectManager.isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
         if (!(hasPermission(user, enquiry))) {
@@ -50,7 +50,7 @@ public class ApplicantEnquiryService extends Service {
 
     public void deleteEnquiry(Applicant user, Enquiry enquiry) throws Exception {
         Project enquiryProject = enquiryManager.retrieveProject(enquiry);
-        if(!projectManager.isOpen(enquiryProject)) {
+        if (!projectManager.isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
         if (!(hasPermission(user, enquiry))) {
@@ -70,7 +70,7 @@ public class ApplicantEnquiryService extends Service {
         return !enquiryManager.hasReplied(enquiry);
     }
 
-    private boolean hasPermission(Applicant user, Enquiry enquiry){
+    private boolean hasPermission(Applicant user, Enquiry enquiry) {
         Applicant enquiryApplicant = enquiryManager.retrieveApplicant(enquiry);
         return enquiryApplicant.equals(user);
     }
