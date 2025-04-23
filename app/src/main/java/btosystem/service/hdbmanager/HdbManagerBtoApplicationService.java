@@ -1,7 +1,5 @@
 package btosystem.service.hdbmanager;
 
-import java.util.List;
-
 import btosystem.classes.BtoApplication;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
@@ -16,14 +14,24 @@ import btosystem.controllers.interfaces.ProjectTeamOperations;
 import btosystem.controllers.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
+import java.util.List;
 
 public class HdbManagerBtoApplicationService extends Service {
 
-    public HdbManagerBtoApplicationService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
-            OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
-            UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+    public HdbManagerBtoApplicationService(DataManager dataManager, 
+                                            BtoApplicationOperations applicationManager, 
+                                            EnquiryOperations enquiryManager,
+                                            OfficerRegistrationOperations registrationOperations, 
+                                            ProjectTeamOperations projectTeamOperations,
+                                            UserOperations userOperations, 
+                                            ProjectOperations projectOperations) {
+        super(dataManager, 
+            applicationManager, 
+            enquiryManager, 
+            registrationOperations, 
+            projectTeamOperations, 
+            userOperations, 
+            projectOperations);
     }
 
     public List<BtoApplication> getApplications(Project project) {
@@ -34,9 +42,11 @@ public class HdbManagerBtoApplicationService extends Service {
         return applicationManager.filterApplications(getApplications(project), status);
     }
     
-    public void approveApplication(HdbManager user, BtoApplication application) throws Exception {
+    public void approveApplication(HdbManager user, 
+                                    BtoApplication application) throws Exception {
         if (!hasApplicationAccess(user, application)) {
-            throw new Exception("Access Denied. Not allowed to access this application. ");
+            throw new Exception(
+                "Access Denied. Not allowed to access this application. ");
         }
         if (!applicationManager.isPending(application)) {
             throw new Exception("Application has been processed. ");
@@ -44,14 +54,16 @@ public class HdbManagerBtoApplicationService extends Service {
         Project project = applicationManager.retrieveProject(application);
         FlatType flatType = applicationManager.retrieveFlatType(application);
         if (!projectManager.unitHasSlots(project, flatType)) {
-            throw new Exception("No slots for unit type, unable to approve applicaton. ");
+            throw new Exception(
+                "No slots for unit type, unable to approve applicaton. ");
         } 
         applicationManager.approveApplication(application);
     }
 
     public void rejectApplication(HdbManager user, BtoApplication application) throws Exception {
         if (!hasApplicationAccess(user, application)) {
-            throw new Exception("Access Denied. Not allowed to access this application. ");
+            throw new Exception(
+                "Access Denied. Not allowed to access this application. ");
         }
         if (!applicationManager.isPending(application)) {
             throw new Exception("Application has been processed. ");
@@ -59,7 +71,8 @@ public class HdbManagerBtoApplicationService extends Service {
         applicationManager.rejectApplication(application);
     }
 
-    private boolean hasApplicationAccess(HdbManager user, BtoApplication application) throws Exception {
+    private boolean hasApplicationAccess(HdbManager user, 
+                                        BtoApplication application) throws Exception {
         Project applicationProject = applicationManager.retrieveProject(application);
         return hasProjectAccess(user, applicationProject);
     }

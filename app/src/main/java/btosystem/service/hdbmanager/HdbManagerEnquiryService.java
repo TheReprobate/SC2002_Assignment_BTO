@@ -1,7 +1,5 @@
 package btosystem.service.hdbmanager;
 
-import java.util.List;
-
 import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
@@ -14,14 +12,24 @@ import btosystem.controllers.interfaces.ProjectTeamOperations;
 import btosystem.controllers.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
+import java.util.List;
 
 public class HdbManagerEnquiryService extends Service {
 
-    public HdbManagerEnquiryService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
-            OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
-            UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+    public HdbManagerEnquiryService(DataManager dataManager, 
+                                    BtoApplicationOperations applicationManager, 
+                                    EnquiryOperations enquiryManager,
+                                    OfficerRegistrationOperations registrationOperations, 
+                                    ProjectTeamOperations projectTeamOperations,
+                                    UserOperations userOperations, 
+                                    ProjectOperations projectOperations) {
+        super(dataManager, 
+            applicationManager, 
+            enquiryManager, 
+            registrationOperations, 
+            projectTeamOperations, 
+            userOperations, 
+            projectOperations);
     }
 
     public List<Enquiry> getEnquiries(Project project) {
@@ -39,7 +47,7 @@ public class HdbManagerEnquiryService extends Service {
         return projectEnquiries;
     }
 
-    public void replyEnquiry(HdbManager user, Enquiry enquiry, String reply) throws Exception{
+    public void replyEnquiry(HdbManager user, Enquiry enquiry, String reply) throws Exception {
         ProjectTeam team = userManager.retrieveCurrentTeam(user);
         Project currentProj = projectTeamManager.retrieveAssignedProject(team);
         Project enquiryProj = enquiryManager.retrieveProject(enquiry);

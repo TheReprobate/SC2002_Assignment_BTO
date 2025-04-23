@@ -7,7 +7,6 @@ import btosystem.classes.Project;
 import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.controllers.interfaces.BtoApplicationOperations;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

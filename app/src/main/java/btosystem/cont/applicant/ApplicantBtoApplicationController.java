@@ -14,9 +14,10 @@ import java.util.List;
  * High-level controller class specific to the {@link Applicant} role
  * handling BTO application related functionality.
  */
+
 public class ApplicantBtoApplicationController extends ApplicantController {
     private static final String[] MENU = {
-            "Create Application", "Withdrawal Application", "Exit"
+        "Create Application", "Withdrawal Application", "Exit"
     };
     private BtoApplication application;
 
@@ -26,7 +27,9 @@ public class ApplicantBtoApplicationController extends ApplicantController {
      * @param user reference to a {@link Applicant} object
      * @param serviceManager reference to a {@link ApplicantServiceManager}
      */
-    public ApplicantBtoApplicationController(Applicant user, ApplicantServiceManager serviceManager) {
+
+    public ApplicantBtoApplicationController(Applicant user, 
+                                            ApplicantServiceManager serviceManager) {
         super(user, serviceManager);
     }
 
@@ -48,26 +51,25 @@ public class ApplicantBtoApplicationController extends ApplicantController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                createApplication();
-                return 0;
-            case 1:
-                withdrawApplication();
-                return 0;
-            case 2:
-                return -1;
-            default:
-                throw new Exception("Please enter a valid input. ");
+          case 0:
+              createApplication();
+              return 0;
+          case 1:
+              withdrawApplication();
+              return 0;
+          case 2:
+              return -1;
+          default:
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
     /**
-     * Invokes service classes to perform the operations required
-     * in application process.
+     * Invokes service classes to perform the operations required in application process.
      *
-     * @throws Exception when no flat-types are available or
-     * propagated errors from service calls
+     * @throws Exception when no flat-types are available or propagated errors from service calls
      */
+
     private void createApplication() throws Exception {
         if (application != null) {
             throw new Exception("Active application found. ");
@@ -76,7 +78,8 @@ public class ApplicantBtoApplicationController extends ApplicantController {
         System.out.println(serviceManager.getGenericService().displayProject(projects));
         int projectIndex = InputHandler.getIntIndexInput("Select a project to apply for: ");
         Project project = serviceManager.getGenericService().getProject(projects, projectIndex);
-        List<FlatType> flatTypes = serviceManager.getApplicationService().getAvailableFlatTypes(user, project);
+        List<FlatType> flatTypes = serviceManager.getApplicationService()
+                                                .getAvailableFlatTypes(user, project);
         if (flatTypes.size() <= 0) {
             throw new Exception("No flat types available for you. ");
         }
@@ -91,9 +94,9 @@ public class ApplicantBtoApplicationController extends ApplicantController {
      * Invokes service classes to perform the operations required
      * for withdrawal of an application.
      *
-     * @throws Exception when no flat-types are available or
-     * propagated errors from service calls
+     * @throws Exception when no flat-types are available or propagated errors from service calls
      */
+
     private void withdrawApplication() throws Exception {
         if (application == null) {
             throw new Exception("No existing application found. ");
