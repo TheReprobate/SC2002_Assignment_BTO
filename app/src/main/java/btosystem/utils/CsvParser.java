@@ -7,16 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-
-import btosystem.classes.Applicant;
 
 public class CsvParser {
     public static List<List<String>> loadFromCSV(String filename) {
         List<List<String>> records = new ArrayList<>();
         File f = new File(String.format("src\\main\\resources\\%s", filename));
-        System.out.println(f.getAbsoluteFile());
         if(!(f.exists() && !f.isDirectory())) { 
             try {
                 f.createNewFile();

@@ -63,7 +63,7 @@ public class UserController implements UserOperations {
 
     @Override
     public String toString(User data) {
-        return "[" + (data.isMarried() ? "Married" : "Single") +"]" + data.getName() + "-" + data.getAge() + "years old";
+        return "[" + (data.isMarried() ? "Married" : "Single") +"] " + data.getName() + " - " + data.getAge() + "years old\n";
     }
 
     @Override
