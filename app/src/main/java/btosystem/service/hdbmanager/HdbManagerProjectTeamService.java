@@ -1,7 +1,5 @@
 package btosystem.service.hdbmanager;
 
-import java.util.List;
-
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
@@ -16,14 +14,24 @@ import btosystem.controllers.interfaces.ProjectTeamOperations;
 import btosystem.controllers.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
+import java.util.List;
 
 public class HdbManagerProjectTeamService extends Service {
 
-    public HdbManagerProjectTeamService (DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
-            OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
-            UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+    public HdbManagerProjectTeamService(DataManager dataManager, 
+                                        BtoApplicationOperations applicationManager, 
+                                        EnquiryOperations enquiryManager,
+                                        OfficerRegistrationOperations registrationOperations, 
+                                        ProjectTeamOperations projectTeamOperations,
+                                        UserOperations userOperations, 
+                                        ProjectOperations projectOperations) {
+        super(dataManager, 
+            applicationManager, 
+            enquiryManager, 
+            registrationOperations, 
+            projectTeamOperations, 
+            userOperations, 
+            projectOperations);
     }
 
     public ProjectTeam getProjectTeam(Project project) {
@@ -32,18 +40,22 @@ public class HdbManagerProjectTeamService extends Service {
 
     public List<OfficerRegistration> getRegistrations(Project project) {
         ProjectTeam team = projectManager.retrieveProjectTeam(project);
-        List<OfficerRegistration> registrations = projectTeamManager.retrieveOfficerRegistrations(team);
+        List<OfficerRegistration> registrations = projectTeamManager
+                                                .retrieveOfficerRegistrations(team);
         return registrations;
     }
 
-    public List<OfficerRegistration> getRegistrations(Project project, RegistrationStatus status) {
+    public List<OfficerRegistration> getRegistrations(Project project, 
+                                                    RegistrationStatus status) {
         return registrationManager.filterRegistrations(getRegistrations(project), status);
     } 
 
     // do we invalidate all his previous registartions when approved?????????????????????????
-    public void approveRegistration(HdbManager user, ProjectTeam team, OfficerRegistration registration) throws Exception {
+    public void approveRegistration(HdbManager user, 
+                                    ProjectTeam team, 
+                                    OfficerRegistration registration) throws Exception {
         Project project = projectTeamManager.retrieveAssignedProject(team);
-        if(!hasProjectAccess(user, project)){
+        if (!hasProjectAccess(user, project)) {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         HdbOfficer officer = registrationManager.retrieveAppliedOfficer(registration);
@@ -55,9 +67,11 @@ public class HdbManagerProjectTeamService extends Service {
         projectTeamManager.addProjectTeam(userManager.retrieveTeams(officer), team);
     }
 
-    public void rejectRegistration(HdbManager user, ProjectTeam team, OfficerRegistration registration) throws Exception {
+    public void rejectRegistration(HdbManager user, 
+                                    ProjectTeam team, 
+                                    OfficerRegistration registration) throws Exception {
         Project project = projectTeamManager.retrieveAssignedProject(team);
-        if(!hasProjectAccess(user, project)){
+        if (!hasProjectAccess(user, project)) {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         registrationManager.rejectRegistration(registration);

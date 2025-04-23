@@ -42,14 +42,26 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
 
     @Override
     protected int process(int input) throws Exception {
-        switch(input) {
-            case 0: viewProject(); return 0;
-            case 1: approveRegistration(); return 0;
-            case 2: rejectRegistration(); return 0;
-            case 3: editProject(); return 0;
-            case 4: deleteProject(); return -1;
-            case 5: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+        switch (input) {
+          case 0: 
+              viewProject(); 
+              return 0;
+          case 1: 
+              approveRegistration(); 
+              return 0;
+          case 2: 
+              rejectRegistration(); 
+              return 0;
+          case 3: 
+              editProject(); 
+              return 0;
+          case 4: 
+               deleteProject();
+               return -1;
+          case 5: 
+               return -1;
+          default: 
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
@@ -62,7 +74,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         Project project = getProject();
         OfficerRegistration registration = getRegistration(project);
         String input = InputHandler.getStringInput("Confirm to approve registration [Y/N]: ", RegexPatterns.YES_NO);
-        if(!(input.equals("Y") || input.equals("y"))){
+        if (!(input.equals("Y") || input.equals("y"))) {
             return;
         }
         ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
@@ -74,7 +86,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         Project project = getProject();
         OfficerRegistration registration = getRegistration(project);
         String input = InputHandler.getStringInput("Confirm to reject registration [Y/N]: ", RegexPatterns.YES_NO);
-        if(!(input.equals("Y") || input.equals("y"))){
+        if (!(input.equals("Y") || input.equals("y"))) {
             return;
         }
         ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
@@ -120,7 +132,8 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         }
         System.out.println(serviceManager.getGenericService().displayRegistration(registrations));
         int index = InputHandler.getIntIndexInput("Select a registration: ");
-        OfficerRegistration registration = serviceManager.getGenericService().getRegistration(registrations, index);
+        OfficerRegistration registration = serviceManager.getGenericService()
+                                                        .getRegistration(registrations, index);
         return registration;
     }
 

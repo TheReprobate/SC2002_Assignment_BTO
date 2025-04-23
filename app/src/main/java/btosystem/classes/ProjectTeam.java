@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ProjectTeam class, logical implementation is handled by:
+ * ProjectTeam class.
+ * Logical implementation is handled by:
  * {@link btosystem.controllers.ProjectTeamController}
  */
+
 public class ProjectTeam {
     private Project project;
     
@@ -19,6 +21,7 @@ public class ProjectTeam {
      * Actual implementation for creation of object is handled by:
      * {@link btosystem.controllers.ProjectTeamController}
      */
+
     public ProjectTeam(Project project) {
         this.project = project;
         this.manager = null;
@@ -50,18 +53,41 @@ public class ProjectTeam {
         this.manager = manager;
     }
 
+    /**
+     * Modifier method for officer list.
+     * Actual implementation is handled by:
+     * {@link btosystem.controllers.ProjectTeamController}
+     */
+
     public void assignOfficer(HdbOfficer officer) {
         this.officers.add(officer);
     }
     
-    public void addOfficerRegistration(OfficerRegistration officerRegistration)
-    {
+    /**
+     * Modifier method for registration list.
+     * Actual implementation is handled by:
+     * {@link btosystem.controllers.ProjectTeamController}
+     */
+
+    public void addOfficerRegistration(OfficerRegistration officerRegistration) {
         this.officerRegistrations.add(officerRegistration);
     }
+
+    /**
+     * Used for cleanup of object.
+     * Actual implementation is handled by:
+     * {@link btosystem.controllers.ProjectTeamController}
+     */
 
     public void removeOfficers() {
         this.officers.clear();
     }
+
+    /**
+     * Used for cleanup of object.
+     * Actual implementation is handled by:
+     * {@link btosystem.controllers.ProjectTeamController}
+     */
 
     public void removeOfficerRegistrations() {
         this.officerRegistrations.clear();

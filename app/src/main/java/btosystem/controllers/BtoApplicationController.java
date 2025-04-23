@@ -7,7 +7,6 @@ import btosystem.classes.Project;
 import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.controllers.interfaces.BtoApplicationOperations;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -202,7 +201,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
     @Override
     public boolean hasApplied(List<BtoApplication> applications, Applicant applicant) {
         for(BtoApplication application : applications) {
-            if(application.getApplicant().equals(applicant)) {
+            if (application.getApplicant().equals(applicant)) {
                 return true;
             }
         }

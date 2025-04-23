@@ -24,10 +24,20 @@ import btosystem.utils.DataManager;
 
 public class HdbManagerProjectService extends Service {
 
-    public HdbManagerProjectService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
-            OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
-            UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+    public HdbManagerProjectService(DataManager dataManager, 
+                                    BtoApplicationOperations applicationManager, 
+                                    EnquiryOperations enquiryManager,
+                                    OfficerRegistrationOperations registrationOperations, 
+                                    ProjectTeamOperations projectTeamOperations,
+                                    UserOperations userOperations, 
+                                    ProjectOperations projectOperations) {
+        super(dataManager, 
+            applicationManager, 
+            enquiryManager, 
+            registrationOperations, 
+            projectTeamOperations, 
+            userOperations, 
+            projectOperations);
     }
     
     public List<Project> getProject() {
@@ -52,24 +62,31 @@ public class HdbManagerProjectService extends Service {
     }
 
     public String displayReport(HdbManager user, Project project) throws Exception {
-        if(!hasProjectAccess(user, project)) {
+        if (!hasProjectAccess(user, project)) {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         List<BtoApplication> applications = projectManager.retrieveApplications(project);
         return applicationManager.toString(applications);
     }
     
-    public void createProject(HdbManager user, String name, Neighborhood neighborhood, LocalDate openTime, LocalDate closeTime) throws Exception {
-        if(projectExist(name)) {
+    public void createProject(HdbManager user, 
+                            String name, 
+                            Neighborhood neighborhood, 
+                            LocalDate openTime, 
+                            LocalDate closeTime) throws Exception {
+        if (projectExist(name)) {
             return;
         }
 
         List<Project> projects = dataManager.getProjects();
-        List<Project> managerCreatedProjects = userManager.retrieveCreatedProjects(user);
-        Project project = projectManager.createProject(name, neighborhood, openTime, closeTime, user);
-        if(!hasValidTime(openTime, closeTime)){
+        Project project = projectManager
+                        .createProject(name, neighborhood, openTime, closeTime, user);
+        if (!hasValidTime(openTime, closeTime)) {
             return;
         }
+        ProjectTeam team = projectTeamManager.createProjectTeam(project);
+        List<Project> managerCreatedProjects = userManager.retrieveCreatedProjects(user);
+        
         projectManager.addProject(projects, project);
         projectManager.addProject(managerCreatedProjects, project);
     }
@@ -86,20 +103,20 @@ public class HdbManagerProjectService extends Service {
         projectManager.editProject(project, visibility);
     }
 
-    public boolean projectExist(String name) throws Exception{
+    public boolean projectExist(String name) throws Exception {
         List<Project> projects = dataManager.getProjects();
         boolean exist = projectManager.projectExist(projects, name);
-        if(exist) {
+        if (exist) {
             throw new Exception("Project name already exist. ");
         }
         return exist;
     }
 
-    public boolean hasValidTime(LocalDate open, LocalDate close) throws Exception{
-        if(open.isBefore(LocalDate.now())){
+    public boolean hasValidTime(LocalDate open, LocalDate close) throws Exception {
+        if (open.isBefore(LocalDate.now())) {
             throw new Exception("Open time is in the past. "); 
         }
-        if(close.isBefore(open)) {
+        if (close.isBefore(open)) {
             throw new Exception("Close time has to be after open time. "); 
         }
         return true;

@@ -33,9 +33,22 @@ public interface EnquiryOperations
      */
     Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index) throws Exception;
 
+    /**
+     * Retrieves the project associated with an enquiry.
+     *
+     * @param enquiry The enquiry to examine
+     * @return The Project associated with the enquiry
+     */
     Project retrieveProject(Enquiry enquiry);
 
+    /**
+     * Retrieves the applicant who made the enquiry.
+     *
+     * @param enquiry The enquiry to examine
+     * @return The Applicant who made the enquiry
+     */
     Applicant retrieveApplicant(Enquiry enquiry);
+
     /**
      * Deletes an enquiry from a list if it hasn't been replied to.
      *
@@ -66,10 +79,30 @@ public interface EnquiryOperations
      */
     int editEnquiry(Enquiry enquiry, String content) throws Exception;
 
+    /**
+     * Adds an enquiry to a list of enquiries.
+     *
+     * @param enquiries The list to add to
+     * @param enquiry The enquiry to add
+     * @return 1 if addition was successful, 0 otherwise
+     */
     int addEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
 
+    /**
+     * Checks if an enquiry has been replied to.
+     *
+     * @param enquiry The enquiry to check
+     * @return true if the enquiry has been replied to, false otherwise
+     */
     boolean hasReplied(Enquiry enquiry);
 
+    /**
+     * Filters enquiries by their reply status.
+     *
+     * @param enquiries The list of enquiries to filter
+     * @param replied Whether to filter for replied or unreplied enquiries
+     * @return The filtered list of enquiries
+     */
     List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied);
 
     /**

@@ -10,14 +10,28 @@ import btosystem.service.HdbManagerServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
 
+/**
+ * High-level controller class specific to the {@link HdbManager} role
+ * handling enquiry related functionality.
+ */
 public class HdbManagerEnquiryController extends HdbManagerController {
     private static final String[] MENU = {"Reply Enquiry", "Exit"};
     private List<Project> projects;
     private List<Enquiry> enquiries;
+
+    /**
+     * Constructor for the {@link HdbManager} Enquiry controller.
+     *
+     * @param user reference to a {@link HdbManager} object
+     * @param serviceManager reference to a {@link HdbManagerServiceManager}
+     */
     public HdbManagerEnquiryController(HdbManager user, HdbManagerServiceManager serviceManager) {
         super(user, serviceManager);
     }
 
+    /**
+     * Retrieves the project's un-replied enquiries via service call.
+     */
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getCurrentProject(user);
@@ -36,18 +50,29 @@ public class HdbManagerEnquiryController extends HdbManagerController {
     
     @Override
     protected String display() {
-        return serviceManager.getGenericService().displayEnquiry(enquiries) + ListToStringFormatter.toString(MENU);
+        return serviceManager.getGenericService().displayEnquiry(enquiries)
+                + ListToStringFormatter.toString(MENU);
     }
 
     @Override
     protected int process(int input) throws Exception {
-        switch(input) {
-            case 0: replyEnquiry();return 0;
-            case 1: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+        switch (input) {
+          case 0:
+              replyEnquiry();
+              return 0;
+          case 1:
+              return -1;
+          default:
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
+    /**
+     * Invokes service classes to perform the operations required
+     * to reply to an enquiry.
+     *
+     * @throws Exception propagated errors from service calls
+     */
     private void replyEnquiry() throws Exception {
         Enquiry enquiry = getEnquiry();
         String reply = InputHandler.getStringInput("Input reply: ");
@@ -55,6 +80,12 @@ public class HdbManagerEnquiryController extends HdbManagerController {
         System.out.println("Enquiry reply successful!");
     }
 
+    /**
+     * Requests user to pick an enquiry and invoke service class to return
+     * enquiry object.
+     *
+     * @throws Exception propagated errors from service calls
+     */
     private Enquiry getEnquiry() throws Exception {
         int index = InputHandler.getIntIndexInput("Select an enquiry: ");
         Enquiry enquiry = serviceManager.getGenericService().getEnquiry(enquiries, index);

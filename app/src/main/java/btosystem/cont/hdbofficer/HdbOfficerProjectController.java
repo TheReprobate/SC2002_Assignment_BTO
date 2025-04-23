@@ -1,23 +1,37 @@
 package btosystem.cont.hdbofficer;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
 import btosystem.service.HdbOfficerServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
 import btosystem.utils.RegexPatterns;
+import java.time.LocalDate;
+import java.util.List;
 
-public class HdbOfficerProjectController extends HdbOfficerController{
-    private static final String[] MENU = {"Register for project", "Exit"};
+/**
+ * High-level controller class specific to the {@link HdbOfficer} role
+ * handling Project related functionality.
+ */
+public class HdbOfficerProjectController extends HdbOfficerController {
+    private static final String[] MENU = {
+        "Register for project", "Exit"
+    };
     private List<Project> projects;
 
+    /**
+     * Constructor for the {@link HdbOfficer} Project controller.
+     *
+     * @param user reference to a {@link HdbOfficer} object
+     * @param serviceManager reference to a {@link HdbOfficerServiceManager}
+     */
     public HdbOfficerProjectController(HdbOfficer user, HdbOfficerServiceManager serviceManager) {
         super(user, serviceManager);
     }
 
+    /**
+     * Retrieves the project's that have started from today.
+     */
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getProjects(null, LocalDate.now());
@@ -29,22 +43,33 @@ public class HdbOfficerProjectController extends HdbOfficerController{
 
     @Override
     protected String display() {
-        return serviceManager.getGenericService().displayProject(projects) + ListToStringFormatter.toString(MENU);
+        return serviceManager.getGenericService().displayProject(projects)
+                + ListToStringFormatter.toString(MENU);
     }
 
     @Override
     protected int process(int input) throws Exception {
-        switch(input) {
-            case 0: registerProject();return 0;
-            case 1: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+        switch (input) {
+          case 0:
+              registerProject();
+              return 0;
+          case 1: 
+              return -1;
+          default: 
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
+    /**
+     * Invokes service classes to perform the operations required
+     * to register for a project.
+     *
+     * @throws Exception propagated errors from service calls
+     */
     private void registerProject() throws Exception {
         Project project = getProject();
         String input = InputHandler.getStringInput("Confirm to register for project? [Y/N]: ", RegexPatterns.YES_NO);
-        if(!(input.equals("Y") || input.equals("y"))){
+        if (!(input.equals("Y") || input.equals("y"))) {
             System.out.println("Project registration cancelled.");
             return;
         }
@@ -52,6 +77,12 @@ public class HdbOfficerProjectController extends HdbOfficerController{
         System.out.println("Registration Success!");
     }
 
+    /**
+     * Requests user to pick a project and invoke service class to return
+     * project object.
+     *
+     * @throws Exception propagated errors from service calls
+     */
     private Project getProject() throws Exception {
         int index = InputHandler.getIntIndexInput("Select a project: ");
         Project project = serviceManager.getGenericService().getProject(projects, index);

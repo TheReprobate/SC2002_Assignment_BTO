@@ -14,14 +14,23 @@ import btosystem.controllers.interfaces.ProjectTeamOperations;
 import btosystem.controllers.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
 
 public class ApplicantBtoApplicationService extends Service {
 
-    public ApplicantBtoApplicationService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
-            OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
-            UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+    public ApplicantBtoApplicationService(DataManager dataManager, 
+                                        BtoApplicationOperations applicationManager, 
+                                        EnquiryOperations enquiryManager,
+                                        OfficerRegistrationOperations registrationOperations, 
+                                        ProjectTeamOperations projectTeamOperations,
+                                        UserOperations userOperations, 
+                                        ProjectOperations projectOperations) {
+        super(dataManager, 
+            applicationManager, 
+            enquiryManager, 
+            registrationOperations, 
+            projectTeamOperations, 
+            userOperations, 
+            projectOperations);
     }
 
     public BtoApplication getApplication(Applicant user) {
@@ -35,16 +44,18 @@ public class ApplicantBtoApplicationService extends Service {
         return eligibleFlatTypes;
     }
     
-    public void createApplication(Applicant user, Project project, FlatType flatType) throws Exception {
+    public void createApplication(Applicant user, 
+                                Project project, 
+                                FlatType flatType) throws Exception {
         List<BtoApplication> projectApplicationRef = projectManager.retrieveApplications(project);
         BtoApplication application = userManager.retrieveApplication(user);
-        if(!projectManager.isOpen(project)) { 
+        if (!projectManager.isOpen(project)) { 
             throw new Exception("Project is unavailable. ");
         }
-        if(applicationManager.hasApplied(projectApplicationRef, user)){
+        if (applicationManager.hasApplied(projectApplicationRef, user)) {
             throw new Exception("Applicant has applied for this project before, unable to reapply. ");
         }
-        if(application != null) {
+        if (application != null) {
             throw new Exception("Applicant has an existing application. ");
         }
         if(!projectManager.unitHasSlots(project, flatType)) {
@@ -57,11 +68,10 @@ public class ApplicantBtoApplicationService extends Service {
 
     public void withdrawApplication(Applicant user) throws Exception {
         BtoApplication application = userManager.retrieveApplication(user);
-        if(application == null) {
+        if (application == null) {
             throw new Exception("Applicant does not have an existing application. ");
         }
         applicationManager.withdrawApplication(application);
         userManager.removeApplication(user);
     }
-
 }

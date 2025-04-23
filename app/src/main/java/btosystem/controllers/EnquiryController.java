@@ -61,7 +61,6 @@ public class EnquiryController implements EnquiryOperations {
     /**
      * Adds a reply to an enquiry.
      *
-     * @param user User replying to the enquiry
      * @param enquiry Enquiry to be replied to
      * @param reply Reply content
      * @return 1 if reply was successful, else 0
@@ -168,7 +167,7 @@ public class EnquiryController implements EnquiryOperations {
 
     @Override
     public List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied) {
-        return enquiries.stream().filter(e -> e.hasReplied() == replied).collect(Collectors.toList());
+        return enquiries.stream().filter(e -> e.hasReplied() == replied).collect(Collectors.toList()); //182
     }
 
     /**
