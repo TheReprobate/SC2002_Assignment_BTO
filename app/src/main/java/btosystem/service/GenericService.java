@@ -76,7 +76,11 @@ public class GenericService extends Service {
         if (enquiry == null) {
             return "";
         }
-        return enquiryManager.toString(enquiry);
+        Project project = enquiryManager.retrieveProject(enquiry);
+        if (project == null) {
+            return "Project no longer exist" + enquiryManager.toString(enquiry);
+        }
+        return projectManager.toString(project) + enquiryManager.toString(enquiry);
     }
 
 
@@ -140,7 +144,11 @@ public class GenericService extends Service {
         if (application == null) {
             return "";
         }
-        return applicationManager.toString(application);
+        Project project = applicationManager.retrieveProject(application);
+        if (project == null) {
+            return "Project no longer exist" + applicationManager.toString(application);
+        }
+        return projectManager.toString(project) + userManager.toString(applicationManager.retrieveApplicant(application)) + applicationManager.toString(application);
     }
 
     /**

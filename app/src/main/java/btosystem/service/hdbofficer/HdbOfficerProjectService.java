@@ -5,6 +5,7 @@ import java.util.List;
 
 import btosystem.classes.BtoApplication;
 import btosystem.classes.Enquiry;
+import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
@@ -34,8 +35,19 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
     }
 
     public Project getCurrentProject(HdbOfficer user) throws Exception {
-        ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
+        ProjectTeam currentTeam = getCurrentTeam(user);
         Project projectInCharge = projectTeamManager.retrieveAssignedProject(currentTeam);
         return projectInCharge;
+    }
+
+    private ProjectTeam getCurrentTeam(HdbOfficer user) throws Exception{
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.isOpen(p)) {
+                return t;
+            }
+        }
+        throw new Exception("Currently not in a team.");
     }
 }

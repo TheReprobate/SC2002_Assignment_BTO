@@ -208,39 +208,22 @@ public class ProjectController implements ProjectOperations {
     }
 
     /**
-     * Method for updating project's application period.
-     *
-     * @param project Project object
-     * @param openTime Application open date to update to
-     * @param closeTime Application close date to update to
-     * @return 1 for successful update
-     */
-    @Override
-    public int editProject(Project project, LocalDate openTime, LocalDate closeTime) {
-        if (project.getOpenTime().isBefore(openTime)) {
-            project.setOpenTime(openTime);
-            project.setCloseTime(closeTime);
-        } else {
-            throw new IllegalArgumentException(
-                    "Open date cannot be before close date! Are you a time traveller?");
-        }
-
-        return 1;
-    }
-
-    /**
      * Method for deleting a project.
      *
      * @param projects List of projects
      * @param project Project to be deleted from the list
      * @return 1 for successful deletion else 0
+     * @throws Exception 
      */
     @Override
-    public int deleteProject(List<Project> projects, Project project) {
+    public int deleteProject(List<Project> projects, Project project) throws Exception {
         // .remove already checks whether element exists in collection
         // so we do not need to check .contains
         boolean removed = projects.remove(project);
-        return removed ? 1 : 0;
+        if(!removed) {
+            throw new Exception("Project does not exist. ");
+        }
+        return 1;
     }
 
     /**
@@ -258,16 +241,6 @@ public class ProjectController implements ProjectOperations {
             }
         }
         return false;
-    }
-
-    /**
-     * Cleanup operation to ensure no dangling reference.
-     * Unused for now.
-     */
-    @Override
-    public void cleanup(Project instance) {
-        // When we delete a project,
-        //instance.setProjectTeam(null);
     }
 
     /**
@@ -334,7 +307,7 @@ public class ProjectController implements ProjectOperations {
 
     @Override
     public boolean hasTimeOverlap(Project firstProject, Project secondProject) {
-        return secondProject.getOpenTime().isBefore(firstProject.getCloseTime());
+        return secondProject.getOpenTime().isBefore(firstProject.getCloseTime()) && firstProject.getOpenTime().isBefore(secondProject.getCloseTime());
     }
 
     @Override
@@ -357,5 +330,11 @@ public class ProjectController implements ProjectOperations {
     @Override
     public List<FlatType> getAvailableFlatTypes(Project project) {
         return new ArrayList<>(project.getUnits().keySet());
+    }
+
+    @Override
+    public int editProject(Project project, boolean visibility) {
+        project.setVisible(visibility);
+        return 1;
     }
 }

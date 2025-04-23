@@ -26,9 +26,9 @@ public class UserController implements UserOperations {
      * @param username Username to authenticate
      * @param password Password to verify
      * @return Authenticated User object if successful, null otherwise
-     * @throws Exception 
+     * @throws Exception  //29
      */
-    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception {
+    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception {//31
         User user = retrieveUser(users, username);
         if (user != null && user.getPassword().equals(password)) {
             return user;
@@ -47,13 +47,13 @@ public class UserController implements UserOperations {
     }
 
     @Override
-    public ProjectTeam retrieveCurrentTeam(HdbOfficer officer) {
-        return officer.getCurrentTeam();
+    public List<ProjectTeam> retrieveTeams(HdbOfficer officer) {
+        return officer.getTeams();
     }
 
     @Override
-    public ProjectTeam retrieveCurrentTeam(HdbManager manager) {
-        return manager.getCurrentTeam();
+    public List<ProjectTeam> retrieveTeams(HdbManager manager) {
+        return manager.getTeams();
     }
 
     @Override
@@ -63,12 +63,12 @@ public class UserController implements UserOperations {
 
     @Override
     public String toString(User data) {
-        return data.getName() + " (" + data.getNric() + ")";
+        return "[" + (data.isMarried() ? "Married" : "Single") +"]" + data.getName() + "-" + data.getAge() + "years old";
     }
 
     @Override
     public void removeApplication(Applicant applicant) throws Exception {
-        if(applicant.getActiveApplication() == null) {
+        if (applicant.getActiveApplication() == null) {
             throw new Exception("Applicant does not have active application. ");
         }
         applicant.setActiveApplication(null);
@@ -84,7 +84,7 @@ public class UserController implements UserOperations {
     }
 
     @Override
-    public void addApplicant(HashMap<String, User> users, String nric, String name, int age, boolean married) throws Exception {
+    public void addApplicant(HashMap<String, User> users, String nric, String name, int age, boolean married) throws Exception {//87
         if (users.get(nric) != null) {
             throw new Exception("User already exist. ");
         }
@@ -96,14 +96,9 @@ public class UserController implements UserOperations {
     public void setApplication(Applicant applicant, BtoApplication application) {
         applicant.setActiveApplication(application);
     }
-
+    
     @Override
-    public void setTeam(ProjectTeam team, HdbManager user) {
-        user.setCurrentTeam(team);
-    }
-
-    @Override
-    public void setTeam(ProjectTeam team, HdbOfficer user) {
-        user.setCurrentTeam(team);
+    public void changePassword(User user, String password) {
+        user.setPassword(password);
     }
 }

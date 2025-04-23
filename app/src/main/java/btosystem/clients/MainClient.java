@@ -14,6 +14,7 @@ import btosystem.service.ApplicantServiceManager;
 import btosystem.service.HdbManagerServiceManager;
 import btosystem.service.HdbOfficerServiceManager;
 import btosystem.service.user.UserAccountService;
+import btosystem.utils.DataManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
 
@@ -29,6 +30,7 @@ public class MainClient {
     private HdbOfficerServiceManager hdbOfficerServiceManager;
     private HdbManagerServiceManager hdbManagerServiceManager;
     private UserAccountService accountService;
+    private DataManager dManager;
     private User user;
 
     /**
@@ -40,26 +42,28 @@ public class MainClient {
      * @param accountService service for user account operations
      */
     public MainClient(ApplicantServiceManager applicantServiceManager,
-            HdbOfficerServiceManager hdbOfficerServiceManager,
-            HdbManagerServiceManager hdbManagerServiceManager,
-            UserAccountService accountService) {
+            HdbOfficerServiceManager hdbOfficerServiceManager, HdbManagerServiceManager hdbManagerServiceManager,
+            UserAccountService accountService, DataManager dManager) {
         this.applicantServiceManager = applicantServiceManager;
         this.hdbOfficerServiceManager = hdbOfficerServiceManager;
         this.hdbManagerServiceManager = hdbManagerServiceManager;
         this.accountService = accountService;
+        this.dManager = dManager;
     }
 
-    /**
-     * Starts the main application loop.
-     */
-    public void run() {
-        UserAccountController accountController = new UserAccountController(accountService);
-        while (true) {
-            if (user == null) {
+    public void run(){
+        while(true) {
+            UserAccountController accountController = new UserAccountController(accountService);
+            if(user == null) {
                 accountController.execute();
                 user = accountController.getUser();
+                dManager.save();
             }
-            getController().execute();
+            Controller c = getController();
+            if(c != null) {
+                c.execute();
+            }
+            dManager.save();
             user = null;
         }
     }
@@ -71,7 +75,10 @@ public class MainClient {
         if (user instanceof HdbOfficer) {
             return getController((HdbOfficer) user);
         }
-        return getController((Applicant) user);
+        if(user instanceof Applicant) {
+            return getController((Applicant) user);
+        }
+        return null;
     }
 
     private Controller getController(HdbManager user) {

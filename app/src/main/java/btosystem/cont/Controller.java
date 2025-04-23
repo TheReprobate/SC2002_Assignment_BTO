@@ -15,9 +15,12 @@ public abstract class Controller {
     public void execute() {
         while (true) {
             try {
-                if (!load()) {
-                    return;
-                }
+                if(!load()) return;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+            try {
                 System.out.println(display());
                 int input = InputHandler.getIntIndexInput("Select an option: ");
                 if (process(input) == -1) {
