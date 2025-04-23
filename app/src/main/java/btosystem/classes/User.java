@@ -1,5 +1,8 @@
 package btosystem.classes;
 
+/**
+ * Abstract class User.
+ */
 public abstract class User {
     private String nric;
     private String name;
@@ -7,6 +10,9 @@ public abstract class User {
     private int age;
     private boolean married;
 
+    /**
+     * Constructor for User.
+     */
     public User(String nric, String name, int age, boolean married) {
         this.nric = nric;
         this.name = name;

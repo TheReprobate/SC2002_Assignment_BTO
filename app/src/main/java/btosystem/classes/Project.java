@@ -45,6 +45,7 @@ public class Project {
         this.units = new HashMap<FlatType, Integer>();
         this.createdBy = createdBy;
     }
+
     public String getName() {
         return name;
     }
@@ -113,6 +114,9 @@ public class Project {
         this.projectTeam = projectTeam;
     }
 
+    /**
+     * Method for adding BTO application.
+     */
     public void addBtoApplication(BtoApplication btoApplication) {
         this.btoApplications.add(btoApplication);
     }

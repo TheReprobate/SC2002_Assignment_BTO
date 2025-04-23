@@ -18,7 +18,12 @@ import btosystem.utils.DataManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
 
-
+/**
+ * The main client class that manages the application's user interface flow
+ * and routes users to appropriate controllers based on their roles.
+ * This class serves as the entry point for the application's user interface,
+ * handling user authentication and delegating to role-specific controllers.
+ */
 public class MainClient {
     private static final String[] OFFICER_MENU = {"HDB Officer", "Applicant"};
     private ApplicantServiceManager applicantServiceManager;
@@ -27,9 +32,15 @@ public class MainClient {
     private UserAccountService accountService;
     private DataManager dManager;
     private User user;
-    
 
-
+    /**
+     * Constructs a new MainClient with the required service managers.
+     *
+     * @param applicantServiceManager service manager for applicant operations
+     * @param hdbOfficerServiceManager service manager for HDB officer operations
+     * @param hdbManagerServiceManager service manager for HDB manager operations
+     * @param accountService service for user account operations
+     */
     public MainClient(ApplicantServiceManager applicantServiceManager,
             HdbOfficerServiceManager hdbOfficerServiceManager, HdbManagerServiceManager hdbManagerServiceManager,
             UserAccountService accountService, DataManager dManager) {
@@ -56,11 +67,11 @@ public class MainClient {
         }
     }
 
-    private Controller getController(){
-        if (user instanceof HdbManager){
+    private Controller getController() {
+        if (user instanceof HdbManager) {
             return getController((HdbManager) user);
         }
-        if(user instanceof HdbOfficer) {
+        if (user instanceof HdbOfficer) {
             return getController((HdbOfficer) user);
         }
         if(user instanceof Applicant) {
@@ -78,15 +89,15 @@ public class MainClient {
     }
 
     private Controller getController(HdbOfficer user) {
-        while(true) {
+        while (true) {
             System.out.println(ListToStringFormatter.toString(OFFICER_MENU));
             int option;
             try {
                 option = InputHandler.getIntIndexInput("Your role: ");
-                if(option == 0){
+                if (option == 0) {
                     return new HdbOfficerMainController(user, hdbOfficerServiceManager);
                 }
-                if(option == 1){
+                if (option == 1) {
                     return new ApplicantMainController(user, hdbOfficerServiceManager);
                 }
             } catch (Exception e) {

@@ -1,5 +1,7 @@
 package btosystem.utils;
 
+import btosystem.classes.Project;
+import btosystem.classes.User;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,9 +15,7 @@ import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
-import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
-import btosystem.classes.User;
 import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
@@ -24,10 +24,17 @@ import btosystem.classes.enums.RegistrationStatus;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Manages and provides access to the application's core data structures
+ * including projects and user accounts.
+ */
 public class DataManager {
     private List<Project> projects;
     private HashMap<String, User> users;
 
+    /**
+     * Constructs a new DataManager with empty collections.
+     */
     public DataManager() {
         projects = new ArrayList<>();
         users = new HashMap<>();
