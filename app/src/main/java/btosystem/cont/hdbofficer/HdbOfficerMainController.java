@@ -11,7 +11,7 @@ import btosystem.utils.ListToStringFormatter;
  */
 public class HdbOfficerMainController extends HdbOfficerController {
     private static final String[] MENU = {
-            "Application Service", "Enquiry Service", "Project Service", "Exit"
+        "Application Service", "Enquiry Service", "Project Service", "Exit"
     };
     private HdbOfficerBtoApplicationController applicationController;
     private HdbOfficerEnquiryController enquiryController;
@@ -45,19 +45,20 @@ public class HdbOfficerMainController extends HdbOfficerController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                applicationController.execute();
-                return 0;
-            case 1:
-                enquiryController.execute();
-                return 0;
-            case 2:
-                projectController.execute();
-                return 0;
-            case 3: return -1;
-            default:
-                System.out.println("Please enter a valid input. ");
-                return 0;
+          case 0:
+              applicationController.execute();
+              return 0;
+          case 1:
+              enquiryController.execute();
+              return 0;
+          case 2:
+              projectController.execute();
+              return 0;
+          case 3: 
+              return -1;
+          default:
+              System.out.println("Please enter a valid input. ");
+              return 0;
         }
     }
 }

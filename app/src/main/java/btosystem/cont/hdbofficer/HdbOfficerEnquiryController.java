@@ -23,6 +23,7 @@ public class HdbOfficerEnquiryController extends HdbOfficerController {
      * @param user reference to a {@link HdbOfficer} object
      * @param serviceManager reference to a {@link HdbOfficerServiceManager}
      */
+
     public HdbOfficerEnquiryController(
             HdbOfficer user, HdbOfficerServiceManager serviceManager) {
         super(user, serviceManager);
@@ -31,6 +32,7 @@ public class HdbOfficerEnquiryController extends HdbOfficerController {
     /**
      * Retrieves the project's un-replied enquiries via service call.
      */
+
     @Override
     protected boolean load() throws Exception {
         project = serviceManager.getProjectService().getCurrentProject(user);
@@ -48,18 +50,20 @@ public class HdbOfficerEnquiryController extends HdbOfficerController {
     
     @Override
     protected String display() {
-        return serviceManager.getGenericService().displayEnquiry(enquiries) +
-                ListToStringFormatter.toString(MENU);
+        return serviceManager.getGenericService().displayEnquiry(enquiries) 
+                + ListToStringFormatter.toString(MENU);
     }
 
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                replyEnquiry();
-                return 0;
-            case 1: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+          case 0:
+              replyEnquiry();
+              return 0;
+          case 1: 
+              return -1;
+          default: 
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
@@ -69,6 +73,7 @@ public class HdbOfficerEnquiryController extends HdbOfficerController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void replyEnquiry() throws Exception {
         Enquiry enquiry = getEnquiry();
         String reply = InputHandler.getStringInput("Input reply: ");
@@ -82,6 +87,7 @@ public class HdbOfficerEnquiryController extends HdbOfficerController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private Enquiry getEnquiry() throws Exception {
         int index = InputHandler.getIntIndexInput("Select an enquiry: ");
         Enquiry enquiry = serviceManager.getGenericService().getEnquiry(enquiries, index);

@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class HdbManagerProjectController extends HdbManagerController {
     private static final String[] PROJECT_MENU = {
-            "View Enquiries", "View Applications", "View Project Team", "Exit"
+        "View Enquiries", "View Applications", "View Project Team", "Exit"
     };
 
     /**
@@ -30,6 +30,7 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
      * @param user reference to a {@link HdbManager} object
      * @param serviceManager reference to a {@link HdbManagerServiceManager}
      */
+
     public HdbManagerProjectController(HdbManager user, HdbManagerServiceManager serviceManager) {
         super(user, serviceManager);
     }
@@ -43,6 +44,7 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
      * @return the user's selected neighbourhood
      * @throws Exception invalid input from user
      */
+
     protected Neighborhood getInputNeighborhood() throws Exception {
         Neighborhood[] neighborhoods = Neighborhood.values();
         System.out.println(ListToStringFormatter.toString(neighborhoods));
@@ -59,6 +61,7 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
      * @return the user's selected flat type
      * @throws Exception invalid input from user
      */
+
     protected FlatType getInputFlat() throws Exception {
         FlatType[] flatTypes = FlatType.values();
         System.out.println(ListToStringFormatter.toString(flatTypes));
@@ -75,6 +78,7 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
      * @param type which field the date is for, e.g., start date
      * @return the user's entered Date as {@link LocalDate}
      */
+
     protected LocalDate getInputTime(String type) throws Exception {
         String prompt = String.format("Input %s date (dd/MM/yyy): ", type);
         String input = InputHandler.getStringInput(prompt, RegexPatterns.DATE);
@@ -89,41 +93,42 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
      * @param project the selected project
      * @throws Exception propagated errors from service calls or invalid input from user
      */
+
     protected void viewProject(Project project) throws Exception {
         System.out.println(serviceManager.getGenericService().displayProject(project));
         System.out.println(ListToStringFormatter.toString(PROJECT_MENU));
         int input = InputHandler.getIntIndexInput("Select an option: ");
         switch (input) {
-            case 0:
-                List<Enquiry> enquiries =
-                        serviceManager.getEnquiryService().getEnquiries(project);
+          case 0:
+              List<Enquiry> enquiries =
+                    serviceManager.getEnquiryService().getEnquiries(project);
 
-                if (enquiries.size() <= 0) {
-                    System.out.println("No enquiries found. ");
-                    break;
-                }
-                System.out.println(serviceManager.getGenericService().displayEnquiry(enquiries));
-                break;
-            case 1:
-                List<BtoApplication> applications =
+              if (enquiries.size() <= 0) {
+                  System.out.println("No enquiries found. ");
+                  break;
+              }
+              System.out.println(serviceManager.getGenericService().displayEnquiry(enquiries));
+              break;
+          case 1:
+              List<BtoApplication> applications =
                         serviceManager.getApplicationService().getApplications(project);
 
-                if (applications.size() <= 0) {
-                    System.out.println("No enquiries found. ");
-                    break;
-                }
-                System.out.println(
+              if (applications.size() <= 0) {
+                  System.out.println("No enquiries found. ");
+                  break;
+              }
+              System.out.println(
                         serviceManager.getGenericService().displayApplication(applications)
-                );
-                break;
-            case 2:
-                ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
-                System.out.println(serviceManager.getGenericService().displayTeam(team));
-                break;
-            case 3:
-                break;
-            default:
-                throw new Exception("Option does not exist. ");
+              );
+              break;
+          case 2:
+              ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
+              System.out.println(serviceManager.getGenericService().displayTeam(team));
+              break;
+          case 3:
+              break;
+          default:
+              throw new Exception("Option does not exist. ");
         }
     }
 }

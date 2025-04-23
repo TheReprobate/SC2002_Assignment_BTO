@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class HdbOfficerProjectController extends HdbOfficerController {
     private static final String[] MENU = {
-            "Register for project", "Exit"
+        "Register for project", "Exit"
     };
     private List<Project> projects;
 
@@ -50,11 +50,13 @@ public class HdbOfficerProjectController extends HdbOfficerController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                registerProject();
-                return 0;
-            case 1: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+          case 0:
+              registerProject();
+              return 0;
+          case 1: 
+              return -1;
+          default: 
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
