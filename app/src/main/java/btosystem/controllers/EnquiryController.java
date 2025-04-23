@@ -103,11 +103,9 @@ public class EnquiryController implements EnquiryOperations {
         StringBuilder sb = new StringBuilder();
 
         // Format: No. | Project Name | Applicant Name | Enquiry | Created At | Replied
-        String format = "%-4s %-25s %-15s %-60s %-12s %-10s%n";
+        String format = "%-4s %-60s %-12s %-10s%n";
         sb.append(String.format(format,
                 "No.",
-                "Project Name",
-                "Applicant",
                 "Enquiry",
                 "Created At",
                 "Replied"));
@@ -119,11 +117,10 @@ public class EnquiryController implements EnquiryOperations {
 
             sb.append(String.format(format,
                     "[" + count++ + "]",
-                    e.getProject().getName(),
-                    e.getApplicant().getName(),
                     e.getContent(),
                     createdAtDate,
-                    e.hasReplied() ? "Yes" : "No"));
+                    e.hasReplied() ? e.getReply() : "No")
+            );
         }
 
         return sb.toString();

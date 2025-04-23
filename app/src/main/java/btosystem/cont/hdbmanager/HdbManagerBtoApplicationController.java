@@ -53,7 +53,9 @@ public class HdbManagerBtoApplicationController extends HdbManagerController {
 
     @Override
     protected String display() {
-        return serviceManager.getGenericService().displayApplication(applications)
+        return "List of Pending Applications: \n"
+                + serviceManager.getGenericService().displayApplication(applications)
+                + "\n"
                 + ListToStringFormatter.toString(MENU);
     }
 
