@@ -105,7 +105,7 @@ public class HdbManagerBtoApplicationService extends Service {
         List<BtoApplication> applications = projectManager.retrieveApplications(project);
         for(BtoApplication a: applications) {
             Applicant applicant = applicationManager.retrieveApplicant(a);
-            sb.append(userManager.toString(applicant)).append(applicationManager.toString(a));
+            sb.append(userManager.toString(applicant)).append(applicationManager.toString(a)).append('\n');
         }
         return sb.toString();
     }

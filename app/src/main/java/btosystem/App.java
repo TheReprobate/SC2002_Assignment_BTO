@@ -116,7 +116,10 @@ public class App {
                 officerProjectService, officerProjectTeamService, gService);
 
         
-        MainClient client = new MainClient(applicantServiceManager, hdbOfficerServiceManager, hdbMangerServiceManager, accountService, dManager);
+        MainClient client = new MainClient(
+                applicantServiceManager, hdbOfficerServiceManager,
+                hdbMangerServiceManager, accountService, 
+                dManager);
         client.run();
     }
 }

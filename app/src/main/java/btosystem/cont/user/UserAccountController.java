@@ -61,8 +61,8 @@ public class UserAccountController extends Controller {
               changePassword();
               return -1;
           case 2: 
-            register();
-            return 0;
+              register();
+              return -1;
           default: 
               throw new Exception("Please enter a valid input. ");
         }
