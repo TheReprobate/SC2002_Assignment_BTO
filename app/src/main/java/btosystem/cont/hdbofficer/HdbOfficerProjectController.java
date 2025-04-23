@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class HdbOfficerProjectController extends HdbOfficerController {
     private static final String[] MENU = {
-        "View project", "Register for project", "Exit"
+        "View project", "View Participating Project", "Register for project", "Exit"
     };
     private List<Project> projects;
 
@@ -54,9 +54,12 @@ public class HdbOfficerProjectController extends HdbOfficerController {
               viewProject();
               return 0;
           case 1:
+              viewCurrentProjects();
+              return 0;
+          case 2:
               registerProject();
               return 0;
-          case 2: 
+          case 3: 
               return -1;
           default: 
               throw new Exception("Please enter a valid input. ");
@@ -88,6 +91,14 @@ public class HdbOfficerProjectController extends HdbOfficerController {
         }
         serviceManager.getTeamService().createRegistration(user, project);
         System.out.println("Registration Success!");
+    }
+
+    private void viewCurrentProjects() throws Exception {
+        List<Project> projects = serviceManager.getProjectService().getWorkingProject(user);
+        if(projects.size() <= 0 || projects == null) {
+            throw new Exception("No participating projects. ");
+        }
+        System.out.println(serviceManager.getGenericService().displayProject(projects));
     }
 
     /**

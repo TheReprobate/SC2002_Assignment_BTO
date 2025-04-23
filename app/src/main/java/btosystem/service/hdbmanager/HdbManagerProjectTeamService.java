@@ -59,6 +59,13 @@ public class HdbManagerProjectTeamService extends Service {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         HdbOfficer officer = registrationManager.retrieveAppliedOfficer(registration);
+        List<ProjectTeam> officerTeam = userManager.retrieveTeams(officer);
+        for(ProjectTeam t: officerTeam) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.hasTimeOverlap(project, p)) {
+                throw new Exception("Unable to process, time overlap detected. ");
+            }
+        }
         if(projectTeamManager.hasMaxOfficers(team)) {
             throw new Exception("Maximum possible officers in team.  ");
         }

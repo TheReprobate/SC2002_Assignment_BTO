@@ -84,7 +84,6 @@ public class HdbManagerProjectService extends Service {
         if (!hasValidTime(openTime, closeTime)) {
             return;
         }
-        ProjectTeam team = projectTeamManager.createProjectTeam(project);
         List<Project> managerCreatedProjects = userManager.retrieveCreatedProjects(user);
         
         projectManager.addProject(projects, project);
