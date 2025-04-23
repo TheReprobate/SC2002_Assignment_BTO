@@ -21,10 +21,10 @@ import btosystem.utils.OperationsManager;
 
 public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationService{
 
-    public HdbOfficerBtoApplicationService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
+    public HdbOfficerBtoApplicationService(DataManager dataManager, BtoApplicationOperations applicationOperations, EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+        super(dataManager, applicationOperations, enquiryOperations, registrationOperations, projectTeamOperations, userOperations, projectOperations);
     }
 
     @Override

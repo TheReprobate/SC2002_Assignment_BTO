@@ -33,14 +33,14 @@ public class ApplicantEnquiryService extends Service {
      */
     public ApplicantEnquiryService(
             DataManager dataManager,
-            BtoApplicationOperations applicationManager,
-            EnquiryOperations enquiryManager,
+            BtoApplicationOperations applicationOperations,
+            EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations,
             ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations,
             ProjectOperations projectOperations) {
 
-        super(dataManager, applicationManager, enquiryManager,
+        super(dataManager, applicationOperations, enquiryOperations,
                 registrationOperations, projectTeamOperations,
                 userOperations, projectOperations);
     }

@@ -19,15 +19,15 @@ import java.util.List;
 public class HdbManagerProjectTeamService extends Service {
 
     public HdbManagerProjectTeamService(DataManager dataManager, 
-                                        BtoApplicationOperations applicationManager, 
-                                        EnquiryOperations enquiryManager,
+                                        BtoApplicationOperations applicationOperations, 
+                                        EnquiryOperations enquiryOperations,
                                         OfficerRegistrationOperations registrationOperations, 
                                         ProjectTeamOperations projectTeamOperations,
                                         UserOperations userOperations, 
                                         ProjectOperations projectOperations) {
         super(dataManager, 
-            applicationManager, 
-            enquiryManager, 
+            applicationOperations,
+            enquiryOperations,
             registrationOperations, 
             projectTeamOperations, 
             userOperations, 

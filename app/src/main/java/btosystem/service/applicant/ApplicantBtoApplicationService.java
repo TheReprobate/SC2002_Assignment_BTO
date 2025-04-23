@@ -18,15 +18,15 @@ import btosystem.utils.DataManager;
 public class ApplicantBtoApplicationService extends Service {
 
     public ApplicantBtoApplicationService(DataManager dataManager, 
-                                        BtoApplicationOperations applicationManager, 
-                                        EnquiryOperations enquiryManager,
+                                        BtoApplicationOperations applicationOperations, 
+                                        EnquiryOperations enquiryOperations,
                                         OfficerRegistrationOperations registrationOperations, 
                                         ProjectTeamOperations projectTeamOperations,
                                         UserOperations userOperations, 
                                         ProjectOperations projectOperations) {
         super(dataManager, 
-            applicationManager, 
-            enquiryManager, 
+            applicationOperations, 
+            enquiryOperations, 
             registrationOperations, 
             projectTeamOperations, 
             userOperations, 
