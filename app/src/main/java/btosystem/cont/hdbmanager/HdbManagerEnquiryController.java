@@ -1,5 +1,6 @@
 package btosystem.cont.hdbmanager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import btosystem.classes.Enquiry;
@@ -11,7 +12,7 @@ import btosystem.utils.ListToStringFormatter;
 
 public class HdbManagerEnquiryController extends HdbManagerController {
     private static final String[] MENU = {"Reply Enquiry", "Exit"};
-    private Project project;
+    private List<Project> projects;
     private List<Enquiry> enquiries;
     public HdbManagerEnquiryController(HdbManager user, HdbManagerServiceManager serviceManager) {
         super(user, serviceManager);
@@ -19,15 +20,16 @@ public class HdbManagerEnquiryController extends HdbManagerController {
 
     @Override
     protected boolean load() throws Exception {
-        project = serviceManager.getProjectService().getCurrentProject(user);
-        if(project == null) {
-            System.out.println("No current project found. ");
-            return false;
+        projects = serviceManager.getProjectService().getCurrentProject(user);
+        if(projects == null || projects.size() <= 0) {
+            throw new Exception("No current project found, join a team. ");
         }
-        enquiries = serviceManager.getEnquiryService().getEnquiries(project, false);
+        enquiries = new ArrayList<>();
+        for(Project p: projects) {
+            enquiries.addAll(serviceManager.getEnquiryService().getEnquiries(p, false));
+        }
         if(enquiries.size() <= 0) {
-            System.out.println("No enquiries found. ");
-            return false;
+            throw new Exception("No repliable enquiries found. ");
         }
         return true;
     }

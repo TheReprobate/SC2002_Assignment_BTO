@@ -47,7 +47,6 @@ public class ApplicantBtoApplicationService extends Service {
         if(application != null) {
             throw new Exception("Applicant has an existing application. ");
         }
-        
         if(!projectManager.unitHasSlots(project, flatType)) {
             throw new Exception("There is no slots available for your requirements.  ");
         }

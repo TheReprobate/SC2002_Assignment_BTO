@@ -59,4 +59,8 @@ public class BtoApplication {
     public void setFlatType(FlatType flatType) {
         this.flatType = flatType;
     }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 }

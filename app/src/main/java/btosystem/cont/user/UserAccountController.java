@@ -8,7 +8,7 @@ import btosystem.utils.ListToStringFormatter;
 import btosystem.utils.RegexPatterns;
 
 public class UserAccountController extends Controller{
-    private static final String[] MENU = {"Login", "Register Applicant", "Exit"};
+    private static final String[] MENU = {"Login", "Change Password", "Register Applicant"};
     private UserAccountService accountService;
     private User user;
 
@@ -34,8 +34,8 @@ public class UserAccountController extends Controller{
     protected int process(int input) throws Exception {
         switch(input) {
             case 0: login(); return -1;
-            case 1: register(); return 0;
-            case 2: return -1;
+            case 1: changePassword(); return 0;
+            case 2: register(); return 0;
             default: throw new Exception("Please enter a valid input. ");
         }
     }
@@ -57,5 +57,15 @@ public class UserAccountController extends Controller{
         }
         accountService.registerApplicant(nric, name, age, married);
         System.out.println("User registered with password: password. ");
+    }
+
+    private void changePassword() throws Exception{
+        String nric = InputHandler.getStringInput("Input NRIC: ", RegexPatterns.NRIC);
+        String password = InputHandler.getStringInput("Current Password: ");
+        user = accountService.login(nric, password);
+        if(user != null) {
+            String newPassword = InputHandler.getStringInput("New Password: ");
+        }
+        
     }
 }

@@ -33,13 +33,14 @@ public class EnquiryController implements EnquiryOperations {
      * @param enquiries List of enquiries
      * @param index Index of the enquiry to retrieve
      * @return Enquiry object if valid index, else null
+     * @throws Exception 
      */
     @Override
-    public Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index) {
+    public Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index) throws Exception {
         if (index >= 0 && index < enquiries.size()) {
             return enquiries.get(index);
         }
-        return null;
+        throw new Exception("Index out of bounds. ");
     }
 
     /**
@@ -50,11 +51,11 @@ public class EnquiryController implements EnquiryOperations {
      * @return 1 if deleted successfully, else 0
      */
     @Override
-    public int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry) {
+    public int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry) throws Exception {
         if (!enquiry.hasReplied()) {
             return enquiries.remove(enquiry) ? 1 : 0;
         }
-        return 0;
+        throw new Exception("Enquiry has a reply, unable to delete. ");
     }
 
     /**
@@ -66,14 +67,14 @@ public class EnquiryController implements EnquiryOperations {
      * @return 1 if reply was successful, else 0
      */
     @Override
-    public int replyEnquiry(Enquiry enquiry, String reply) {
+    public int replyEnquiry(Enquiry enquiry, String reply) throws Exception {
         if (!enquiry.hasReplied()) {
             enquiry.setReply(reply);
             enquiry.setReplied(true);
             enquiry.setRepliedAt(LocalDateTime.now());
             return 1;
         }
-        return 0;
+        throw new Exception("Enquiry has a reply, unable to reply. ");
     }
 
     /**
@@ -84,25 +85,12 @@ public class EnquiryController implements EnquiryOperations {
      * @return 1 if edited successfully, else 0
      */
     @Override
-    public int editEnquiry(Enquiry enquiry, String content) {
+    public int editEnquiry(Enquiry enquiry, String content) throws Exception {
         if (!enquiry.hasReplied()) {
             enquiry.setContent(content);
             return 1;
         }
-        return 0;
-    }
-
-    /**
-     * Cleans up the enquiry object, resetting its fields.
-     *
-     * @param instance Enquiry object to clean
-     */
-    @Override
-    public void cleanup(Enquiry instance) {
-        instance.setContent(null);
-        instance.setReply(null);
-        instance.setReplied(false);
-        instance.setRepliedAt(null);
+        throw new Exception("Enquiry has a reply, unable to edit. ");
     }
 
     /**
@@ -181,5 +169,15 @@ public class EnquiryController implements EnquiryOperations {
     @Override
     public List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied) {
         return enquiries.stream().filter(e -> e.hasReplied() == replied).collect(Collectors.toList());
+    }
+
+    /**
+     * Sets project to empty
+     *
+     * @param enquiry The enquiry to edit
+     */
+    @Override
+    public void removeProject(Enquiry enquiry) throws Exception {
+        enquiry.setProject(null);
     }
 }

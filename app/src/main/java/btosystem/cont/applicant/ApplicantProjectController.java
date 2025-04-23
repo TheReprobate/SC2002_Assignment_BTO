@@ -1,9 +1,14 @@
 package btosystem.cont.applicant;
 
+import java.util.Arrays;
 import java.util.List;
 
 import btosystem.classes.Applicant;
+import btosystem.classes.Enquiry;
 import btosystem.classes.Project;
+import btosystem.classes.enums.FlatType;
+import btosystem.classes.enums.Neighborhood;
+import btosystem.controllers.interfaces.ListToString;
 import btosystem.service.ApplicantServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
@@ -21,8 +26,7 @@ public class ApplicantProjectController extends ApplicantController{
     protected boolean load() throws Exception{
         projects = serviceManager.getProjectService().getVisibleProjects();
         if(projects.size() <= 0) {
-            System.out.println("No projects found. ");
-            return false;
+            throw new Exception("No projects found. ");
         }
         return true;
     }
@@ -40,7 +44,6 @@ public class ApplicantProjectController extends ApplicantController{
             default: throw new Exception("Please enter a valid input. ");
         }
     }
-
     private void viewProject() throws Exception {
         Project project = getProject();
         System.out.println(serviceManager.getGenericService().displayProject(project));

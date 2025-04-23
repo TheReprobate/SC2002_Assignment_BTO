@@ -18,7 +18,7 @@ import btosystem.utils.ListToStringFormatter;
 import btosystem.utils.RegexPatterns;
 
 public abstract class HdbManagerProjectController extends HdbManagerController {
-    private static final String[] PROJECT_MENU = {"View Enquiries", "View Applications", "View Project Team", "Exit"};
+    private static final String[] PROJECT_MENU = {"View Enquiries", "View Applications", "View Project Team", "Generate Report", "Exit"};
 
     public HdbManagerProjectController(HdbManager user, HdbManagerServiceManager serviceManager) {
         super(user, serviceManager);
@@ -68,7 +68,7 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
             case 1:
                 List<BtoApplication> applications = serviceManager.getApplicationService().getApplications(project);
                 if(applications.size() <= 0) {
-                    System.out.println("No enquiries found. ");
+                    System.out.println("No applications found. ");
                     break;
                 }
                 System.out.println(serviceManager.getGenericService().displayApplication(applications));
@@ -77,6 +77,8 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
                 ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
                 System.out.println(serviceManager.getGenericService().displayTeam(team));
             case 3:
+                System.out.println(serviceManager.getApplicationService().generateReport(project));
+            case 4:
                 break;
             default:
                 throw new Exception("Option does not exist. ");

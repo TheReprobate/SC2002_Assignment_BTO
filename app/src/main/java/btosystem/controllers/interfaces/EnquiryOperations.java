@@ -11,7 +11,7 @@ import java.util.List;
  * cleanup.
  */
 public interface EnquiryOperations
-        extends ListToString<Enquiry>, CleanupOperations<Enquiry> {
+        extends ListToString<Enquiry> {
 
     /**
      * Creates a new enquiry for a project.
@@ -29,8 +29,9 @@ public interface EnquiryOperations
      * @param enquiries The list of enquiries to search
      * @param index The index of the enquiry to retrieve
      * @return The Enquiry object if found, null otherwise
+     * @throws Exception 
      */
-    Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index);
+    Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index) throws Exception;
 
     Project retrieveProject(Enquiry enquiry);
 
@@ -41,8 +42,9 @@ public interface EnquiryOperations
      * @param enquiries The list containing the enquiry
      * @param enquiry The enquiry to delete
      * @return 1 if deletion was successful, 0 otherwise
+     * @throws Exception 
      */
-    int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
+    int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry) throws Exception;
 
     /**
      * Adds a reply to an enquiry.
@@ -50,8 +52,9 @@ public interface EnquiryOperations
      * @param enquiry The enquiry to reply to
      * @param reply The reply content
      * @return 1 if reply was successful, 0 otherwise
+     * @throws Exception 
      */
-    int replyEnquiry(Enquiry enquiry, String reply);
+    int replyEnquiry(Enquiry enquiry, String reply) throws Exception;
 
     /**
      * Edits the content of an enquiry if it hasn't been replied to.
@@ -59,12 +62,20 @@ public interface EnquiryOperations
      * @param enquiry The enquiry to edit
      * @param content The new content
      * @return 1 if edit was successful, 0 otherwise
+     * @throws Exception 
      */
-    int editEnquiry(Enquiry enquiry, String content);
+    int editEnquiry(Enquiry enquiry, String content) throws Exception;
 
     int addEnquiry(List<Enquiry> enquiries, Enquiry enquiry);
 
     boolean hasReplied(Enquiry enquiry);
 
     List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied);
+
+    /**
+     * Sets project to empty
+     *
+     * @param enquiry The enquiry to edit
+     */
+    void removeProject(Enquiry enquiry) throws Exception;
 }

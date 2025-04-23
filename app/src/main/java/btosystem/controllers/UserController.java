@@ -47,13 +47,13 @@ public class UserController implements UserOperations {
     }
 
     @Override
-    public ProjectTeam retrieveCurrentTeam(HdbOfficer officer) {
-        return officer.getCurrentTeam();
+    public List<ProjectTeam> retrieveTeams(HdbOfficer officer) {
+        return officer.getTeams();
     }
 
     @Override
-    public ProjectTeam retrieveCurrentTeam(HdbManager manager) {
-        return manager.getCurrentTeam();
+    public List<ProjectTeam> retrieveTeams(HdbManager manager) {
+        return manager.getTeams();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UserController implements UserOperations {
 
     @Override
     public String toString(User data) {
-        return data.getName() + " (" + data.getNric() + ")";
+        return "[" + (data.isMarried() ? "Married" : "Single") +"]" + data.getName() + "-" + data.getAge() + "years old";
     }
 
     @Override
@@ -96,14 +96,9 @@ public class UserController implements UserOperations {
     public void setApplication(Applicant applicant, BtoApplication application) {
         applicant.setActiveApplication(application);
     }
-
+    
     @Override
-    public void setTeam(ProjectTeam team, HdbManager user) {
-        user.setCurrentTeam(team);
-    }
-
-    @Override
-    public void setTeam(ProjectTeam team, HdbOfficer user) {
-        user.setCurrentTeam(team);
+    public void changePassword(User user, String password) {
+        user.setPassword(password);
     }
 }

@@ -48,17 +48,17 @@ public interface UserOperations extends ToString<User> {
      * Retrieves the current project team for an HDB officer.
      *
      * @param officer The officer to query
-     * @return The officer's current project team
+     * @return The officers's history of all teams
      */
-    public ProjectTeam retrieveCurrentTeam(HdbOfficer officer);
+    public List<ProjectTeam> retrieveTeams(HdbOfficer officer);
 
     /**
      * Retrieves the current project team for an HDB manager.
      *
      * @param manager The manager to query
-     * @return The manager's current project team
+     * @return The manager's history of all teams
      */
-    public ProjectTeam retrieveCurrentTeam(HdbManager manager);
+    public List<ProjectTeam> retrieveTeams(HdbManager manager);
 
     /**
      * Retrieves all projects created by an HDB manager.
@@ -76,7 +76,5 @@ public interface UserOperations extends ToString<User> {
 
     public void setApplication(Applicant applicant, BtoApplication application);
 
-    public void setTeam(ProjectTeam team, HdbManager user);
-
-    public void setTeam(ProjectTeam team, HdbOfficer user);
+    public void changePassword(User user, String password);
 }

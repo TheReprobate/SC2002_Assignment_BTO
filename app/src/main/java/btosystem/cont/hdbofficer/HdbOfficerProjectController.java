@@ -20,8 +20,8 @@ public class HdbOfficerProjectController extends HdbOfficerController{
 
     @Override
     protected boolean load() throws Exception {
-        projects = serviceManager.getProjectService().getProjects(LocalDate.now(), null);
-        if(projects == null) {
+        projects = serviceManager.getProjectService().getProjects(null, LocalDate.now());
+        if(projects == null || projects.size() <= 0) {
             throw new Exception("No projects found. ");
         }
         return true;

@@ -2,7 +2,9 @@ package btosystem.service.applicant;
 
 import java.util.List;
 
+import btosystem.classes.Applicant;
 import btosystem.classes.Project;
+import btosystem.classes.User;
 import btosystem.classes.enums.Neighborhood;
 import btosystem.controllers.interfaces.BtoApplicationOperations;
 import btosystem.controllers.interfaces.EnquiryOperations;
@@ -32,9 +34,5 @@ public class ApplicantProjectService extends Service {
             visibleProjects.remove(p);
         }
         return visibleProjects;
-    }
-
-    public List<Project> filterProject(List<Project> projects, Neighborhood neighborhood) {
-        return projectManager.filterProject(projects, neighborhood);
     }
 }

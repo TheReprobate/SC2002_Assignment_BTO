@@ -52,6 +52,9 @@ public class ApplicantEnquiryController extends ApplicantController{
 
     private void createEnquiry() throws Exception {
         List<Project> projects = serviceManager.getProjectService().getVisibleProjects();
+        if(projects == null || projects.size() <= 0){
+            throw new Exception("No projects found. ");
+        }
         System.out.println(serviceManager.getGenericService().displayProject(projects));
         int projectIndex = InputHandler.getIntIndexInput("Select a project to enquire for: ");
         Project project = serviceManager.getGenericService().getProject(projects, projectIndex);

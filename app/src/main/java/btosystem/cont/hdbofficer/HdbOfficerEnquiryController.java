@@ -21,13 +21,12 @@ public class HdbOfficerEnquiryController extends HdbOfficerController{
     protected boolean load() throws Exception {
         project = serviceManager.getProjectService().getCurrentProject(user);
         if(project == null) {
-            System.out.println("No current project found. ");
-            return false;
+            throw new Exception("No current project found. ");
+
         }
         enquiries = serviceManager.getEnquiryService().getEnquiries(project, false);
         if(enquiries.size() <= 0) {
-            System.out.println("No enquiries found. ");
-            return false;
+            throw new Exception("No enquiries found. ");
         }
         return true;
     }

@@ -46,6 +46,7 @@ public class HdbOfficerBtoApplicationController extends HdbOfficerController{
         }
         serviceManager.getApplicationService().processApplication(application, user);
         System.out.println("Process application successful!");
+        serviceManager.getGenericService().displayApplication(application);
     }
     
 }

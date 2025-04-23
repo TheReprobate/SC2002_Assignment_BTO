@@ -1,5 +1,6 @@
 package btosystem.cont.hdbmanager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import btosystem.classes.BtoApplication;
@@ -12,7 +13,7 @@ import btosystem.utils.ListToStringFormatter;
 
 public class HdbManagerBtoApplicationController extends HdbManagerController{
     private static final String[] MENU = {"Approve Application", "Reject Application", "Exit"};
-    private Project project;
+    private List<Project> projects;
     private List<BtoApplication> applications;
 
     public HdbManagerBtoApplicationController(HdbManager user, HdbManagerServiceManager serviceManager) {
@@ -21,15 +22,16 @@ public class HdbManagerBtoApplicationController extends HdbManagerController{
 
     @Override
     protected boolean load() throws Exception {
-        project = serviceManager.getProjectService().getCurrentProject(user);
-        if(project == null) {
-            System.out.println("No current project found. ");
-            return false;
+        projects = serviceManager.getProjectService().getCurrentProject(user);
+        if(projects == null || projects.size() <= 0) {
+            throw new Exception("No current project found, join a team. ");
         }
-        applications = serviceManager.getApplicationService().getApplications(project, ApplicationStatus.PENDING);
+        applications = new ArrayList<>();
+        for(Project p: projects) {
+            applications.addAll(serviceManager.getApplicationService().getApplications(p, ApplicationStatus.PENDING));
+        }
         if(applications.size() <= 0) {
-            System.out.println("No applications found. ");
-            return false;
+            throw new Exception("No applications found. ");
         }
         return true;
     }

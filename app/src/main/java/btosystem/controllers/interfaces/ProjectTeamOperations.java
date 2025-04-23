@@ -13,8 +13,7 @@ import btosystem.classes.ProjectTeam;
  * providing various operations related to ProjectTeam management.
  */
 public interface ProjectTeamOperations extends 
-                ToString<ProjectTeam>, 
-                CleanupOperations<ProjectTeam>
+                ToString<ProjectTeam>
 {
     /**
      * Interface method for ProjectTeam creation.
@@ -71,6 +70,22 @@ public interface ProjectTeamOperations extends
     boolean hasMaxOfficers(ProjectTeam team);
     
     boolean hasManager(ProjectTeam team);
+
+    /**
+     * Sets project to empty
+     *
+     * @param projectTeam The projectTeam to edit
+     */
+    void removeProject(ProjectTeam projectTeam);
+
+    void addProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team); 
+
+    void removeProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team);
+
+    List<HdbOfficer> retrieveOfficerTeam(ProjectTeam team);
+
+    HdbManager retrieveManager(ProjectTeam team);    
+    
 
     /* ---------------------------------- End OfficerRegistration --------------------------------- */
 }

@@ -39,8 +39,7 @@ public class Project {
         this.neighborhood = neighborhood;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        //this.projectTeam = projectTeam;
-        this.projectTeam = null;
+        this.projectTeam = new ProjectTeam(this);
         this.btoApplications = new ArrayList<BtoApplication>();
         this.enquiries = new ArrayList<Enquiry>();
         this.units = new HashMap<FlatType, Integer>();

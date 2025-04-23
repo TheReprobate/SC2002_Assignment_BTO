@@ -299,20 +299,35 @@ public class ProjectTeamController implements ProjectTeamOperations{
     public boolean hasManager(ProjectTeam team) {
         return team.getManager() != null;
     }
+
     /**
-     * Cleans up the ProjectTeam object, resetting its fields.
+     * Sets project to empty
      *
-     * @param instance ProjectTeam object to clean
+     * @param projectTeam The projectTeam to edit
      */
     @Override
-    public void cleanup(ProjectTeam instance) {
-        if(instance != null)
-        {
-            instance.setProject(null);
-    
-            instance.setManager(null);
-            instance.removeOfficers();
-            instance.removeOfficerRegistrations();
-        }
+    public void removeProject(ProjectTeam projectTeam) {
+        projectTeam.setProject(null);
     }
+
+    @Override
+    public void addProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team) {
+        projectTeams.add(team);
+    }
+
+    @Override
+    public void removeProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team) {
+        projectTeams.remove(team);
+    }
+
+    @Override
+    public List<HdbOfficer> retrieveOfficerTeam(ProjectTeam team) {
+        return team.getOfficers();
+    }
+
+    @Override
+    public HdbManager retrieveManager(ProjectTeam team) {
+        return team.getManager();
+    }
+    
 }

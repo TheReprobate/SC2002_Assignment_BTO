@@ -17,7 +17,7 @@ import java.util.List;
  * providing various operations related to project management.
  */
 public interface ProjectOperations
-        extends ListToString<Project>, CleanupOperations<Project> {
+        extends ListToString<Project> {
 
     /**
      * Interface method for project creation.
@@ -87,16 +87,17 @@ public interface ProjectOperations
     int editProject(Project project, Neighborhood neighborhood);
 
     /**
-     * Interface method for project's application period.
+     * Interface method for updating project's visibility.
      * Details can be found in {@link btosystem.controllers.ProjectController}
      */
-    int editProject(Project project, LocalDate openTime, LocalDate closeTime);
+    int editProject(Project project, boolean visibility);
 
     /**
      * Interface method for project deletion.
      * Details can be found in {@link btosystem.controllers.ProjectController}
+     * @throws Exception 
      */
-    int deleteProject(List<Project> projects, Project project);
+    int deleteProject(List<Project> projects, Project project) throws Exception;
 
     /**
      * Interface method for checking if project exists.

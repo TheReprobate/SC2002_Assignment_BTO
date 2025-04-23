@@ -22,8 +22,8 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getProject();
-        if(projects == null) {
-            throw new Exception("No projects found. ");
+        if(projects == null || projects.size() <= 0) {
+            System.out.println("No projects found. ");
         }
         return true;
     }
@@ -46,6 +46,9 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
     }
     
     private void viewCreatedProjects() throws Exception {
+        if(projects == null || projects.size() <= 0) {
+            throw new Exception("No projects found. ");
+        }
         List<Project> createdProjects = serviceManager.getProjectService().getCreatedProject(user);
         if(createdProjects.size() <= 0) {
             System.out.println("No created projects found. ");
@@ -69,6 +72,9 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
     }
 
     private void joinTeam() throws Exception {
+        if(projects == null || projects.size() <= 0) {
+            throw new Exception("No projects found. ");
+        }
         Project project = getProject();
         String input = InputHandler.getStringInput("Confirm to join team [Y/N]: ", RegexPatterns.YES_NO);
         if(!(input.equals("Y") || input.equals("y"))){
@@ -79,6 +85,9 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
     }
 
     private void viewProject() throws Exception {
+        if(projects == null || projects.size() <= 0) {
+            throw new Exception("No projects found. ");
+        }
         Project project = getProject();
         super.viewProject(project);
     }
@@ -88,6 +97,4 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
         Project project = serviceManager.getGenericService().getProject(projects, index);
         return project;
     }
-
-    private void deleteProject() {}; // not implemented
 }

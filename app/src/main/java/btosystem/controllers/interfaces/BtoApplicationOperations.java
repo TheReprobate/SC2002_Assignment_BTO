@@ -14,8 +14,7 @@ import java.util.List;
  * providing various operations related to application management.
  */
 public interface BtoApplicationOperations extends 
-    ListToString<BtoApplication>, 
-    CleanupOperations<BtoApplication>
+    ListToString<BtoApplication>
 {
     /**
      * Creates an application for a project with a specific flat type.
@@ -111,4 +110,11 @@ public interface BtoApplicationOperations extends
     boolean isPending(BtoApplication application);
 
     boolean hasApplied(List<BtoApplication> applications, Applicant applicant);
+
+    /**
+     * Sets project to empty
+     *
+     * @param application The application to edit
+     */
+    void removeProject(BtoApplication application);
 }

@@ -7,6 +7,11 @@ public abstract class Controller {
         while (true) {
             try {
                 if(!load()) return;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return;
+            }
+            try {
                 System.out.println(display());
                 int input = InputHandler.getIntIndexInput("Select an option: ");
                 if(process(input) == -1) return;

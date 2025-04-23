@@ -13,8 +13,7 @@ import btosystem.classes.OfficerRegistration;
  */
 
 public interface OfficerRegistrationOperations extends 
-                ListToString<OfficerRegistration>,
-                CleanupOperations<OfficerRegistration> 
+                ListToString<OfficerRegistration>
 {
     /**
      * Interface method for OfficerRegistration creation.

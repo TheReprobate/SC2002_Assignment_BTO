@@ -47,15 +47,12 @@ public class HdbManagerProjectTeamService extends Service {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         HdbOfficer officer = registrationManager.retrieveAppliedOfficer(registration);
-        if(userManager.retrieveCurrentTeam(officer) != null) {
-            throw new Exception("Officer is currently assigned to a team. ");
-        }
         if(projectTeamManager.hasMaxOfficers(team)) {
             throw new Exception("Maximum possible officers in team.  ");
         }
         registrationManager.approveRegistration(registration);
         projectTeamManager.assignProject(team, officer);
-        userManager.setTeam(team, officer);
+        projectTeamManager.addProjectTeam(userManager.retrieveTeams(officer), team);
     }
 
     public void rejectRegistration(HdbManager user, ProjectTeam team, OfficerRegistration registration) throws Exception {
@@ -67,20 +64,29 @@ public class HdbManagerProjectTeamService extends Service {
     }
 
     public void joinTeam(HdbManager user, Project project) throws Exception {
-        ProjectTeam team = projectManager.retrieveProjectTeam(project);
-        if(userManager.retrieveCurrentTeam(user) != null){
-            throw new Exception("User is currently assigned to a team. ");
+        ProjectTeam projectTeam = projectManager.retrieveProjectTeam(project);
+        if(projectTeamManager.hasManager(projectTeam)) {
+            throw new Exception("Project already has a manager. ");
         }
-        if(projectTeamManager.hasManager(team)) {
-            throw new Exception("Existing manager in team. ");
+        List<ProjectTeam> userTeams = userManager.retrieveTeams(user);
+        for(ProjectTeam t : userTeams){
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.hasTimeOverlap(project, p)){
+                throw new Exception("Unable to join team, time overlapped with other projects. ");
+            }
         }
-        projectTeamManager.assignProject(team, user);
-        userManager.setTeam(team, user);
+        projectTeamManager.assignProject(projectTeam, user);
+        projectTeamManager.addProjectTeam(userTeams, projectTeam);
     }
 
-    private boolean hasProjectAccess(HdbManager user, Project project) {
-        ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
-        Project projectInCharge = projectTeamManager.retrieveAssignedProject(currentTeam);
-        return projectInCharge.equals(project);
+    private boolean hasProjectAccess(HdbManager user, Project project) throws Exception {
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(p.equals(project)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -33,7 +33,7 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
         return enquiryManager.filterEnquiries(getEnquiries(project), replied);
     }
 
-    public List<Enquiry> getRepliableEnquiries(HdbOfficer user) {
+    public List<Enquiry> getRepliableEnquiries(HdbOfficer user) throws Exception {
         return getViewableProjectEnquiries(user);
     }
 
@@ -42,7 +42,7 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
         if(!projectManager.isOpen(enquiryProject)) {
             throw new Exception("Project is not open");
         }
-        ProjectTeam team = userManager.retrieveCurrentTeam(user);
+        ProjectTeam team = getCurrentTeam(user);
         Project currentProj = projectTeamManager.retrieveAssignedProject(team);
         Project enquiryProj = enquiryManager.retrieveProject(enquiry);
         if(!currentProj.equals(enquiryProj)) {
@@ -51,11 +51,22 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
         enquiryManager.replyEnquiry(enquiry, reply);
     }
 
-    private List<Enquiry> getViewableProjectEnquiries(HdbOfficer user) {
-        ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
+    private List<Enquiry> getViewableProjectEnquiries(HdbOfficer user) throws Exception {
+        ProjectTeam currentTeam = getCurrentTeam(user);
         Project currentProject = projectTeamManager.retrieveAssignedProject(currentTeam);
         List<Enquiry> projectEnquiries = projectManager.retrieveEnquiries(currentProject);
         return projectEnquiries;
+    }
+
+    private ProjectTeam getCurrentTeam(HdbOfficer user) throws Exception{
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.isOpen(p)) {
+                return t;
+            }
+        }
+        throw new Exception("Currently not in a team.");
     }
     
 }

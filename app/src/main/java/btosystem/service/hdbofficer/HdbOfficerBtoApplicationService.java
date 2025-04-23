@@ -72,12 +72,15 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
         projectManager.decreaseUnitCount(applicationProject, flatType);
     }
 
-    private boolean hasApplicationAccess(HdbOfficer user, BtoApplication application) {
+    private boolean hasApplicationAccess(HdbOfficer user, BtoApplication application) throws Exception {
         Project applicationProject = applicationManager.retrieveProject(application);
         return hasProjectAccess(user, applicationProject);
     }
     private boolean hasProjectAccess(HdbOfficer user, Project project) {
-        ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
+        ProjectTeam currentTeam = getCurrentTeam(user);
+        if(currentTeam == null) {
+            return false;
+        }
         Project projectInCharge = projectTeamManager.retrieveAssignedProject(currentTeam);
         return projectInCharge.equals(project);
     }
@@ -87,5 +90,16 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
             throw new Exception("User is not an applicant. ");
         }
         return (Applicant) user;
+    }
+
+    private ProjectTeam getCurrentTeam(HdbOfficer user){
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.isOpen(p)) {
+                return t;
+            }
+        }
+        return null;
     }
 }

@@ -32,15 +32,15 @@ public class HdbManagerEnquiryService extends Service {
         return enquiryManager.filterEnquiries(getEnquiries(project), replied);
     }
 
-    public List<Enquiry> getRepliableEnquiries(HdbManager user) {
-        ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
+    public List<Enquiry> getRepliableEnquiries(HdbManager user) throws Exception {
+        ProjectTeam currentTeam = getCurrentTeam(user);
         Project currentProject = projectTeamManager.retrieveAssignedProject(currentTeam);
         List<Enquiry> projectEnquiries = projectManager.retrieveEnquiries(currentProject);
         return projectEnquiries;
     }
 
     public void replyEnquiry(HdbManager user, Enquiry enquiry, String reply) throws Exception{
-        ProjectTeam team = userManager.retrieveCurrentTeam(user);
+        ProjectTeam team = getCurrentTeam(user);
         Project currentProj = projectTeamManager.retrieveAssignedProject(team);
         Project enquiryProj = enquiryManager.retrieveProject(enquiry);
         if(!currentProj.equals(enquiryProj)) {
@@ -48,4 +48,16 @@ public class HdbManagerEnquiryService extends Service {
         }
         enquiryManager.replyEnquiry(enquiry, reply);
     }
+
+    private ProjectTeam getCurrentTeam(HdbManager user) throws Exception{
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.isOpen(p)) {
+                return t;
+            }
+        }
+        throw new Exception("Currently not in a team.");
+    }
+
 }

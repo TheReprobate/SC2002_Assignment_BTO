@@ -26,4 +26,9 @@ public class UserAccountService extends Service{
     public void registerApplicant(String nric, String name, int age, boolean married) throws Exception {
         userManager.addApplicant(dataManager.getUsers(), nric, name, age, married);
     }
+    
+    public void changePassword(String nric, String oldPassword, String newPassword) throws Exception {
+        User user = login(nric, newPassword);
+        userManager.changePassword(user, newPassword);
+    }
 }

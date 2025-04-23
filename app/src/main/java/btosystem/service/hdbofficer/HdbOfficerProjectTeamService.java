@@ -15,7 +15,6 @@ import btosystem.controllers.interfaces.ProjectTeamOperations;
 import btosystem.controllers.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
 
 public class HdbOfficerProjectTeamService extends Service {
 
@@ -32,7 +31,7 @@ public class HdbOfficerProjectTeamService extends Service {
             throw new Exception("Already has pending application for this team. ");
         }
         BtoApplication application = userManager.retrieveApplication(user);
-        ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
+        ProjectTeam currentTeam = getCurrentTeam(user);
         if(currentTeam != null) {
             Project currentProject = projectTeamManager.retrieveAssignedProject(currentTeam);
             if(applicationManager.retrieveProject(application).equals(currentProject)){
@@ -46,5 +45,16 @@ public class HdbOfficerProjectTeamService extends Service {
         OfficerRegistration registration = registrationManager.createRegistration(team, user);
         List<OfficerRegistration> teamRegistrationRef = projectTeamManager.retrieveOfficerRegistrations(team);
         registrationManager.addRegistration(teamRegistrationRef, registration);
+    }
+
+    private ProjectTeam getCurrentTeam(HdbOfficer user){
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.isOpen(p)) {
+                return t;
+            }
+        }
+        return null;
     }
 }

@@ -13,7 +13,6 @@ import btosystem.controllers.interfaces.ProjectOperations;
 import btosystem.controllers.interfaces.ProjectTeamOperations;
 import btosystem.controllers.interfaces.UserOperations;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
 
 public class GenericService extends Service{
 
@@ -34,7 +33,11 @@ public class GenericService extends Service{
         if(enquiry == null){
             return "";
         }
-        return enquiryManager.toString(enquiry);
+        Project project = enquiryManager.retrieveProject(enquiry);
+        if (project == null) {
+            return "Project no longer exist" + enquiryManager.toString(enquiry);
+        }
+        return projectManager.toString(project) + enquiryManager.toString(enquiry);
     }
 
     public Enquiry getEnquiry(List<Enquiry> enquiries, int index) throws Exception {
@@ -63,7 +66,11 @@ public class GenericService extends Service{
         if(application == null){
             return "";
         }
-        return applicationManager.toString(application);
+        Project project = applicationManager.retrieveProject(application);
+        if (project == null) {
+            return "Project no longer exist" + applicationManager.toString(application);
+        }
+        return projectManager.toString(project) + userManager.toString(applicationManager.retrieveApplicant(application)) + applicationManager.toString(application);
     }
 
     public String displayApplication(List<BtoApplication> applications) {

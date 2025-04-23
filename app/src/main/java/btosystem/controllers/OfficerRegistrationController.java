@@ -161,36 +161,6 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
         + registrations;
     }
 
-    /**
-     * Cleans up the OfficerRegistration object, resetting its fields.
-     *
-     * @param instance OfficerRegistration objects to clean
-     */
-    @Override
-    public void cleanup(OfficerRegistration instance) {
-        if(instance != null)
-        {
-            instance.setOfficer(null);
-            instance.setStatus(null);
-        }
-    }
-
-    /**
-     * Cleans up a list of OfficerRegistration objects, resetting its fields.
-     *
-     * @param instance List of OfficerRegistration objects to clean
-     */
-    public void cleanup(List<OfficerRegistration> instance) {
-        if(instance != null)
-        {
-            for(OfficerRegistration registration : instance)
-            {
-                this.cleanup(registration);
-            }
-            instance.clear();
-        }
-    }
-
     @Override
     public HdbOfficer retrieveAppliedOfficer(OfficerRegistration registration) {
         return registration.getOfficer();

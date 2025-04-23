@@ -130,4 +130,22 @@ public class Enquiry {
     public void setRepliedAt(LocalDateTime repliedAt) {
         this.repliedAt = repliedAt;
     }
+
+    /**
+     * Sets the timestamp when the enquiry was created.
+     *
+     * @param createdAt The reply timestamp to set
+     */
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * Set the project the enquiry is for.
+     *
+     * @param project The project to set
+     */
+    public void setProject(Project project) {
+        this.project = project;
+    }
 }

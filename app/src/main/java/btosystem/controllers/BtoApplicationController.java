@@ -164,15 +164,6 @@ public class BtoApplicationController implements BtoApplicationOperations {
     }
 
     @Override
-    public void cleanup(BtoApplication instance) {
-        Project project = instance.getProject();
-        Applicant applicant = instance.getApplicant();
-
-        project.getBtoApplications().remove(instance);
-        applicant.setActiveApplication(null);
-    }
-
-    @Override
     public Project retrieveProject(BtoApplication application) {
         return application.getProject();
     }
@@ -216,5 +207,10 @@ public class BtoApplicationController implements BtoApplicationOperations {
             }
         }
         return false;
+    }
+
+    @Override
+    public void removeProject(BtoApplication application) {
+        application.setProject(null);
     }
 }

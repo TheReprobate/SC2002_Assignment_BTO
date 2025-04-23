@@ -2,6 +2,7 @@ package btosystem.service.hdbmanager;
 
 import java.util.List;
 
+import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
@@ -64,10 +65,35 @@ public class HdbManagerBtoApplicationService extends Service {
         return hasProjectAccess(user, applicationProject);
     }
 
-    private boolean hasProjectAccess(HdbManager user, Project project) {
-        ProjectTeam currentTeam = userManager.retrieveCurrentTeam(user);
-        Project projectInCharge = projectTeamManager.retrieveAssignedProject(currentTeam);
-        return projectInCharge.equals(project);
+    private boolean hasProjectAccess(HdbManager user, Project project) throws Exception {
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(p.equals(project)) {
+                return true;
+            }
+        }
+        return false;
     }
     
+    private ProjectTeam getCurrentTeam(HdbManager user) throws Exception{
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.isOpen(p)) {
+                return t;
+            }
+        }
+        throw new Exception("Currently not in a team.");
+    }
+
+    public String generateReport(Project project) {
+        StringBuilder sb = new StringBuilder();
+        List<BtoApplication> applications = projectManager.retrieveApplications(project);
+        for(BtoApplication a: applications) {
+            Applicant applicant = applicationManager.retrieveApplicant(a);
+            sb.append(userManager.toString(applicant)).append(applicationManager.toString(a));
+        }
+        return sb.toString();
+    }
 }
