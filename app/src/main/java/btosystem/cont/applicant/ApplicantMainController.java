@@ -39,7 +39,7 @@ public class ApplicantMainController extends ApplicantController {
 
     @Override
     protected String display() {
-        return ListToStringFormatter.toString(MENU);
+        return "\nAPPLICATION DASHBOARD" + ListToStringFormatter.toString(MENU);
     }
 
     @Override

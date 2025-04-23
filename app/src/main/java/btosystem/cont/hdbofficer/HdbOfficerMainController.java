@@ -39,7 +39,7 @@ public class HdbOfficerMainController extends HdbOfficerController {
 
     @Override
     protected String display() {
-        return ListToStringFormatter.toString(MENU);
+        return "\nHDB OFFICER DASHBOARD" + ListToStringFormatter.toString(MENU);
     }
 
     @Override

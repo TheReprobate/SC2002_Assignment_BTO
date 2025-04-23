@@ -46,7 +46,7 @@ public class HdbManagerMainController extends HdbManagerController {
 
     @Override
     protected String display() {
-        return ListToStringFormatter.toString(MENU);
+        return "\nHDB MANAGER DASHBOARD" + ListToStringFormatter.toString(MENU);
     }
 
     @Override
