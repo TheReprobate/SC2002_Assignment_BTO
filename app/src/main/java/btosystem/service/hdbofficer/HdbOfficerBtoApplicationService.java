@@ -49,10 +49,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
     }
 
     public void processApplication(BtoApplication application, HdbOfficer officer) throws Exception {
-        Applicant applicant = applicationManager.retrieveApplicant(application);
-        if (!hasApplicationAccess(officer, application)) {
-            throw new Exception("Access Denied. Not allowed to process own application. ");
-        }        
+        Applicant applicant = applicationManager.retrieveApplicant(application);    
         FlatType flatType = application.getFlatType();
         if (!hasApplicationAccess(officer, application)) {
             throw new Exception("Access Denied. Not allowed to access this application. ");

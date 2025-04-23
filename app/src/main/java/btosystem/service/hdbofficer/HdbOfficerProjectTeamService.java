@@ -34,7 +34,7 @@ public class HdbOfficerProjectTeamService extends Service {
         ProjectTeam currentTeam = getCurrentTeam(user);
         if(currentTeam != null) {
             Project currentProject = projectTeamManager.retrieveAssignedProject(currentTeam);
-            if (applicationManager.retrieveProject(application).equals(currentProject)) {
+            if (application != null && applicationManager.retrieveProject(application).equals(currentProject)) {
                 throw new Exception("Already has existing application in project, unable to apply for project. ");
             }
             Project appliedProject = projectTeamManager.retrieveAssignedProject(team);

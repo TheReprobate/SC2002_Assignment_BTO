@@ -252,12 +252,8 @@ public class ProjectTeamController implements ProjectTeamOperations {
         if (registrations.isBlank()) {
             registrations = "No Officers applied to project team.";
         }
-
-        String projName = data.getProject().getName();
-
         return 
-            "Project Name           : \n" + projName        + "\n\n" 
-            + "Manager                : \n" + managerName     + "\n\n" 
+            "Manager                : \n" + managerName     + "\n\n" 
             + "Officers               : \n" + officers        + "\n\n" 
             + "Pending registrations  : \n" + registrations   + "\n";
     }
