@@ -57,6 +57,7 @@ public class MainClient {
             if(user == null) {
                 accountController.execute();
                 user = accountController.getUser();
+                dManager.save();
             }
             Controller c = getController();
             if(c != null) {

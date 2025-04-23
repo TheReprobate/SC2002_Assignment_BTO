@@ -59,7 +59,7 @@ public class UserAccountController extends Controller {
               return -1;
           case 1:
               changePassword();
-              return 0;
+              return -1;
           case 2: 
             register();
             return 0;

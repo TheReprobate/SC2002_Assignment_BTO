@@ -72,7 +72,7 @@ public class UserAccountService extends Service {
     }
     
     public void changePassword(String nric, String oldPassword, String newPassword) throws Exception {
-        User user = login(nric, newPassword);
+        User user = login(nric, oldPassword);
         userManager.changePassword(user, newPassword);
     }
 }

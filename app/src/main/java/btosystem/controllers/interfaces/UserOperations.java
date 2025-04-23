@@ -108,21 +108,5 @@ public interface UserOperations extends ToString<User> {
      */
     public void setApplication(Applicant applicant, BtoApplication application);
 
-    /**
-     * Adds an HDB manager to the specified project team.
-     *
-     * @param team the project team to modify
-     * @param user the HDB manager to add to the team
-     */
-    public void setTeam(ProjectTeam team, HdbManager user);
-
-    /**
-     * Adds an HDB officer to the specified project team.
-     *
-     * @param team the project team to modify
-     * @param user the HDB officer to add to the team
-     */
-    public void setTeam(ProjectTeam team, HdbOfficer user);
-
     public void changePassword(User user, String password);
 }
