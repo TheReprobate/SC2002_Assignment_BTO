@@ -164,7 +164,8 @@ public class DataManager {
         buffer.add("ProjectName,ApplicantNric,Content,Reply,Replied,CreatedAt,RepliedAt");
         for (Enquiry enquiry : enquiries) {
             StringBuilder sb = new StringBuilder();
-            sb.append(CsvParser.escapeCsv(enquiry.getProject().getName())).append(",");
+            Project p = enquiry.getProject();
+            sb.append(CsvParser.escapeCsv(p == null ? "null" : p.getName())).append(",");
             sb.append(CsvParser.escapeCsv(enquiry.getApplicant().getNric())).append(",");
             sb.append(CsvParser.escapeCsv(enquiry.getContent())).append(",");
             sb.append(CsvParser.escapeCsv(enquiry.getReply())).append(",");
@@ -191,7 +192,8 @@ public class DataManager {
 
         for (BtoApplication application : applications) {
             StringBuilder sb = new StringBuilder();
-            sb.append(CsvParser.escapeCsv(application.getProject().getName())).append(",");
+            Project p = application.getProject();
+            sb.append(CsvParser.escapeCsv(p == null ? "null" : p.getName())).append(",");
             sb.append(CsvParser.escapeCsv(application.getApplicant().getNric())).append(",");
             sb.append(statuses.indexOf(application.getStatus())).append(",");
             HdbOfficer officer = application.getOfficerInCharge();
@@ -355,14 +357,12 @@ public class DataManager {
             if(!repliedAtString.equals("null")) {
                 repliedAt = LocalDateTime.parse(repliedAtString);
             }
-            Optional<Project> project = projects.stream()
+            Optional<Project> projectOptional = projects.stream()
                 .filter(p -> projectName.equals(p.getName()))
                 .findFirst();
-            if(!project.isPresent()) {
-                throw new Error("File load error");
-            }
+            Project project = projectOptional.get();
             Applicant applicant = (Applicant) users.get(applicantNric);
-            Enquiry enquiry = new Enquiry(project.get(), applicant, content);
+            Enquiry enquiry = new Enquiry(project, applicant, content);
             enquiry.setReply(reply);
             enquiry.setReplied(replied);
             enquiry.setCreatedAt(createdAt);
@@ -370,7 +370,9 @@ public class DataManager {
                 enquiry.setRepliedAt(repliedAt);
             }
             applicant.getEnquiries().add(enquiry); // add to applicant
-            project.get().getEnquiries().add(enquiry); // add to project
+            if(project != null) {
+                project.getEnquiries().add(enquiry); // add to project
+            }
         }
     }
     
@@ -387,14 +389,12 @@ public class DataManager {
             int flatIndex = Integer.valueOf(data.get(4));
             boolean activeProject = data.get(5).equals("Yes");
 
-            Optional<Project> project = projects.stream()
+            Optional<Project> projectOptional = projects.stream()
                 .filter(p -> projectName.equals(p.getName()))
                 .findFirst();
-            if(!project.isPresent()) {
-                throw new Error("File load error");
-            }
+            Project project = projectOptional.get();
             Applicant applicant = (Applicant) users.get(applicantNric);            
-            BtoApplication application = new BtoApplication(project.get(), applicant, flats.get(flatIndex));
+            BtoApplication application = new BtoApplication(project, applicant, flats.get(flatIndex));
             application.setStatus(statuses.get(statusIndex));
             if(!officerNric.equals("null")) {
                 application.setOfficerInCharge((HdbOfficer) users.get(officerNric));
@@ -402,7 +402,9 @@ public class DataManager {
             if(activeProject) {
                 applicant.setActiveApplication(application);
             }
-            project.get().addBtoApplication(application);
+            if(project != null) {
+                project.addBtoApplication(application);
+            }
         }
     }
 

@@ -7,15 +7,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-
-import btosystem.classes.Applicant;
 
 public class CsvParser {
     public static List<List<String>> loadFromCSV(String filename) {
         List<List<String>> records = new ArrayList<>();
-        File f = new File(String.format("app\\src\\main\\resources\\%s", filename));
+        File f = new File(String.format("src\\main\\resources\\%s", filename));
         if(!(f.exists() && !f.isDirectory())) { 
             try {
                 f.createNewFile();
@@ -48,7 +45,7 @@ public class CsvParser {
     }
 
     public static void saveToCSV(String filename, List<String> strings) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("app\\src\\main\\resources\\%s", filename)))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("src\\main\\resources\\%s", filename)))) {
             for(String s: strings){
                 writer.write(s);
                 writer.newLine();
