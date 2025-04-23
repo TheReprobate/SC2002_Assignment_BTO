@@ -11,9 +11,9 @@ import btosystem.utils.RegexPatterns;
  * High-level controller class specific to the {@link HdbOfficer} role
  * handling BTO application related functionality.
  */
-public class HdbOfficerBtoApplicationController extends HdbOfficerController{
+public class HdbOfficerBtoApplicationController extends HdbOfficerController {
     private static final String[] MENU = {
-            "Process Application", "Exit"
+        "Process Application", "Exit"
     };
 
     /**
@@ -22,6 +22,7 @@ public class HdbOfficerBtoApplicationController extends HdbOfficerController{
      * @param user reference to a {@link HdbOfficer} object
      * @param serviceManager reference to a {@link HdbOfficerServiceManager}
      */
+
     public HdbOfficerBtoApplicationController(
             HdbOfficer user, HdbOfficerServiceManager serviceManager) {
         super(user, serviceManager);
@@ -40,11 +41,13 @@ public class HdbOfficerBtoApplicationController extends HdbOfficerController{
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                processApplication();
-                return 0;
-            case 1: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+          case 0:
+              processApplication();
+              return 0;
+          case 1: 
+              return -1;
+          default: 
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
@@ -54,6 +57,7 @@ public class HdbOfficerBtoApplicationController extends HdbOfficerController{
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void processApplication() throws Exception {
         String nric = InputHandler.getStringInput("Input Applicant's NRIC: ", RegexPatterns.NRIC);
         BtoApplication application = serviceManager.getApplicationService().getApplication(nric);

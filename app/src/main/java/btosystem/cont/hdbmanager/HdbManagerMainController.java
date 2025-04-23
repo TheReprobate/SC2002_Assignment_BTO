@@ -11,8 +11,8 @@ import btosystem.utils.ListToStringFormatter;
  */
 public class HdbManagerMainController extends HdbManagerController {
     private static final String[] MENU = {
-            "System Project Service", "Current Project Service",
-            "Application Service", "Enquiry Service", "Exit"};
+        "System Project Service", "Current Project Service",
+        "Application Service", "Enquiry Service", "Exit"};
 
     private HdbManagerBtoApplicationController applicationController;
     private HdbManagerEnquiryController enquiryController;
@@ -52,22 +52,22 @@ public class HdbManagerMainController extends HdbManagerController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                systemProjectController.execute();
-                return 0;
-            case 1:
-                currentProjectController.execute();
-                return 0;
-            case 2:
-                applicationController.execute();
-                return 0;
-            case 3:
-                enquiryController.execute();
-                return 0;
-            case 4:
-                return -1;
-            default:
-                throw new Exception("Please enter a valid input. ");
+          case 0:
+              systemProjectController.execute();
+              return 0;
+          case 1:
+              currentProjectController.execute();
+              return 0;
+          case 2:
+              applicationController.execute();
+              return 0;
+          case 3:
+              enquiryController.execute();
+              return 0;
+          case 4:
+              return -1;
+          default:
+              throw new Exception("Please enter a valid input. ");
         }
     }
 }

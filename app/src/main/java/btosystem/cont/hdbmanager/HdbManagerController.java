@@ -21,7 +21,7 @@ public abstract class HdbManagerController extends Controller {
      * @param serviceManager reference to a {@link HdbManagerServiceManager}
      *                       instance for use by sub-controllers
      */
-    public HdbManagerController (
+    public HdbManagerController(
             HdbManager user,
             HdbManagerServiceManager serviceManager) {
         this.user = user;

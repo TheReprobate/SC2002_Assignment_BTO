@@ -11,13 +11,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * High-level controller class specific to the {@link HdbManager} role
+ * High-level controller class specific to the {@link HdbManager} role.
  * for functionality related to all projects in the system
  */
+
 public class HdbManagerSystemProjectController extends HdbManagerProjectController {
     private static final String[] MENU = {
-            "View Project Details", "View Created Projects",
-            "Join Team", "Create Project", "Exit"
+        "View Project Details", "View Created Projects",
+        "Join Team", "Create Project", "Exit"
     };
     private List<Project> projects;
 
@@ -27,6 +28,7 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
      * @param user reference to a {@link HdbManager} object
      * @param serviceManager reference to a {@link HdbManagerServiceManager}
      */
+
     public HdbManagerSystemProjectController(
             HdbManager user, HdbManagerServiceManager serviceManager) {
         super(user, serviceManager);
@@ -50,21 +52,21 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                viewProject();
-                return 0;
-            case 1:
-                viewCreatedProjects();
-                return 0;
-            case 2:
-                joinTeam();
-                return 0;
-            case 3:
-                createProject();
-                return 0;
-            case 4:
-                return -1;
-            default: throw new Exception("Please enter a valid input. ");
+          case 0:
+              viewProject();
+              return 0;
+          case 1:
+              viewCreatedProjects();
+              return 0;
+          case 2:
+              joinTeam();
+              return 0;
+          case 3:
+              createProject();
+              return 0;
+          case 4:
+              return -1;
+          default: throw new Exception("Please enter a valid input. ");
         }
     }
 
@@ -122,9 +124,9 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
     /**
      * Pick a project to be viewed.
      *
-     * @throws Exception propagated errors from service calls or
-     * user not involved in any projects
+     * @throws Exception propagated errors from service calls or user not involved in any projects
      */
+
     private void viewProject() throws Exception {
         Project project = getProject();
         super.viewProject(project);
@@ -142,5 +144,5 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
         return project;
     }
 
-    private void deleteProject() {}; // not implemented
+    // private void deleteProject() {}; // not implemented
 }

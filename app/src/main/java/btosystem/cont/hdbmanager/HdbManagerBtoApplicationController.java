@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class HdbManagerBtoApplicationController extends HdbManagerController {
     private static final String[] MENU = {
-            "Approve Application", "Reject Application", "Exit"
+        "Approve Application", "Reject Application", "Exit"
     };
     private Project project;
     private List<BtoApplication> applications;
@@ -26,7 +26,8 @@ public class HdbManagerBtoApplicationController extends HdbManagerController {
      * @param user reference to a {@link HdbManager} object
      * @param serviceManager reference to a {@link HdbManagerServiceManager}
      */
-    public HdbManagerBtoApplicationController (
+
+    public HdbManagerBtoApplicationController(
             HdbManager user,
             HdbManagerServiceManager serviceManager) {
         super(user, serviceManager);
@@ -56,16 +57,16 @@ public class HdbManagerBtoApplicationController extends HdbManagerController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                approveApplication();
-                return 0;
-            case 1:
-                rejectApplication();
-                return 0;
-            case 2:
-                return -1;
-            default:
-                throw new Exception("Please enter a valid input. ");
+          case 0:
+              approveApplication();
+              return 0;
+          case 1:
+              rejectApplication();
+              return 0;
+          case 2:
+              return -1;
+          default:
+              throw new Exception("Please enter a valid input. ");
         }
     }
 

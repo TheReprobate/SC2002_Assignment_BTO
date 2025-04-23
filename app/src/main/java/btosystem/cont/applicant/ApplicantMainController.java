@@ -11,7 +11,7 @@ import btosystem.utils.ListToStringFormatter;
  */
 public class ApplicantMainController extends ApplicantController {
     private static final String[] MENU = {
-            "Project Service", "Application Service", "Enquiry Service", "Exit"
+        "Project Service", "Application Service", "Enquiry Service", "Exit"
     };
     private ApplicantBtoApplicationController applicationController;
     private ApplicantEnquiryController enquiryController;
@@ -45,20 +45,20 @@ public class ApplicantMainController extends ApplicantController {
     @Override
     protected int process(int input) throws Exception {
         return switch (input) {
-            case 0 -> {
-                projectController.execute();
-                yield 0;
-            }
-            case 1 -> {
-                applicationController.execute();
-                yield 0;
-            }
-            case 2 -> {
-                enquiryController.execute();
-                yield 0;
-            }
-            case 3 -> -1;
-            default -> throw new Exception("Please enter a valid input. ");
+          case 0 -> {
+              projectController.execute();
+              yield 0;
+          }
+          case 1 -> {
+              applicationController.execute();
+              yield 0;
+          }
+          case 2 -> {
+              enquiryController.execute();
+              yield 0;
+          }
+          case 3 -> -1;
+          default -> throw new Exception("Please enter a valid input. ");
         };
     }
 }

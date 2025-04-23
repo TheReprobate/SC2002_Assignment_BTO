@@ -50,9 +50,9 @@ public class ApplicantEnquiryController extends ApplicantController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-          case 0: //55
-              viewEnquiry();  //56
-              return 0;   //57
+          case 0:
+              viewEnquiry();
+              return 0;
           case 1:
               createEnquiry();
               return 0;

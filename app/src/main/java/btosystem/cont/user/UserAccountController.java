@@ -14,7 +14,7 @@ import btosystem.utils.RegexPatterns;
  */
 public class UserAccountController extends Controller {
     private static final String[] MENU = {
-            "Login", "Register Applicant", "Exit"
+        "Login", "Register Applicant", "Exit"
     };
     private UserAccountService accountService;
     private User user;
@@ -33,6 +33,7 @@ public class UserAccountController extends Controller {
      *
      * @return the current user, or {@code null} if no current user.
      */
+
     public User getUser() {
         if (this.user == null) {
             return null;
@@ -59,8 +60,10 @@ public class UserAccountController extends Controller {
           case 1:
               register();
               return 0;
-          case 2: return -1;
-          default: throw new Exception("Please enter a valid input. ");
+          case 2: 
+              return -1;
+          default: 
+              throw new Exception("Please enter a valid input. ");
         }
     }
 

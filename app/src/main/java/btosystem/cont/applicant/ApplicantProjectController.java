@@ -5,7 +5,6 @@ import btosystem.classes.Project;
 import btosystem.service.ApplicantServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
-
 import java.util.List;
 
 // missing - filters
@@ -15,7 +14,7 @@ import java.util.List;
  */
 public class ApplicantProjectController extends ApplicantController {
     private static final String[] MENU = {
-            "View Project Details", "Exit"
+        "View Project Details", "Exit"
     };
     private List<Project> projects;
 
@@ -48,13 +47,13 @@ public class ApplicantProjectController extends ApplicantController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                viewProject();
-                return 0;
-            case 1:
-                return -1;
-            default:
-                throw new Exception("Please enter a valid input. ");
+          case 0:
+              viewProject();
+              return 0;
+          case 1:
+              return -1;
+          default:
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
@@ -72,9 +71,9 @@ public class ApplicantProjectController extends ApplicantController {
      * Requests user to pick a project and invoke service class to return
      * project object.
      *
-     * @throws Exception propagated errors from service calls or
-     * user not involved in any projects
+     * @throws Exception propagated errors from service calls or user not involved in any projects
      */
+
     private Project getProject() throws Exception {
         if (projects.size() <= 0) {
             throw new Exception("No related projects found. ");
