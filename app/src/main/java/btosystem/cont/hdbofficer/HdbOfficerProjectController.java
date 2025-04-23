@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class HdbOfficerProjectController extends HdbOfficerController {
     private static final String[] MENU = {
-        "Register for project", "Exit"
+        "View project", "Register for project", "Exit"
     };
     private List<Project> projects;
 
@@ -51,13 +51,26 @@ public class HdbOfficerProjectController extends HdbOfficerController {
     protected int process(int input) throws Exception {
         switch (input) {
           case 0:
+              viewProject();
+              return 0;
+          case 1:
               registerProject();
               return 0;
-          case 1: 
+          case 2: 
               return -1;
           default: 
               throw new Exception("Please enter a valid input. ");
         }
+    }
+    /**
+     * Invokes service classes to perform the operations required
+     * to view more details about a project.
+     *
+     * @throws Exception propagated errors from service calls
+     */
+    private void viewProject() throws Exception {
+        Project project = getProject();
+        System.out.println(serviceManager.getGenericService().displayProject(project));
     }
 
     /**
