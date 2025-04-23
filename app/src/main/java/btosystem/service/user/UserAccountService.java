@@ -9,6 +9,7 @@ import btosystem.controllers.interfaces.ProjectTeamOperations;
 import btosystem.controllers.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
+import btosystem.utils.HashUtil;
 import btosystem.utils.OperationsManager;
 
 /**
@@ -51,7 +52,8 @@ public class UserAccountService extends Service {
      * @throws Exception If authentication fails
      */
     public User login(String nric, String password) throws Exception {
-        return userManager.authenticate(dataManager.getUsers(), nric, password);
+        String hashedPassword = HashUtil.hashPassword(password);
+        return userManager.authenticate(dataManager.getUsers(), nric, hashedPassword);
     }
 
     /**
@@ -73,6 +75,7 @@ public class UserAccountService extends Service {
     
     public void changePassword(String nric, String oldPassword, String newPassword) throws Exception {
         User user = login(nric, oldPassword);
-        userManager.changePassword(user, newPassword);
+        String hashedPassword = HashUtil.hashPassword(newPassword);
+        userManager.changePassword(user, hashedPassword);
     }
 }

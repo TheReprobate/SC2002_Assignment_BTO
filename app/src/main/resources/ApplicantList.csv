@@ -1,7 +1,7 @@
 Name,NRIC,Age,MaritalStatus,Password
-Sarah,T7654321B,40,Married,password
-James,T2345678D,30,Married,password
-Rachel,S3456789E,25,Single,password
-APPLICANT,T0000002A,0,Single,password
-Grace,S9876543C,37,Married,password
-John,S1234567A,35,Single,test2
+Sarah,T7654321B,40,Married,5f4dcc3b5aa765d61d8327deb882cf99
+James,T2345678D,30,Married,5f4dcc3b5aa765d61d8327deb882cf99
+Rachel,S3456789E,25,Single,5f4dcc3b5aa765d61d8327deb882cf99
+APPLICANT,T0000002A,0,Single,5f4dcc3b5aa765d61d8327deb882cf99
+Grace,S9876543C,37,Married,5f4dcc3b5aa765d61d8327deb882cf99
+John,S1234567A,35,Single,5f4dcc3b5aa765d61d8327deb882cf99

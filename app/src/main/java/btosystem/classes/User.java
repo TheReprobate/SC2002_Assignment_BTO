@@ -18,7 +18,7 @@ public abstract class User {
         this.name = name;
         this.age = age;
         this.married = married;
-        this.password = "password";
+        this.password = "5f4dcc3b5aa765d61d8327deb882cf99"; // MD5 hash for "password"
     }
 
     public String getNric() {
