@@ -10,6 +10,12 @@ public class OfficerRegistration {
     private RegistrationStatus status;
     private HdbOfficer officer;
 
+    /**
+     * Constructor for OfficerRegistration object.
+     * Actual implementation for creation of object is handled by:
+     * {@link btosystem.controllers.ProjectTeamController}
+     */
+
     public OfficerRegistration(HdbOfficer officer) {
         this.officer = officer;
         status = RegistrationStatus.PENDING;

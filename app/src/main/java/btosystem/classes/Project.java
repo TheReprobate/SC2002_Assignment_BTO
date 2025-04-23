@@ -2,8 +2,6 @@ package btosystem.classes;
 
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
-import btosystem.controllers.interfaces.CleanupOperations;
-import btosystem.controllers.interfaces.ListToString;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,13 +39,13 @@ public class Project {
         this.neighborhood = neighborhood;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        //this.projectTeam = projectTeam;
-        this.projectTeam = null;
+        this.projectTeam = new ProjectTeam(this);
         this.btoApplications = new ArrayList<BtoApplication>();
         this.enquiries = new ArrayList<Enquiry>();
         this.units = new HashMap<FlatType, Integer>();
         this.createdBy = createdBy;
     }
+
     public String getName() {
         return name;
     }
@@ -116,6 +114,9 @@ public class Project {
         this.projectTeam = projectTeam;
     }
 
+    /**
+     * Method for adding BTO application.
+     */
     public void addBtoApplication(BtoApplication btoApplication) {
         this.btoApplications.add(btoApplication);
     }

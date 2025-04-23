@@ -25,7 +25,8 @@ public interface UserOperations extends ToString<User> {
      * @param password Password to verify
      * @return Authenticated User object if successful, null otherwise
      */
-    public User authenticate(HashMap<String, User> users, String username, String password);
+    public User authenticate(HashMap<String, User> users, String username, String password)
+            throws Exception;
 
     /**
      * Retrieves the active application for an applicant.
@@ -47,17 +48,17 @@ public interface UserOperations extends ToString<User> {
      * Retrieves the current project team for an HDB officer.
      *
      * @param officer The officer to query
-     * @return The officer's current project team
+     * @return The officers's history of all teams
      */
-    public ProjectTeam retrieveCurrentTeam(HdbOfficer officer);
+    public List<ProjectTeam> retrieveTeams(HdbOfficer officer);
 
     /**
      * Retrieves the current project team for an HDB manager.
      *
      * @param manager The manager to query
-     * @return The manager's current project team
+     * @return The manager's history of all teams
      */
-    public ProjectTeam retrieveCurrentTeam(HdbManager manager);
+    public List<ProjectTeam> retrieveTeams(HdbManager manager);
 
     /**
      * Retrieves all projects created by an HDB manager.
@@ -66,4 +67,46 @@ public interface UserOperations extends ToString<User> {
      * @return List of projects created by the manager
      */
     public List<Project> retrieveCreatedProjects(HdbManager manager);
+
+    /**
+     * Removes the application associated with the specified applicant.
+     *
+     * @param applicant the applicant whose application should be removed
+     * @throws Exception if the removal operation fails or if applicant is not found
+     */
+    public void removeApplication(Applicant applicant) throws Exception;
+
+    /**
+     * Retrieves a user from the user registry based on NRIC.
+     *
+     * @param users the user registry to search in
+     * @param nric the NRIC number to search for
+     * @return the User object matching the NRIC
+     * @throws Exception if user is not found or retrieval fails
+     */
+    public User retrieveUser(HashMap<String, User> users, String nric) throws Exception;
+
+    /**
+     * Adds a new applicant to the user registry.
+     *
+     * @param users the user registry to add to
+     * @param nric the NRIC of the new applicant
+     * @param name the full name of the applicant
+     * @param age the age of the applicant
+     * @param married marital status of the applicant
+     * @throws Exception if addition fails (e.g., duplicate NRIC or invalid data)
+     */
+    public void addApplicant(HashMap<String, User> users, String nric,
+                             String name, int age, boolean married)
+            throws Exception;
+
+    /**
+     * Associates an application with an applicant.
+     *
+     * @param applicant the applicant to associate with
+     * @param application the application to set
+     */
+    public void setApplication(Applicant applicant, BtoApplication application);
+
+    public void changePassword(User user, String password);
 }

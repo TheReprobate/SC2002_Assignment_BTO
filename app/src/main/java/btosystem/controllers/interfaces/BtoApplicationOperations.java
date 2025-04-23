@@ -4,6 +4,7 @@ import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.Project;
+import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import java.util.List;
 
@@ -13,8 +14,7 @@ import java.util.List;
  * providing various operations related to application management.
  */
 public interface BtoApplicationOperations extends 
-    ListToString<BtoApplication>, 
-    CleanupOperations<BtoApplication>
+    ListToString<BtoApplication>
 {
     /**
      * Creates an application for a project with a specific flat type.
@@ -87,6 +87,7 @@ public interface BtoApplicationOperations extends
      */
     int withdrawApplication(BtoApplication application) throws IllegalArgumentException;
 
+    int addApplication(List<BtoApplication> applications, BtoApplication application);  
     /**
      * Returns a list of flat types eligible to be applied for by a given {@code Applicant}.
      *
@@ -95,4 +96,25 @@ public interface BtoApplicationOperations extends
      * eligible to be applied for by the applicant.
      */
     List<FlatType> getEligibleFlatTypes(Applicant applicant);
+
+    FlatType retrieveFlatType(BtoApplication application);
+
+    boolean isReadyToProcess(BtoApplication application);
+
+    List<BtoApplication> filterApplications(List<BtoApplication> applications, ApplicationStatus status);
+
+    Project retrieveProject(BtoApplication application);
+
+    Applicant retrieveApplicant(BtoApplication application);
+
+    boolean isPending(BtoApplication application);
+
+    boolean hasApplied(List<BtoApplication> applications, Applicant applicant);
+
+    /**
+     * Sets project to empty
+     *
+     * @param application The application to edit
+     */
+    void removeProject(BtoApplication application);
 }

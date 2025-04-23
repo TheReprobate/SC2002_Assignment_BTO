@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller for Project class that implements ProjectOperation interface.
@@ -110,6 +111,21 @@ public class ProjectController implements ProjectOperations {
         return filteredProjects;
     }
 
+    @Override
+    public List<Project> filterProject(List<Project> projects, LocalDate start, LocalDate end) {
+        List<Project> out = new ArrayList<>();
+        for (Project p : projects) {
+            if (start != null && start.isBefore(p.getOpenTime())) {
+                continue;
+            }
+            if (end != null && end.isAfter(p.getCloseTime())) {
+                continue;
+            }
+            out.add(p);
+        }
+        return out;
+    }
+
     /**
      * Method for retrieving project team handling this project.
      *
@@ -132,8 +148,9 @@ public class ProjectController implements ProjectOperations {
         if (project.getProjectTeam() == null) {
             project.setProjectTeam(team);
             return 1;
+        } else {
+            throw new IllegalArgumentException("Project already has a team!");
         }
-        else throw new IllegalArgumentException("Project already has a team!");
     }
 
     /**
@@ -191,39 +208,22 @@ public class ProjectController implements ProjectOperations {
     }
 
     /**
-     * Method for updating project's application period.
-     *
-     * @param project Project object
-     * @param openTime Application open date to update to
-     * @param closeTime Application close date to update to
-     * @return 1 for successful update
-     */
-    @Override
-    public int editProject(Project project, LocalDate openTime, LocalDate closeTime) {
-        if (project.getOpenTime().isBefore(openTime)) {
-            project.setOpenTime(openTime);
-            project.setCloseTime(closeTime);
-        }
-        else {
-            throw new IllegalArgumentException("Open date cannot be before close date! Are you a time traveller?");
-        }
-
-        return 1;
-    }
-
-    /**
      * Method for deleting a project.
      *
      * @param projects List of projects
      * @param project Project to be deleted from the list
      * @return 1 for successful deletion else 0
+     * @throws Exception 
      */
     @Override
-    public int deleteProject(List<Project> projects, Project project) {
+    public int deleteProject(List<Project> projects, Project project) throws Exception {
         // .remove already checks whether element exists in collection
         // so we do not need to check .contains
         boolean removed = projects.remove(project);
-        return removed ? 1 : 0;
+        if(!removed) {
+            throw new Exception("Project does not exist. ");
+        }
+        return 1;
     }
 
     /**
@@ -241,16 +241,6 @@ public class ProjectController implements ProjectOperations {
             }
         }
         return false;
-    }
-
-    /**
-     * Cleanup operation to ensure no dangling reference.
-     * Unused for now.
-     */
-    @Override
-    public void cleanup(Project instance) {
-        // When we delete a project,
-        //instance.setProjectTeam(null);
     }
 
     /**
@@ -273,7 +263,7 @@ public class ProjectController implements ProjectOperations {
         int count = 1;
         for (Project p : data) {
             sb.append(String.format(stringFormat,
-                    "[" + count++ +"]",
+                    "[" + count++ + "]",
                     p.getName(),
                     p.getNeighborhood(),
                     p.getOpenTime(),
@@ -301,5 +291,50 @@ public class ProjectController implements ProjectOperations {
                 + "Number of Enquiries: " + data.getEnquiries().size() + "\n"
                 + "Created by Manager: " + data.getCreatedBy().getName() + "\n";
 
+    }
+
+    @Override
+    public boolean unitHasSlots(Project project, FlatType flatType) {
+        return project.getUnits().get(flatType) > 0;
+    }
+
+    @Override
+    public boolean isOpen(Project project) {
+        LocalDate now = LocalDate.now();
+        return (now.isAfter(project.getOpenTime()) || now.isEqual(project.getOpenTime()))
+            && (now.isBefore(project.getCloseTime()) || now.isEqual(project.getCloseTime()));
+    }
+
+    @Override
+    public boolean hasTimeOverlap(Project firstProject, Project secondProject) {
+        return secondProject.getOpenTime().isBefore(firstProject.getCloseTime()) && firstProject.getOpenTime().isBefore(secondProject.getCloseTime());
+    }
+
+    @Override
+    public int addProject(List<Project> projects, Project project) {
+        projects.add(project);
+        return 1;
+    }
+
+    @Override
+    public int decreaseUnitCount(Project project, FlatType flatType) {
+        Map<FlatType, Integer> flats = project.getUnits();
+        int count = flats.get(flatType);
+        if (count <= 0) {
+            return 0;
+        }
+        updateUnitCount(project, flatType, count - 1);
+        return 1;
+    }
+
+    @Override
+    public List<FlatType> getAvailableFlatTypes(Project project) {
+        return new ArrayList<>(project.getUnits().keySet());
+    }
+
+    @Override
+    public int editProject(Project project, boolean visibility) {
+        project.setVisible(visibility);
+        return 1;
     }
 }
