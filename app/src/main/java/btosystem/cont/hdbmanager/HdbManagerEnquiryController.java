@@ -54,13 +54,13 @@ public class HdbManagerEnquiryController extends HdbManagerController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                replyEnquiry();
-                return 0;
-            case 1:
-                return -1;
-            default:
-                throw new Exception("Please enter a valid input. ");
+          case 0:
+              replyEnquiry();
+              return 0;
+          case 1:
+              return -1;
+          default:
+              throw new Exception("Please enter a valid input. ");
         }
     }
 

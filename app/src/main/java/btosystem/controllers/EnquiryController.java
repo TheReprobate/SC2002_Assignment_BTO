@@ -179,6 +179,6 @@ public class EnquiryController implements EnquiryOperations {
 
     @Override
     public List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied) {
-        return enquiries.stream().filter(e -> e.hasReplied() == replied).collect(Collectors.toList());
+        return enquiries.stream().filter(e -> e.hasReplied() == replied).collect(Collectors.toList()); //182
     }
 }

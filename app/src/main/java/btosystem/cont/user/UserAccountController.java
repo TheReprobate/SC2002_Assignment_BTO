@@ -31,8 +31,7 @@ public class UserAccountController extends Controller {
     /**
      * Retrieves the current user object.
      *
-     * @return the current user,
-     * or {@code null} if no current user.
+     * @return the current user, or {@code null} if no current user.
      */
     public User getUser() {
         if (this.user == null) {
@@ -54,14 +53,14 @@ public class UserAccountController extends Controller {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                login();
-                return -1;
-            case 1:
-                register();
-                return 0;
-            case 2: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+          case 0:
+              login();
+              return -1;
+          case 1:
+              register();
+              return 0;
+          case 2: return -1;
+          default: throw new Exception("Please enter a valid input. ");
         }
     }
 

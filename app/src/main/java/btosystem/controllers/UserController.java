@@ -26,9 +26,9 @@ public class UserController implements UserOperations {
      * @param username Username to authenticate
      * @param password Password to verify
      * @return Authenticated User object if successful, null otherwise
-     * @throws Exception 
+     * @throws Exception  //29
      */
-    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception {
+    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception {//31
         User user = retrieveUser(users, username);
         if (user != null && user.getPassword().equals(password)) {
             return user;
@@ -84,7 +84,7 @@ public class UserController implements UserOperations {
     }
 
     @Override
-    public void addApplicant(HashMap<String, User> users, String nric, String name, int age, boolean married) throws Exception {
+    public void addApplicant(HashMap<String, User> users, String nric, String name, int age, boolean married) throws Exception {//87
         if (users.get(nric) != null) {
             throw new Exception("User already exist. ");
         }

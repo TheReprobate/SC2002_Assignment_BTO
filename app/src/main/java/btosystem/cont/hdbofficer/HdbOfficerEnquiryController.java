@@ -48,18 +48,18 @@ public class HdbOfficerEnquiryController extends HdbOfficerController {
     
     @Override
     protected String display() {
-        return serviceManager.getGenericService().displayEnquiry(enquiries) +
-                ListToStringFormatter.toString(MENU);
+        return serviceManager.getGenericService().displayEnquiry(enquiries)
+                + ListToStringFormatter.toString(MENU);
     }
 
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                replyEnquiry();
-                return 0;
-            case 1: return -1;
-            default: throw new Exception("Please enter a valid input. ");
+          case 0:
+              replyEnquiry();
+              return 0;
+          case 1: return -1;
+          default: throw new Exception("Please enter a valid input. ");
         }
     }
 

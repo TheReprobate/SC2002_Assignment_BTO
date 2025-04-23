@@ -7,7 +7,6 @@ import btosystem.service.ApplicantServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
 import btosystem.utils.RegexPatterns;
-
 import java.util.List;
 
 // missing filters
@@ -17,9 +16,7 @@ import java.util.List;
  * handling enquiries related functionality.
  */
 public class ApplicantEnquiryController extends ApplicantController {
-    private static final String[] MENU = {
-            "View Enquiry Details", "Create Enquiry", "Edit Enquiry", "Delete Enquiry", "Exit"
-    };
+    private static final String[] MENU = {"View Enquiry Details", "Create Enquiry", "Edit Enquiry", "Delete Enquiry", "Exit"};
     private List<Enquiry> enquiries;
 
     /**
@@ -53,22 +50,22 @@ public class ApplicantEnquiryController extends ApplicantController {
     @Override
     protected int process(int input) throws Exception {
         switch (input) {
-            case 0:
-                viewEnquiry();
-                return 0;
-            case 1:
-                createEnquiry();
-                return 0;
-            case 2:
-                editEnquiry();
-                return 0;
-            case 3:
-                deleteEnquiry();
-                return 0;
-            case 4:
-                return -1;
-            default:
-                throw new Exception("Please enter a valid input. ");
+          case 0: //55
+              viewEnquiry();  //56
+              return 0;   //57
+          case 1:
+              createEnquiry();
+              return 0;
+          case 2:
+              editEnquiry();
+              return 0;
+          case 3:
+              deleteEnquiry();
+              return 0;
+          case 4:
+              return -1;
+          default:
+              throw new Exception("Please enter a valid input. ");
         }
     }
 
@@ -128,7 +125,10 @@ public class ApplicantEnquiryController extends ApplicantController {
             throw new Exception("Enquiry has a reply, unable to process.");
         }
         System.out.println(serviceManager.getGenericService().displayEnquiry(enquiry));
-        String input = InputHandler.getStringInput("Confirm to delete enquiry [Y/N]: ", RegexPatterns.YES_NO);
+        String input = InputHandler.getStringInput(
+                "Confirm to delete enquiry [Y/N]: ",
+                RegexPatterns.YES_NO
+        );
         if (!(input.equals("Y") || input.equals("y"))) {
             System.out.println("Enquiry deletion cancelled");
             return;
