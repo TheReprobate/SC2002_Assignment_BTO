@@ -24,8 +24,8 @@ public class HdbManagerEnquiryService extends Service {
      * Constructs a new HdbManagerEnquiryService with required dependencies.
      *
      * @param dataManager Data management operations
-     * @param applicationManager BTO application operations
-     * @param enquiryManager Enquiry operations
+     * @param applicationOperations BTO application operations
+     * @param enquiryOperations Enquiry operations
      * @param registrationOperations Officer registration operations
      * @param projectTeamOperations Project team operations
      * @param userOperations User operations
@@ -98,9 +98,17 @@ public class HdbManagerEnquiryService extends Service {
         enquiryManager.replyEnquiry(enquiry, reply);
     }
 
+    /**
+     * Retrieves the current project team the given HDB manager is assigned to
+     * for an open project.
+     *
+     * @param user The HDB manager to retrieve the current team for.
+     * @return The current project team of the manager.
+     * @throws Exception If the manager is not currently assigned to an open project team.
+     */
     private ProjectTeam getCurrentTeam(HdbManager user) throws Exception{
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for(ProjectTeam t: teams) {
+        for (ProjectTeam t: teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if(projectManager.isOpen(p)) {
                 return t;
@@ -108,5 +116,4 @@ public class HdbManagerEnquiryService extends Service {
         }
         throw new Exception("Currently not in a team.");
     }
-
 }
