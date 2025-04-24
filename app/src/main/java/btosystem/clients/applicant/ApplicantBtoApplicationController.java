@@ -79,6 +79,9 @@ public class ApplicantBtoApplicationController extends ApplicantController {
             throw new Exception("Active application found. ");
         }
         List<Project> projects = serviceManager.getProjectService().getVisibleProjects();
+        if (projects == null || projects.size() <= 0) {
+            throw new Exception("No projects available. ");
+        }
         System.out.println(serviceManager.getGenericService().displayProject(projects));
         int projectIndex = InputHandler.getIntIndexInput("Select a project to apply for: ");
         Project project = serviceManager.getGenericService().getProject(projects, projectIndex);

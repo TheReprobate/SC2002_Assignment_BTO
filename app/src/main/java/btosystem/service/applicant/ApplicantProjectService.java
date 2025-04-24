@@ -9,6 +9,8 @@ import btosystem.operations.interfaces.ProjectTeamOperations;
 import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
+
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -58,11 +60,12 @@ public class ApplicantProjectService extends Service {
     public List<Project> getVisibleProjects() {
         List<Project> projects = dataManager.getProjects();
         List<Project> visibleProjects = projectManager.filterProject(projects, true);
-        for (Project p : visibleProjects) {
-            if (projectManager.isOpen(p)) {
+        Iterator<Project> it = visibleProjects.iterator();
+        while (it.hasNext()) {
+            if (projectManager.isOpen(it.next())) {
                 continue;
             }
-            visibleProjects.remove(p);
+            it.remove();
         }
         return visibleProjects;
     }
