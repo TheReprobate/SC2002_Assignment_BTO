@@ -37,7 +37,7 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getProject();
-        if(projects == null || projects.size() <= 0) {
+        if (projects == null || projects.size() <= 0) {
             System.out.println("No projects found. ");
         }
         return true;
@@ -76,11 +76,13 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void viewCreatedProjects() throws Exception {
-        if(projects == null || projects.size() <= 0) {
+        if (projects == null || projects.size() <= 0) {
             throw new Exception("No projects found. ");
         }
-        List<Project> createdProjects = serviceManager.getProjectService().getCreatedProject(user);
+        List<Project> createdProjects = serviceManager
+                                .getProjectService().getCreatedProject(user);
         if (createdProjects.size() <= 0) {
             System.out.println("No created projects found. ");
         }
@@ -114,7 +116,7 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
      * @throws Exception propagated errors from service calls
      */
     private void joinTeam() throws Exception {
-        if(projects == null || projects.size() <= 0) {
+        if (projects == null || projects.size() <= 0) {
             throw new Exception("No projects found. ");
         }
         Project project = getProject();
@@ -134,7 +136,7 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
      */
 
     private void viewProject() throws Exception {
-        if(projects == null || projects.size() <= 0) {
+        if (projects == null || projects.size() <= 0) {
             throw new Exception("No projects found. ");
         }
         Project project = getProject();
@@ -147,6 +149,7 @@ public class HdbManagerSystemProjectController extends HdbManagerProjectControll
      *
      * @throws Exception propagated errors from service calls
      */
+    
     private Project getProject() throws Exception {
         int index = InputHandler.getIntIndexInput("Select a project: ");
         Project project = serviceManager.getGenericService().getProject(projects, index);

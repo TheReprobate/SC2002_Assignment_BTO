@@ -1,8 +1,5 @@
 package btosystem.clients.hdbmanager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import btosystem.classes.BtoApplication;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
@@ -10,11 +7,14 @@ import btosystem.classes.enums.ApplicationStatus;
 import btosystem.service.HdbManagerServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * High-level controller class specific to the {@link HdbManager} role
  * handling BTO application related functionality.
  */
+
 public class HdbManagerBtoApplicationController extends HdbManagerController {
     private static final String[] MENU = {
         "Approve Application", "Reject Application", "Exit"
@@ -38,14 +38,15 @@ public class HdbManagerBtoApplicationController extends HdbManagerController {
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getCurrentProject(user);
-        if(projects == null || projects.size() <= 0) {
+        if (projects == null || projects.size() <= 0) {
             throw new Exception("No current project found, join a team. ");
         }
         applications = new ArrayList<>();
-        for(Project p: projects) {
-            applications.addAll(serviceManager.getApplicationService().getApplications(p, ApplicationStatus.PENDING));
+        for (Project p : projects) {
+            applications.addAll(serviceManager.getApplicationService()
+                                            .getApplications(p, ApplicationStatus.PENDING));
         }
-        if(applications.size() <= 0) {
+        if (applications.size() <= 0) {
             throw new Exception("No applications found. ");
         }
         return true;
@@ -81,6 +82,7 @@ public class HdbManagerBtoApplicationController extends HdbManagerController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void approveApplication() throws Exception {
         BtoApplication application = getApplication();
         serviceManager.getApplicationService().approveApplication(user, application);
@@ -93,6 +95,7 @@ public class HdbManagerBtoApplicationController extends HdbManagerController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void rejectApplication() throws Exception {
         BtoApplication application = getApplication();
         serviceManager.getApplicationService().rejectApplication(user, application);
@@ -105,10 +108,11 @@ public class HdbManagerBtoApplicationController extends HdbManagerController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private BtoApplication getApplication() throws Exception {
         int index = InputHandler.getIntIndexInput("Select an application: ");
-        BtoApplication application = serviceManager.getGenericService().getApplication(applications, index);
+        BtoApplication application = serviceManager.getGenericService()
+                                                    .getApplication(applications, index);
         return application;
     }
-    
 }

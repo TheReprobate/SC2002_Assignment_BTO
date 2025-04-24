@@ -25,14 +25,14 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
      * Constructs a new HdbOfficerEnquiryService with required dependencies.
      *
      * @param dataManager Data management operations
-     * @param applicationManager BTO application operations
-     * @param enquiryManager Enquiry operations
+     * @param applicationOperations BTO application operations
+     * @param enquiryOperations Enquiry operations
      * @param registrationOperations Officer registration operations
      * @param projectTeamOperations Project team operations
      * @param userOperations User operations
      * @param projectOperations Project operations
      */
-    public HdbOfficerEnquiryService(
+    public HdbOfficerEnquiryService (
         DataManager dataManager,
         BtoApplicationOperations applicationOperations,
         EnquiryOperations enquiryOperations,
@@ -95,7 +95,7 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
             throw new Exception("Project is not open");
         }
         ProjectTeam team = getCurrentTeam(user);
-        if(team == null) {
+        if (team == null) {
             throw new Exception("Currently not in a team.");
         }
         Project currentProj = projectTeamManager.retrieveAssignedProject(team);
@@ -107,6 +107,14 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
         enquiryManager.replyEnquiry(enquiry, reply);
     }
 
+    /**
+     * Retrieves a list of enquiries for the project that the given HDB officer's current
+     * team is assigned to and is currently open. This is a helper method used to determine
+     * which enquiries an officer has the authority to view and potentially reply to.
+     *
+     * @param user The {@link HdbOfficer} object requesting the viewable enquiries.
+     * @return A {@code List} of {@link Enquiry} objects associated with the officer's current project.
+     */
     private List<Enquiry> getViewableProjectEnquiries(HdbOfficer user) {
         ProjectTeam currentTeam = getCurrentTeam(user);
         Project currentProject = projectTeamManager.retrieveAssignedProject(currentTeam);
@@ -114,11 +122,19 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
         return projectEnquiries;
     }
 
+    /**
+     * Retrieves the current project team that the given HDB officer is actively working on.
+     * A team is considered the current team if it is assigned to a project that is currently open
+     * for application. If the officer is not currently assigned to any open project, this method returns {@code null}.
+     *
+     * @param user The {@link HdbOfficer} object for whom to retrieve the current team.
+     * @return The {@link ProjectTeam} object of the officer's current team, or {@code null} if none.
+     */
     private ProjectTeam getCurrentTeam(HdbOfficer user){
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for(ProjectTeam t: teams) {
+        for (ProjectTeam t: teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
-            if(projectManager.isOpen(p)) {
+            if (projectManager.isOpen(p)) {
                 return t;
             }
         }

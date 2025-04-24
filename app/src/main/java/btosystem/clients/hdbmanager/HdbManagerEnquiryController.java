@@ -1,14 +1,13 @@
 package btosystem.clients.hdbmanager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
 import btosystem.service.HdbManagerServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * High-level controller class specific to the {@link HdbManager} role
@@ -35,14 +34,14 @@ public class HdbManagerEnquiryController extends HdbManagerController {
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getCurrentProject(user);
-        if(projects == null || projects.size() <= 0) {
+        if (projects == null || projects.size() <= 0) {
             throw new Exception("No current project found, join a team. ");
         }
         enquiries = new ArrayList<>();
-        for(Project p: projects) {
+        for (Project p : projects) {
             enquiries.addAll(serviceManager.getEnquiryService().getEnquiries(p, false));
         }
-        if(enquiries.size() <= 0) {
+        if (enquiries.size() <= 0) {
             throw new Exception("No repliable enquiries found. ");
         }
         return true;
@@ -73,6 +72,7 @@ public class HdbManagerEnquiryController extends HdbManagerController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void replyEnquiry() throws Exception {
         Enquiry enquiry = getEnquiry();
         String reply = InputHandler.getStringInput("Input reply: ");
@@ -86,6 +86,7 @@ public class HdbManagerEnquiryController extends HdbManagerController {
      *
      * @throws Exception propagated errors from service calls
      */
+    
     private Enquiry getEnquiry() throws Exception {
         int index = InputHandler.getIntIndexInput("Select an enquiry: ");
         Enquiry enquiry = serviceManager.getGenericService().getEnquiry(enquiries, index);

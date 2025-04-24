@@ -17,10 +17,10 @@ public class BtoApplication {
     /**
      * Constructor for a {@link BtoApplication} object.
      * @param project the {@link Project} being applied for
-     * 
      * @param applicant the {@link Applicant} making the application
-     *
+     * @param flatType the {@link Applicant} being applied for
      */
+
     public BtoApplication(Project project, Applicant applicant, FlatType flatType) {
         this.project = project;
         this.applicant = applicant;

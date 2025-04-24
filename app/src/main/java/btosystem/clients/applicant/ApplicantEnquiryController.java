@@ -9,14 +9,16 @@ import btosystem.utils.ListToStringFormatter;
 import btosystem.utils.RegexPatterns;
 import java.util.List;
 
-// missing filters
-
 /**
  * High-level controller class specific to the {@link Applicant} role
  * handling enquiries related functionality.
  */
+
 public class ApplicantEnquiryController extends ApplicantController {
-    private static final String[] MENU = {"View Enquiry Details", "Create Enquiry", "Edit Enquiry", "Delete Enquiry", "Exit"};
+    private static final String[] MENU = {"View Enquiry Details", 
+                                          "Create Enquiry", 
+                                          "Edit Enquiry", 
+                                          "Delete Enquiry", "Exit"};
     private List<Enquiry> enquiries;
 
     /**
@@ -25,6 +27,7 @@ public class ApplicantEnquiryController extends ApplicantController {
      * @param user reference to a {@link Applicant} object
      * @param serviceManager reference to a {@link ApplicantServiceManager}
      */
+
     public ApplicantEnquiryController(Applicant user, ApplicantServiceManager serviceManager) {
         super(user, serviceManager);
     }
@@ -75,6 +78,7 @@ public class ApplicantEnquiryController extends ApplicantController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void viewEnquiry() throws Exception {
         Enquiry enquiry = getEnquiry();
         System.out.println(serviceManager.getGenericService().displayEnquiry(enquiry));
@@ -88,11 +92,12 @@ public class ApplicantEnquiryController extends ApplicantController {
      */
     private void createEnquiry() throws Exception {
         List<Project> projects = serviceManager.getProjectService().getVisibleProjects();
-        if(projects == null || projects.size() <= 0){
+        if (projects == null || projects.size() <= 0) {
             throw new Exception("No projects found. ");
         }
         System.out.println(serviceManager.getGenericService().displayProject(projects));
-        int projectIndex = InputHandler.getIntIndexInput("Select a project to enquire for: ");
+        int projectIndex = InputHandler
+                            .getIntIndexInput("Select a project to enquire for: ");
         Project project = serviceManager.getGenericService().getProject(projects, projectIndex);
         String input = InputHandler.getStringInput("Input message: ");
         serviceManager.getEnquiryService().createEnquiry(user, project, input);
@@ -105,12 +110,12 @@ public class ApplicantEnquiryController extends ApplicantController {
      *
      * @throws Exception propagated errors from service calls or editing not allowed
      */
+
     private void editEnquiry() throws Exception {
         Enquiry enquiry = getEnquiry();
         if (!serviceManager.getEnquiryService().isEditable(enquiry)) {
             throw new Exception("Enquiry has a reply, unable to process.");
         }
-        // System.out.println(serviceManager.getGenericService().displayEnquiry(enquiry));
         String input = InputHandler.getStringInput("Input new message: ");
         serviceManager.getEnquiryService().editEnquiry(user, enquiry, input);
         System.out.println("Enquiry edit success!");
@@ -122,6 +127,7 @@ public class ApplicantEnquiryController extends ApplicantController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void deleteEnquiry() throws Exception {
         Enquiry enquiry = getEnquiry();
         if (!serviceManager.getEnquiryService().isEditable(enquiry)) {

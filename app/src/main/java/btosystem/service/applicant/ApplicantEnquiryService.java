@@ -24,14 +24,14 @@ public class ApplicantEnquiryService extends Service {
      * Constructs a new ApplicantEnquiryService with required dependencies.
      *
      * @param dataManager Data management operations
-     * @param applicationManager BTO application operations
-     * @param enquiryManager Enquiry operations
+     * @param applicationOperations BTO application operations
+     * @param enquiryOperations Enquiry operations
      * @param registrationOperations Officer registration operations
      * @param projectTeamOperations Project team operations
      * @param userOperations User operations
      * @param projectOperations Project operations
      */
-    public ApplicantEnquiryService(
+    public ApplicantEnquiryService (
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,

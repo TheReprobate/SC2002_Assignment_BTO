@@ -11,6 +11,7 @@ import btosystem.utils.RegexPatterns;
  * High-level controller class specific to the {@link HdbOfficer} role
  * handling BTO application related functionality.
  */
+
 public class HdbOfficerBtoApplicationController extends HdbOfficerController {
     private static final String[] MENU = {
         "Process Application", "Exit"
@@ -62,7 +63,8 @@ public class HdbOfficerBtoApplicationController extends HdbOfficerController {
         String nric = InputHandler.getStringInput("Input Applicant's NRIC: ", RegexPatterns.NRIC);
         BtoApplication application = serviceManager.getApplicationService().getApplication(nric);
         System.out.println(serviceManager.getGenericService().displayApplication(application));
-        String input = InputHandler.getStringInput("Confirm to process application [Y/N]: ", RegexPatterns.YES_NO);
+        String input = InputHandler.getStringInput(
+            "Confirm to process application [Y/N]: ", RegexPatterns.YES_NO);
         if (!(input.equals("Y") || input.equals("y"))) {
             System.out.println("Process application cancelled");
             return;

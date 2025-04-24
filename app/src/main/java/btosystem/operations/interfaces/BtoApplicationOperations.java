@@ -14,8 +14,7 @@ import java.util.List;
  * providing various operations related to application management.
  */
 public interface BtoApplicationOperations extends 
-    ListToString<BtoApplication>
-{
+    ListToString<BtoApplication> {
     /**
      * Creates an application for a project with a specific flat type.
      *
@@ -24,6 +23,7 @@ public interface BtoApplicationOperations extends
      * @param flatType the type of flat being applied for
      * @return the completed <code>Application</code> object
      */
+    
     BtoApplication createApplication(
             Project project,
             Applicant applicant,
@@ -51,8 +51,7 @@ public interface BtoApplicationOperations extends
      * @param application the application to be processed
      * @param officer the officer processing the application
      * @return {@code 1} if the operation is successful.
-     * @throws IllegalArgumentException if {@code application}
-     * or {@code officer} is null.
+     * @throws IllegalArgumentException if {@code application} or {@code officer} is null.
      */
     int processApplication(
             BtoApplication application,
@@ -87,21 +86,14 @@ public interface BtoApplicationOperations extends
      */
     int withdrawApplication(BtoApplication application) throws IllegalArgumentException;
 
-    /**
-    * Adds a new BTO application to the provided list of applications.
-    *
-    * @param applications The list of BtoApplication objects to which the new application will be added.
-    * @param application The BtoApplication to add to the list.
-    * @return An integer indicating the result of the operation (e.g., the index at which the application was added, or a status code).
-    */
     int addApplication(List<BtoApplication> applications, BtoApplication application);
 
     /**
      * Returns a list of flat types eligible to be applied for by a given {@code Applicant}.
      *
      * @param applicant the potential applicant
-     * @return {@code List<FlatType>} containing the flat types
-     * eligible to be applied for by the applicant.
+     * @return {@code List<FlatType>} containing the flat types eligible 
+     *                                to be applied for by the applicant.
      */
     List<FlatType> getEligibleFlatTypes(Applicant applicant);
 
@@ -128,7 +120,8 @@ public interface BtoApplicationOperations extends
      * @param status The ApplicationStatus to filter by.
      * @return A list of BtoApplication objects with the specified status.
      */
-    List<BtoApplication> filterApplications(List<BtoApplication> applications, ApplicationStatus status);
+    List<BtoApplication> filterApplications(List<BtoApplication> applications, 
+                                            ApplicationStatus status);
 
     /**
      * Retrieves the project associated with the given BTO application.
@@ -165,7 +158,7 @@ public interface BtoApplicationOperations extends
     boolean hasApplied(List<BtoApplication> applications, Applicant applicant);
 
     /**
-     * Sets project to empty
+     * Sets project to empty.
      *
      * @param application The application to edit
      */
