@@ -7,15 +7,19 @@ import btosystem.utils.InputHandler;
  * command-line interface controllers. Implements the main control loop and
  * delegates specific operations to subclass implementations.
  */
+
 public abstract class Controller {
 
     /**
      * Executes the main controller loop.
      */
+
     public void execute() {
         while (true) {
             try {
-                if(!load()) return;
+                if (!load()) {
+                    return;
+                }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return;
@@ -40,6 +44,7 @@ public abstract class Controller {
      *         false to terminate the controller
      * @throws Exception if an error occurs during loading
      */
+
     protected abstract boolean load() throws Exception;
 
     /**
@@ -47,6 +52,7 @@ public abstract class Controller {
      *
      * @return the string to be displayed to the user
      */
+
     protected abstract String display();
 
     /**
@@ -57,5 +63,6 @@ public abstract class Controller {
      * @return 0 to continue execution, -1 to terminate the controller
      * @throws Exception if an error occurs during processing
      */
+
     protected abstract int process(int input) throws Exception;
 }

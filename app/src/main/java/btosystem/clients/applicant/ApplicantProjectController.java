@@ -1,19 +1,12 @@
 package btosystem.clients.applicant;
 
-import java.util.Arrays;
-import java.util.List;
-
 import btosystem.classes.Applicant;
-import btosystem.classes.Enquiry;
 import btosystem.classes.Project;
-import btosystem.classes.enums.FlatType;
-import btosystem.classes.enums.Neighborhood;
-import btosystem.operations.interfaces.ListToString;
 import btosystem.service.ApplicantServiceManager;
 import btosystem.utils.InputHandler;
 import btosystem.utils.ListToStringFormatter;
+import java.util.List;
 
-// missing - filters
 /**
  * High-level controller class specific to the {@link Applicant} role
  * handling Project related functionality.
@@ -30,6 +23,7 @@ public class ApplicantProjectController extends ApplicantController {
      * @param user reference to a {@link Applicant} object
      * @param serviceManager reference to a {@link ApplicantServiceManager}
      */
+
     public ApplicantProjectController(Applicant user, ApplicantServiceManager serviceManager) {
         super(user, serviceManager);
     }
@@ -37,7 +31,7 @@ public class ApplicantProjectController extends ApplicantController {
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getVisibleProjects();
-        if(projects.size() <= 0) {
+        if (projects.size() <= 0) {
             throw new Exception("No projects found. ");
         }
         return true;
@@ -67,6 +61,7 @@ public class ApplicantProjectController extends ApplicantController {
      *
      * @throws Exception propagated errors from service calls
      */
+
     private void viewProject() throws Exception {
         Project project = getProject();
         System.out.println(serviceManager.getGenericService().displayProject(project));

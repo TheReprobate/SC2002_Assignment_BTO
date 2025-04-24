@@ -38,14 +38,13 @@ public class ApplicantBtoApplicationController extends ApplicantController {
         application = serviceManager.getApplicationService().getApplication(user);
         return true;
     }
-
+    
     @Override
     protected String display() {
         if (application == null) {
             return "You currently do not have an active application.\n"
                     + ListToStringFormatter.toString(MENU);
-        }
-        else {
+        } else {
             return "Current Application: \n"
                     + serviceManager.getGenericService().displayApplication(application)
                     + "\n"
