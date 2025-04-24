@@ -1,28 +1,26 @@
 package btosystem.utils;
 
-import btosystem.classes.Project;
-import btosystem.classes.User;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.HdbOfficer;
 import btosystem.classes.OfficerRegistration;
+import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
+import btosystem.classes.User;
 import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import btosystem.classes.enums.RegistrationStatus;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Manages and provides access to the application's core data structures
@@ -82,7 +80,7 @@ public class DataManager {
         List<String> buffer = new ArrayList<>();
         buffer.add("Name,NRIC,Age,MaritalStatus,Password");
         for (User user : temp) {
-            if(user instanceof HdbOfficer) {
+            if (user instanceof HdbOfficer) {
                 continue;
             }
             if (!(user instanceof Applicant)) {
@@ -104,7 +102,7 @@ public class DataManager {
         List<String> buffer = new ArrayList<>();
         buffer.add("Name,NRIC,Age,MaritalStatus,Password");
         for (User user : temp) {
-            if(!(user instanceof HdbManager)) {
+            if (!(user instanceof HdbManager)) {
                 continue;
             }
             StringBuilder sb = new StringBuilder();
@@ -123,7 +121,7 @@ public class DataManager {
         List<String> buffer = new ArrayList<>();
         buffer.add("Name,NRIC,Age,MaritalStatus,Password");
         for (User user : temp) {
-            if(!(user instanceof HdbOfficer)) {
+            if (!(user instanceof HdbOfficer)) {
                 continue;
             }
             StringBuilder sb = new StringBuilder();
@@ -145,7 +143,8 @@ public class DataManager {
         for (Project project : temp) {
             StringBuilder sb = new StringBuilder();
             sb.append(CsvParser.escapeCsv(project.getName())).append(",");
-            sb.append(CsvParser.escapeCsv(neighborhoods.indexOf(project.getNeighborhood()))).append(",");
+            sb.append(CsvParser.escapeCsv(neighborhoods.indexOf(
+                                        project.getNeighborhood()))).append(",");
             sb.append(CsvParser.escapeCsv(project.isVisible() ? "Yes" : "No")).append(",");
             sb.append(CsvParser.escapeCsv(project.getOpenTime().toString())).append(",");
             sb.append(CsvParser.escapeCsv(project.getCloseTime().toString())).append(",");
@@ -197,7 +196,8 @@ public class DataManager {
             sb.append(CsvParser.escapeCsv(application.getApplicant().getNric())).append(",");
             sb.append(statuses.indexOf(application.getStatus())).append(",");
             HdbOfficer officer = application.getOfficerInCharge();
-            sb.append(officer != null ? CsvParser.escapeCsv(officer.getNric()) : "null").append(",");
+            sb.append(officer != null ? CsvParser.escapeCsv(officer.getNric()) : 
+                                                            "null").append(",");
             sb.append(flats.indexOf(application.getFlatType())).append(",");
             // Check if this is the applicant's active application for this project
             boolean isActive = application.getApplicant().getActiveApplication() == application;
@@ -251,7 +251,9 @@ public class DataManager {
                 String officerNric = CsvParser.escapeCsv(registration.getOfficer().getNric());
                 int statusIndex = statuses.indexOf(registration.getStatus());
     
-                String row = String.join(",", projectName, officerNric, String.valueOf(statusIndex));
+                String row = String.join(",", 
+                                        projectName, 
+                                        officerNric, String.valueOf(statusIndex));
                 buffer.add(row);
             }
         }
@@ -303,7 +305,7 @@ public class DataManager {
 
     private void loadApplicant() {
         List<List<String>> rawData = CsvParser.loadFromCSV("ApplicantList.csv");
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             String name = data.get(0);
             String nric = data.get(1);
             int age = Integer.valueOf(data.get(2));
@@ -317,7 +319,7 @@ public class DataManager {
 
     private void loadManager() {
         List<List<String>> rawData = CsvParser.loadFromCSV("ManagerList.csv");
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             String name = data.get(0);
             String nric = data.get(1);
             int age = Integer.valueOf(data.get(2));
@@ -331,7 +333,7 @@ public class DataManager {
 
     private void loadOfficer() {
         List<List<String>> rawData = CsvParser.loadFromCSV("OfficerList.csv");
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             String name = data.get(0);
             String nric = data.get(1);
             int age = Integer.valueOf(data.get(2));
@@ -345,16 +347,15 @@ public class DataManager {
 
     private void loadEnquiry() {
         List<List<String>> rawData = CsvParser.loadFromCSV("EnquiryList.csv");
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             LocalDateTime repliedAt = null;
             String projectName = data.get(0);
             String applicantNric = data.get(1);
             String content = data.get(2);
             String reply = data.get(3);
             boolean replied = data.get(4).equals("Yes");
-            LocalDateTime createdAt = LocalDateTime.parse(data.get(5));
             String repliedAtString = data.get(6);
-            if(!repliedAtString.equals("null")) {
+            if (!repliedAtString.equals("null")) {
                 repliedAt = LocalDateTime.parse(repliedAtString);
             }
             Optional<Project> projectOptional = projects.stream()
@@ -363,25 +364,25 @@ public class DataManager {
             Project project = projectOptional.get();
             Applicant applicant = (Applicant) users.get(applicantNric);
             Enquiry enquiry = new Enquiry(project, applicant, content);
+            LocalDateTime createdAt = LocalDateTime.parse(data.get(5));
             enquiry.setReply(reply);
             enquiry.setReplied(replied);
             enquiry.setCreatedAt(createdAt);
-            if(repliedAt != null) {
+            if (repliedAt != null) {
                 enquiry.setRepliedAt(repliedAt);
             }
             applicant.getEnquiries().add(enquiry); // add to applicant
-            if(project != null) {
+            if (project != null) {
                 project.getEnquiries().add(enquiry); // add to project
             }
         }
     }
-    
 
     private void loadApplication() {
         List<List<String>> rawData = CsvParser.loadFromCSV("ApplicationList.csv");
         List<ApplicationStatus> statuses = Arrays.asList(ApplicationStatus.values());
         List<FlatType> flats = Arrays.asList(FlatType.values());
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             String projectName = data.get(0);
             String applicantNric = data.get(1);
             int statusIndex = Integer.valueOf(data.get(2));
@@ -394,15 +395,16 @@ public class DataManager {
                 .findFirst();
             Project project = projectOptional.get();
             Applicant applicant = (Applicant) users.get(applicantNric);            
-            BtoApplication application = new BtoApplication(project, applicant, flats.get(flatIndex));
+            BtoApplication application = 
+                                    new BtoApplication(project, applicant, flats.get(flatIndex));
             application.setStatus(statuses.get(statusIndex));
-            if(!officerNric.equals("null")) {
+            if (!officerNric.equals("null")) {
                 application.setOfficerInCharge((HdbOfficer) users.get(officerNric));
             }
-            if(activeProject) {
+            if (activeProject) {
                 applicant.setActiveApplication(application);
             }
-            if(project != null) {
+            if (project != null) {
                 project.addBtoApplication(application);
             }
         }
@@ -410,25 +412,25 @@ public class DataManager {
 
     private void loadProjectTeam() {
         List<List<String>> rawData = CsvParser.loadFromCSV("ProjectTeamList.csv");
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             String projectName = data.get(0);
             String managerNric = data.get(1);
             String officersNric = data.get(2);
             Optional<Project> projectOptional = projects.stream()
                 .filter(p -> projectName.equals(p.getName()))
                 .findFirst();
-            if(!projectOptional.isPresent()) {
+            if (!projectOptional.isPresent()) {
                 throw new Error("File load error");
             }
             Project project = projectOptional.get();
             ProjectTeam team = project.getProjectTeam();
-            if(!managerNric.equals("null")) {
+            if (!managerNric.equals("null")) {
                 HdbManager manager = (HdbManager) users.get(managerNric);
                 manager.getTeams().add(team);
                 team.setManager(manager);
             }
-            if(!officersNric.equals("null")) {
-                for(String s: officersNric.split(";")) {
+            if (!officersNric.equals("null")) {
+                for (String s : officersNric.split(";")) {
                     HdbOfficer officer = (HdbOfficer) users.get(s);
                     officer.getTeams().add(team);
                     team.getOfficers().add(officer);
@@ -440,14 +442,14 @@ public class DataManager {
     private void loadRegistration() {
         List<List<String>> rawData = CsvParser.loadFromCSV("RegistrationList.csv");
         List<RegistrationStatus> statuses = Arrays.asList(RegistrationStatus.values());
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             String projectName = data.get(0);
             String officerNric = data.get(1);
             int statusIndex = Integer.parseInt(data.get(2));
             Optional<Project> projectOptional = projects.stream()
                 .filter(p -> projectName.equals(p.getName()))
                 .findFirst();
-            if(!projectOptional.isPresent()) {
+            if (!projectOptional.isPresent()) {
                 throw new Error("File load error");
             }
             Project project = projectOptional.get();
@@ -462,14 +464,14 @@ public class DataManager {
     private void loadFlatType() {
         List<List<String>> rawData = CsvParser.loadFromCSV("FlatList.csv");
         List<FlatType> flats = Arrays.asList(FlatType.values());
-        for(List<String> data: rawData) {
+        for (List<String> data : rawData) {
             String projectName = data.get(0);
             int flatIndex = Integer.parseInt(data.get(1));
             int count = Integer.parseInt(data.get(2));
             Optional<Project> projectOptional = projects.stream()
                 .filter(p -> projectName.equals(p.getName()))
                 .findFirst();
-            if(!projectOptional.isPresent()) {
+            if (!projectOptional.isPresent()) {
                 throw new Error("File load error");
             }
             Project project = projectOptional.get();
