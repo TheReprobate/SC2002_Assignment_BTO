@@ -13,6 +13,14 @@ import btosystem.utils.ListToStringFormatter;
 import btosystem.utils.RegexPatterns;
 import java.util.List;
 
+/**
+ * High-level controller class specific to the {@link HdbManager} role
+ * handling functionality related to the HDB Manager's current project.
+ * <p>
+ * This class extends {@link HdbManagerProjectController} and provides
+ * actions such as viewing project details, approving/rejecting officer
+ * registrations, editing project information, and deleting the current project.
+ */
 public class HdbManagerCurrentProjectController extends HdbManagerProjectController {
     private static final String[] MENU = {"View Project Details", 
                                           "Approve Officer Registration", 
@@ -22,6 +30,13 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
                                                  "Flat Count", "Visibility", "Exit"};
     private List<Project> projects;
 
+    /**
+     * Constructor for the {@link HdbManagerCurrentProjectController}.
+     *
+     * @param user           reference to the logged-in {@link HdbManager} user.
+     * @param serviceManager reference to the {@link HdbManagerServiceManager}
+     * for accessing business logic.
+     */
     public HdbManagerCurrentProjectController(HdbManager user, 
                                             HdbManagerServiceManager serviceManager) {
         super(user, serviceManager);
@@ -67,11 +82,30 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         }
     }
 
+    /**
+     * Allows the HDB Manager to view the details of a selected project.
+     * This method retrieves the project based on user input and then calls
+     * the parent class's {@link #viewProject(Project)} method to display
+     * further options related to the project.
+     *
+     * @throws Exception if there's an error in getting the project or during
+     * the viewing process.
+     */
     private void viewProject() throws Exception {
         Project project = getProject();
         super.viewProject(project);
     }
 
+    /**
+     * Allows the HDB Manager to approve a pending officer registration for the
+     * current project. This method prompts the user to select a registration,
+     * confirms the approval, and then updates the registration status through
+     * the service layer.
+     *
+     * @throws Exception if there are no pending registrations, if the user
+     * provides invalid input, or if an error occurs during
+     * the approval process.
+     */
     private void approveRegistration() throws Exception {
         Project project = getProject();
         OfficerRegistration registration = getRegistration(project);
@@ -86,6 +120,16 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         System.out.println("Registration Approved!");
     }
 
+    /**
+     * Allows the HDB Manager to reject a pending officer registration for the
+     * current project. This method prompts the user to select a registration,
+     * confirms the rejection, and then updates the registration status through
+     * the service layer.
+     *
+     * @throws Exception if there are no pending registrations, if the user
+     * provides invalid input, or if an error occurs during
+     * the rejection process.
+     */
     private void rejectRegistration() throws Exception {
         Project project = getProject();
         OfficerRegistration registration = getRegistration(project);
@@ -100,6 +144,14 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         System.out.println("Registration Rejected!");
     }
 
+    /**
+     * Allows the HDB Manager to edit certain details of the current project,
+     * such as the neighborhood, flat count for a specific flat type, or the
+     * project's visibility status.
+     *
+     * @throws Exception if the user provides invalid input or if an error
+     * occurs during the project editing process.
+     */
     private void editProject() throws Exception {
         Project project = getProject();
         System.out.println(ListToStringFormatter.toString(EDIT_FIELDS));
@@ -132,6 +184,15 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         }
     }
 
+    /**
+     * Retrieves a specific pending officer registration for the given project
+     * based on user selection.
+     *
+     * @param project the {@link Project} for which to retrieve registrations.
+     * @return the selected {@link OfficerRegistration} object.
+     * @throws Exception if no pending registrations are found or if the user
+     * provides an invalid selection.
+     */
     private OfficerRegistration getRegistration(Project project) throws Exception {
         List<OfficerRegistration> registrations = serviceManager.getTeamService()
                                                                 .getRegistrations(project, 
@@ -146,6 +207,13 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         return registration;
     }
 
+    /**
+     * Allows the HDB Manager to delete the current project. This method prompts
+     * for confirmation before proceeding with the deletion through the service layer.
+     *
+     * @throws Exception if the user provides invalid input or if an error occurs
+     * during the project deletion process.
+     */
     private void deleteProject() throws Exception {
         Project project = getProject();
         String input = InputHandler.getStringInput(
@@ -156,6 +224,13 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
         serviceManager.getProjectService().deleteProject(user, project);
     }
 
+    /**
+     * Retrieves a specific project from the list of current projects based on
+     * user selection.
+     *
+     * @return the selected {@link Project} object.
+     * @throws Exception if the user provides an invalid selection.
+     */
     private Project getProject() throws Exception {
         int index = InputHandler.getIntIndexInput("Select a project: ");
         Project project = serviceManager.getGenericService().getProject(projects, index);
