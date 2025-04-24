@@ -19,17 +19,20 @@ public class ApplicantServiceManager {
     /**
      * Constructs an {@code ApplicantServiceManager} with the provided service instances.
      *
-     * @param applicationService The service for handling BTO application related operations for applicants.
-     * @param enquiryService     The service for handling enquiry related operations for applicants.
-     * @param projectService     The service for handling project related operations for applicants.
-     * @param genericService     The generic service providing utility methods for displaying and retrieving business objects.
+     * @param applicationService The service for handling BTO application related operations 
+     *                              for applicants.
+     * @param enquiryService     The service for handling enquiry related operations 
+     *                              for applicants.
+     * @param projectService     The service for handling project related operations 
+     *                              for applicants.
+     * @param genericService     The generic service providing utility methods 
+     *                              for displaying and retrieving business objects.
      */
     public ApplicantServiceManager(
             ApplicantBtoApplicationService applicationService,
             ApplicantEnquiryService enquiryService,
             ApplicantProjectService projectService,
-            GenericService genericService)
-    {
+            GenericService genericService) {
         this.applicationService = applicationService;
         this.enquiryService = enquiryService;
         this.projectService = projectService;

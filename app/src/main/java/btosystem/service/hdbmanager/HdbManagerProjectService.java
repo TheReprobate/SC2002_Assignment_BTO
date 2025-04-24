@@ -1,10 +1,5 @@
 package btosystem.service.hdbmanager;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
@@ -21,6 +16,9 @@ import btosystem.operations.interfaces.ProjectTeamOperations;
 import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Service class providing functionalities for HDB managers to manage projects.
@@ -39,15 +37,14 @@ public class HdbManagerProjectService extends Service {
      * @param userOperations User related operations.
      * @param projectOperations Project related operations.
      */
-    public HdbManagerProjectService (
+    public HdbManagerProjectService(
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations,
             ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations,
-            ProjectOperations projectOperations)
-    {
+            ProjectOperations projectOperations) {
         super(dataManager,
             applicationOperations,
             enquiryOperations,
@@ -81,13 +78,13 @@ public class HdbManagerProjectService extends Service {
      *
      * @param user The {@link HdbManager} whose current projects are to be retrieved.
      * @return A list of {@link Project} objects the manager is currently managing,
-     * or {@code null} if the manager is not currently assigned to any project.
+     *          or {@code null} if the manager is not currently assigned to any project.
      * @throws Exception If an error occurs during the retrieval process.
      */
     public List<Project> getCurrentProject(HdbManager user) throws Exception {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
         List<Project> projects = new ArrayList<>();
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project projectInCharge = projectTeamManager.retrieveAssignedProject(t);
             projects.add(projectInCharge);
         }
@@ -126,7 +123,7 @@ public class HdbManagerProjectService extends Service {
      * @param openTime The date when applications for the project will open.
      * @param closeTime The date when applications for the project will close.
      * @throws Exception If a project with the given name already exists, or if the
-     * open or close times are invalid.
+     *                  open or close times are invalid.
      */
     public void createProject(HdbManager user, 
                             String name, 
@@ -248,18 +245,18 @@ public class HdbManagerProjectService extends Service {
         List<BtoApplication> applications = projectManager.retrieveApplications(project);        
         ProjectTeam projectTeam = projectManager.retrieveProjectTeam(project);
         List<HdbOfficer> officers = projectTeamManager.retrieveOfficerTeam(projectTeam);
-        HdbManager manager = projectTeamManager.retrieveManager(projectTeam);
-        List<ProjectTeam> managerTeams = userManager.retrieveTeams(manager);
-        for (Enquiry e: enquiries) {
+        for (Enquiry e : enquiries) {
             enquiryManager.removeProject(e);
         }
-        for (BtoApplication b: applications) {
+        for (BtoApplication b : applications) {
             applicationManager.removeProject(b);
         }
-        for (HdbOfficer o: officers) {
+        for (HdbOfficer o : officers) {
             List<ProjectTeam> officerTeams = userManager.retrieveTeams(o);
             projectTeamManager.removeProjectTeam(officerTeams, projectTeam);
         }
+        HdbManager manager = projectTeamManager.retrieveManager(projectTeam);
+        List<ProjectTeam> managerTeams = userManager.retrieveTeams(manager);
         projectTeamManager.removeProjectTeam(managerTeams, projectTeam);
         projectTeamManager.removeProject(projectTeam);
         projectManager.deleteProject(getProject(), project);

@@ -11,7 +11,6 @@ import btosystem.service.Service;
 import btosystem.service.user.interfaces.IUserAccountService;
 import btosystem.utils.DataManager;
 import btosystem.utils.HashUtil;
-import btosystem.utils.OperationsManager;
 
 /**
  * Service class handling user account operations including login and
@@ -82,11 +81,12 @@ public class UserAccountService extends Service implements IUserAccountService {
      * @param nric The NRIC of the user whose password needs to be changed.
      * @param oldPassword The user's current password for authentication.
      * @param newPassword The new password that the user wants to set. This will be hashed
-     * before being stored.
+     *                    before being stored.
      * @throws Exception If the authentication with the old password fails, or if there is
-     * an issue updating the password in the system.
+     *                   an issue updating the password in the system.
      */
-    public void changePassword(String nric, String oldPassword, String newPassword) throws Exception {
+    public void changePassword(String nric, String oldPassword, 
+                                String newPassword) throws Exception {
         User user = login(nric, oldPassword);
         String hashedPassword = HashUtil.hashPassword(newPassword);
         userManager.changePassword(user, hashedPassword);

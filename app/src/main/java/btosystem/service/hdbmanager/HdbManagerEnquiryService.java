@@ -88,7 +88,7 @@ public class HdbManagerEnquiryService extends Service {
      * @param reply The reply content
      * @throws Exception If manager lacks permission to reply
      */
-    public void replyEnquiry(HdbManager user, Enquiry enquiry, String reply) throws Exception{
+    public void replyEnquiry(HdbManager user, Enquiry enquiry, String reply) throws Exception {
         ProjectTeam team = getCurrentTeam(user);
         Project currentProj = projectTeamManager.retrieveAssignedProject(team);
         Project enquiryProj = enquiryManager.retrieveProject(enquiry);
@@ -106,11 +106,11 @@ public class HdbManagerEnquiryService extends Service {
      * @return The current project team of the manager.
      * @throws Exception If the manager is not currently assigned to an open project team.
      */
-    private ProjectTeam getCurrentTeam(HdbManager user) throws Exception{
+    private ProjectTeam getCurrentTeam(HdbManager user) throws Exception {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
-            if(projectManager.isOpen(p)) {
+            if (projectManager.isOpen(p)) {
                 return t;
             }
         }

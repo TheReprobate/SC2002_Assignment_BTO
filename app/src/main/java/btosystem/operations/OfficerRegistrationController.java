@@ -5,7 +5,6 @@ import btosystem.classes.OfficerRegistration;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.enums.RegistrationStatus;
 import btosystem.operations.interfaces.OfficerRegistrationOperations;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

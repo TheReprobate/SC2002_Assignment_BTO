@@ -6,7 +6,7 @@ import btosystem.classes.User;
  * Interface defining the contract for user account services,
  * including registration and login functionalities.
  */
-public interface IUserAccountService{
+public interface IUserAccountService {
     /**
      * Registers a new applicant user in the system.
      *
@@ -16,7 +16,8 @@ public interface IUserAccountService{
      * @param married The applicant's marital status (true if married, false otherwise).
      * @throws Exception If registration fails
      */
-    public void registerApplicant(String nric, String name, int age, boolean married) throws Exception;
+    public void registerApplicant(String nric, String name, int age, 
+                                boolean married) throws Exception;
 
     /**
      * Authenticates a user based on their NRIC

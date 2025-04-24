@@ -36,15 +36,14 @@ public class HdbManagerBtoApplicationService extends Service {
      * @param userOperations User-related operations.
      * @param projectOperations Project-specific operations.
      */
-    public HdbManagerBtoApplicationService (
+    public HdbManagerBtoApplicationService(
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations,
             ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations,
-            ProjectOperations projectOperations)
-    {
+            ProjectOperations projectOperations) {
         super(dataManager, 
             applicationOperations, 
             enquiryOperations, 
@@ -85,7 +84,7 @@ public class HdbManagerBtoApplicationService extends Service {
      * @param user The {@link HdbManager} performing the approval.
      * @param application The {@link BtoApplication} to be approved.
      * @throws Exception If the manager does not have access, the application
-     * is not pending, or there are no available units of the requested type.
+     *                  is not pending, or there are no available units of the requested type.
      */
     public void approveApplication(HdbManager user, 
                                     BtoApplication application) throws Exception {
@@ -113,8 +112,7 @@ public class HdbManagerBtoApplicationService extends Service {
      *
      * @param user The {@link HdbManager} performing the rejection.
      * @param application The {@link BtoApplication} to be rejected.
-     * @throws Exception If the manager does not have access or the application
-     * is not pending.
+     * @throws Exception If the manager does not have access or the application is not pending.
      */
     public void rejectApplication(HdbManager user, BtoApplication application) throws Exception {
         if (!hasApplicationAccess(user, application)) {
@@ -157,7 +155,7 @@ public class HdbManagerBtoApplicationService extends Service {
      */
     private boolean hasProjectAccess(HdbManager user, Project project) throws Exception {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if (p.equals(project)) {
                 return true;
@@ -175,9 +173,9 @@ public class HdbManagerBtoApplicationService extends Service {
      * @return The {@link ProjectTeam} the manager is currently active in.
      * @throws Exception If the manager is not currently assigned to an open project team.
      */
-    private ProjectTeam getCurrentTeam(HdbManager user) throws Exception{
+    private ProjectTeam getCurrentTeam(HdbManager user) throws Exception {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if (projectManager.isOpen(p)) {
                 return t;
@@ -197,9 +195,11 @@ public class HdbManagerBtoApplicationService extends Service {
     public String generateReport(Project project) {
         StringBuilder sb = new StringBuilder();
         List<BtoApplication> applications = projectManager.retrieveApplications(project);
-        for (BtoApplication a: applications) {
+        for (BtoApplication a : applications) {
             Applicant applicant = applicationManager.retrieveApplicant(a);
-            sb.append(userManager.toString(applicant)).append(applicationManager.toString(a)).append('\n');
+            sb.append(userManager.toString(applicant))
+                .append(applicationManager
+                .toString(a)).append('\n');
         }
         return sb.toString();
     }

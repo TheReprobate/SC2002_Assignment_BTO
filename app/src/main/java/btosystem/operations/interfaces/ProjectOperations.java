@@ -104,7 +104,6 @@ public interface ProjectOperations
     /**
      * Interface method for project deletion.
      * Details can be found in {@link btosystem.operations.ProjectController}
-     * @throws Exception 
      */
     int deleteProject(List<Project> projects, Project project) throws Exception;
 

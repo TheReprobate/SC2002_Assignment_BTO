@@ -34,15 +34,14 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
      * @param userOperations          User operations.
      * @param projectOperations       Project operations.
      */
-    public HdbOfficerProjectService (
+    public HdbOfficerProjectService(
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations,
             ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations,
-            ProjectOperations projectOperations)
-    {
+            ProjectOperations projectOperations) {
         super(
             dataManager,
             applicationOperations,
@@ -69,7 +68,7 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
      * @param start The starting {@code LocalDate} (inclusive) of the date range.
      * @param end   The ending {@code LocalDate} (inclusive) of the date range.
      * @return A {@code List} of {@link Project} objects that were launched between the
-     * specified start and end dates.
+     *          specified start and end dates.
      */
     public List<Project> getProjects(LocalDate start, LocalDate end) {
         return projectManager.filterProject(getProjects(), start, end);
@@ -85,7 +84,7 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
     public List<Project> getWorkingProject(HdbOfficer user) {
         List<Project> projects = new ArrayList<>();
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             projects.add(p);
         }
@@ -98,7 +97,7 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
      *
      * @param user The {@link HdbOfficer} for whom to retrieve the current project.
      * @return The {@link Project} object that the officer is currently working on,
-     * or {@code null} if the officer is not currently assigned to an open project.
+     *          or {@code null} if the officer is not currently assigned to an open project.
      */
     public Project getCurrentProject(HdbOfficer user) {
         ProjectTeam currentTeam = getCurrentTeam(user);
@@ -112,14 +111,16 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
     /**
      * Retrieves the current project team that the given HDB officer is actively working on.
      * A team is considered the current team if it is assigned to a project that is currently open
-     * for application. If the officer is not currently assigned to any open project, this method returns {@code null}.
+     * for application. If the officer is not currently assigned to any open project, 
+     * this method returns {@code null}.
      *
      * @param user The {@link HdbOfficer} object for whom to retrieve the current team.
-     * @return The {@link ProjectTeam} object of the officer's current team, or {@code null} if none.
+     * @return The {@link ProjectTeam} object of the officer's current team, 
+     *          or {@code null} if none.
      */
     private ProjectTeam getCurrentTeam(HdbOfficer user) {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if (projectManager.isOpen(p)) {
                 return t;

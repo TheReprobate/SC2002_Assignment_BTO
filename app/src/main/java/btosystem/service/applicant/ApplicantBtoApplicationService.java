@@ -1,7 +1,5 @@
 package btosystem.service.applicant;
 
-import java.util.List;
-
 import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.Project;
@@ -14,6 +12,7 @@ import btosystem.operations.interfaces.ProjectTeamOperations;
 import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
+import java.util.List;
 
 /**
  * Service class handling application-related operations for applicants. Provides
@@ -57,7 +56,7 @@ public class ApplicantBtoApplicationService extends Service {
      *
      * @param user The applicant whose BTO application to retrieve.
      * @return The {@link BtoApplication} object associated with the applicant,
-     * or null if the applicant has not submitted an application.
+     *          or null if the applicant has not submitted an application.
      */
     public BtoApplication getApplication(Applicant user) {
         return userManager.retrieveApplication(user);
@@ -71,7 +70,7 @@ public class ApplicantBtoApplicationService extends Service {
      * @param user    The applicant for whom to find available flat types.
      * @param project The project for which to check flat type availability.
      * @return A list of {@link FlatType} that the applicant is eligible for and are
-     * currently available in the specified project.
+     *          currently available in the specified project.
      */
     public List<FlatType> getAvailableFlatTypes(Applicant user, Project project) {
         List<FlatType> eligibleFlatTypes = applicationManager.getEligibleFlatTypes(user);
@@ -91,8 +90,8 @@ public class ApplicantBtoApplicationService extends Service {
      * @param project  The project for which the application is being made.
      * @param flatType The type of flat the applicant is applying for.
      * @throws Exception If the project is not open, the applicant has already applied
-     * for the project, the applicant has an existing application, or
-     * there are no available units of the selected flat type.
+     *                  for the project, the applicant has an existing application, or
+     *                  there are no available units of the selected flat type.
      */
     public void createApplication(Applicant user, 
                                 Project project, 

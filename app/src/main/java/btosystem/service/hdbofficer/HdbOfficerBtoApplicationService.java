@@ -1,7 +1,5 @@
 package btosystem.service.hdbofficer;
 
-import java.util.List;
-
 import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.HdbOfficer;
@@ -18,6 +16,7 @@ import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.applicant.ApplicantBtoApplicationService;
 import btosystem.utils.DataManager;
 import btosystem.utils.OperationsManager;
+import java.util.List;
 
 /**
  * Service class extending {@link ApplicantBtoApplicationService} to handle
@@ -25,8 +24,7 @@ import btosystem.utils.OperationsManager;
  * class provides functionalities such as creating, retrieving, and processing
  * BTO applications, with necessary permission checks for HDB officers.
  */
-public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationService{
-
+public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationService {
     /**
      * Constructs a new {@code HdbOfficerBtoApplicationService} with the
      * necessary dependencies for data management and operation handling.
@@ -39,7 +37,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      * @param userOperations User related operations.
      * @param projectOperations Project specific operations.
      */
-    public HdbOfficerBtoApplicationService (
+    public HdbOfficerBtoApplicationService(
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,
@@ -47,7 +45,6 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
             ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations,
             ProjectOperations projectOperations) {
-
         super(dataManager,
             applicationOperations,
             enquiryOperations,
@@ -64,14 +61,16 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      * for projects they are managing. If the officer has access to the project,
      * an exception is thrown; otherwise, the application creation proceeds.
      *
-     * @param user The {@link Applicant} (cast from {@link HdbOfficer}) attempting to create the application.
+     * @param user The {@link Applicant} (cast from {@link HdbOfficer}) 
+     *              attempting to create the application.
      * @param project The {@link Project} for which the application is being created.
      * @param flatType The {@link FlatType} chosen for the application.
      * @throws Exception If the HDB officer has access to the project or if any
-     * other error occurs during application creation.
+     *                  other error occurs during application creation.
      */
     @Override
-    public void createApplication(Applicant user, Project project, FlatType flatType) throws Exception {
+    public void createApplication(Applicant user, 
+                                Project project, FlatType flatType) throws Exception {
         if (hasProjectAccess((HdbOfficer) user, project)) {
             throw new Exception("Access Denied. Not allowed to apply for this project. ");
         }
@@ -94,13 +93,14 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      * @param nric The NRIC of the applicant whose application is to be retrieved.
      * @return The {@link BtoApplication} object associated with the given NRIC.
      * @throws Exception If no applicant is found with the given NRIC or if the
-     * applicant does not have an existing application.
+     *                  applicant does not have an existing application.
      */
     public BtoApplication getApplication(String nric) throws Exception {
         Applicant applicant = getApplicant(nric);
         BtoApplication application = userManager.retrieveApplication(applicant);
         if (application == null) {
-            throw new Exception("Access Denied.Applicant does not have existing application. ");
+            throw new Exception(
+                "Access Denied.Applicant does not have existing application. ");
         }
         return application;
     }
@@ -114,11 +114,12 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      * @param application The {@link BtoApplication} to be processed.
      * @param officer The {@link HdbOfficer} processing the application.
      * @throws Exception If the officer does not have access to the application,
-     * if the application is not approved for processing, if the
-     * applicant is not eligible for the chosen flat type, or if
-     * the selected flat type has no available units.
+     *                  if the application is not approved for processing, if the
+     *                  applicant is not eligible for the chosen flat type, or if
+     *                  the selected flat type has no available units.
      */
-    public void processApplication(BtoApplication application, HdbOfficer officer) throws Exception {
+    public void processApplication(BtoApplication application, 
+                                HdbOfficer officer) throws Exception {
         Applicant applicant = applicationManager.retrieveApplicant(application);    
         FlatType flatType = application.getFlatType();
         if (!hasApplicationAccess(officer, application)) {
@@ -147,9 +148,11 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      * @param user The {@link HdbOfficer} attempting to access the application.
      * @param application The {@link BtoApplication} being accessed.
      * @return {@code true} if the officer has access to the application, {@code false} otherwise.
-     * @throws Exception If an error occurs while retrieving the project associated with the application.
+     * @throws Exception If an error occurs while retrieving the project 
+     *                  associated with the application.
      */
-    private boolean hasApplicationAccess(HdbOfficer user, BtoApplication application) throws Exception {
+    private boolean hasApplicationAccess(HdbOfficer user, 
+                                        BtoApplication application) throws Exception {
         Project applicationProject = applicationManager.retrieveProject(application);
         return hasProjectAccess(user, applicationProject);
     }
@@ -164,7 +167,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      */
     private boolean hasProjectAccess(HdbOfficer user, Project project) {
         ProjectTeam currentTeam = getCurrentTeam(user);
-        if(currentTeam == null) {
+        if (currentTeam == null) {
             return false;
         }
         Project projectInCharge = projectTeamManager.retrieveAssignedProject(currentTeam);
@@ -177,7 +180,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      * @param nric The NRIC of the applicant to retrieve.
      * @return The {@link Applicant} object associated with the given NRIC.
      * @throws Exception If no user is found with the given NRIC or if the user
-     * is not an instance of {@link Applicant}.
+     *                   is not an instance of {@link Applicant}.
      */
     private Applicant getApplicant(String nric) throws Exception {
         User user = userManager.retrieveUser(dataManager.getUsers(), nric);
@@ -195,11 +198,11 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
      *
      * @param user The {@link HdbOfficer} for whom to retrieve the current team.
      * @return The {@link ProjectTeam} object of the officer's current team, or
-     * {@code null} if the officer is not assigned to any open project.
+     *          {@code null} if the officer is not assigned to any open project.
      */
-    private ProjectTeam getCurrentTeam(HdbOfficer user){
+    private ProjectTeam getCurrentTeam(HdbOfficer user) {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if (projectManager.isOpen(p)) {
                 return t;

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * An interface that extends {@link ListToString}
- * and {@link CleanupOperations} for {@link BtoApplication} objects,
+ * {@link BtoApplication} objects,
  * providing various operations related to application management.
  */
 public interface BtoApplicationOperations extends 
@@ -86,6 +86,14 @@ public interface BtoApplicationOperations extends
      */
     int withdrawApplication(BtoApplication application) throws IllegalArgumentException;
 
+    /**
+     * Adds a BtoApplication object to the provided list of applications.
+     *
+     * @param applications The list to which the BtoApplication will be added.
+     *                     It is assumed that this list is already instantiated.
+     * @param application  The BtoApplication object to be added to the list.
+     * @return An integer value indicating the success of the operation.
+     */
     int addApplication(List<BtoApplication> applications, BtoApplication application);
 
     /**

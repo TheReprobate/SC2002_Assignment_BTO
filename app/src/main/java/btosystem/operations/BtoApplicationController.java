@@ -7,7 +7,6 @@ import btosystem.classes.Project;
 import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.operations.interfaces.BtoApplicationOperations;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,16 +34,6 @@ public class BtoApplicationController implements BtoApplicationOperations {
             );
         }
 
-        /*
-        if (applicant instanceof HdbOfficer &&
-            ProjectTeamOperations.isInTeam(project.getProjectTeam(), applicant)
-        ) {
-            throw new IllegalArgumentException(
-                "Error: Officer cannot apply for project he is handling!"
-            );
-        }
-        */
-
         if (applicant.getAge() < 21) {
             throw new IllegalArgumentException("Error: Applicants must be at least 21 years old!");
         }
@@ -57,8 +46,6 @@ public class BtoApplicationController implements BtoApplicationOperations {
         }
 
         BtoApplication application = new BtoApplication(project, applicant, flatType);
-        // project.addBtoApplication(application);
-        // applicant.setActiveApplication(application);
         return application;
     }
 
@@ -134,7 +121,8 @@ public class BtoApplicationController implements BtoApplicationOperations {
         String formattedString = "%-4s %-24s %-12s %-24s %-10s";
         int count = 1;
         String output = String.format(
-                formattedString, "No.", "Applicant", "Type", "Officer-in-Charge", "Status"
+                formattedString, "No.", "Applicant", "Type", 
+                "Officer-in-Charge", "Status"
         );
         for (BtoApplication application : data) {
             output = output.concat("\n").concat(
@@ -185,8 +173,11 @@ public class BtoApplicationController implements BtoApplicationOperations {
     }
 
     @Override
-    public List<BtoApplication> filterApplications(List<BtoApplication> applications, ApplicationStatus status) {
-        return applications.stream().filter(app -> app.getStatus() == status).collect(Collectors.toList());
+    public List<BtoApplication> filterApplications(List<BtoApplication> applications, 
+                                                    ApplicationStatus status) {
+        return applications.stream()
+                        .filter(app -> app.getStatus() == status)
+                        .collect(Collectors.toList());
     }
 
     @Override
@@ -196,7 +187,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
 
     @Override
     public boolean hasApplied(List<BtoApplication> applications, Applicant applicant) {
-        for(BtoApplication application : applications) {
+        for (BtoApplication application : applications) {
             if (application.getApplicant().equals(applicant)) {
                 return true;
             }

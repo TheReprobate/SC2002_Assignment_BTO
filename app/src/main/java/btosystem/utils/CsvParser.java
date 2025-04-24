@@ -21,8 +21,8 @@ public class CsvParser {
      *
      * @param filename The name of the CSV file to load.
      * @return A List of Lists of Strings, where each inner List represents a row of data
-     * and each String represents a cell value. Returns an empty List if an error occurs
-     * during file reading or creation.
+     *          and each String represents a cell value. Returns an empty List if an error occurs
+     *          during file reading or creation.
      */
     public static List<List<String>> loadFromCSV(String filename) {
         List<List<String>> records = new ArrayList<>();
@@ -49,7 +49,8 @@ public class CsvParser {
 
     /**
      * Parses a single line of CSV data into a List of String values.
-     * The line is expected to be delimited by commas, as defined by {@link RegexPatterns#COMMA_DELIMITER}.
+     * The line is expected to be delimited by commas, 
+     * as defined by {@link RegexPatterns#COMMA_DELIMITER}.
      *
      * @param line The CSV line to parse.
      * @return A List of Strings representing the values in the CSV line.
@@ -73,8 +74,9 @@ public class CsvParser {
      * @param strings  The List of Strings to write to the file. Each String will be a new row.
      */
     public static void saveToCSV(String filename, List<String> strings) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("src/main/resources/%s", filename)))) {
-            for(String s: strings){
+        try (BufferedWriter writer = new BufferedWriter(
+                        new FileWriter(String.format("src/main/resources/%s", filename)))) {
+            for (String s : strings) {
                 writer.write(s);
                 writer.newLine();
             }
@@ -85,7 +87,8 @@ public class CsvParser {
 
     /**
      * Escapes a String field for CSV formatting.
-     * If the field contains a comma, double quote, or newline character, it will be enclosed in double quotes,
+     * If the field contains a comma, double quote, or newline character, 
+     * it will be enclosed in double quotes,
      * and any existing double quotes within the field will be escaped by doubling them.
      * If the field is null, an empty string is returned.
      *
@@ -93,7 +96,9 @@ public class CsvParser {
      * @return The escaped String suitable for CSV format.
      */
     public static String escapeCsv(String field) {
-        if (field == null) return "";
+        if (field == null) {
+            return "";
+        }
         if (field.contains(",") || field.contains("\"") || field.contains("\n")) {
             field = field.replace("\"", "\"\"");
             return "\"" + field + "\"";

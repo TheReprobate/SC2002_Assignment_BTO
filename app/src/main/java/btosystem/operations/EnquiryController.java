@@ -4,7 +4,6 @@ import btosystem.classes.Applicant;
 import btosystem.classes.Enquiry;
 import btosystem.classes.Project;
 import btosystem.operations.interfaces.EnquiryOperations;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +33,7 @@ public class EnquiryController implements EnquiryOperations {
      * @param enquiries List of enquiries
      * @param index Index of the enquiry to retrieve
      * @return Enquiry object if valid index, else null
-     * @throws Exception 
+     * @throws Exception Index out of bounds
      */
     @Override
     public Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index) throws Exception {
@@ -50,6 +49,7 @@ public class EnquiryController implements EnquiryOperations {
      * @param enquiries List of enquiries
      * @param enquiry Enquiry to delete
      * @return 1 if deleted successfully, else 0
+     * @throws Exception if enquiry has a reply
      */
     @Override
     public int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry) throws Exception {
@@ -65,6 +65,7 @@ public class EnquiryController implements EnquiryOperations {
      * @param enquiry Enquiry to be replied to
      * @param reply Reply content
      * @return 1 if reply was successful, else 0
+     * @throws Exception if enquiry has a reply
      */
     @Override
     public int replyEnquiry(Enquiry enquiry, String reply) throws Exception {
@@ -83,6 +84,7 @@ public class EnquiryController implements EnquiryOperations {
      * @param enquiry Enquiry to edit
      * @param content New content
      * @return 1 if edited successfully, else 0
+     * @throws Exception if enquiry cannot edit
      */
     @Override
     public int editEnquiry(Enquiry enquiry, String content) throws Exception {
@@ -165,16 +167,17 @@ public class EnquiryController implements EnquiryOperations {
 
     @Override
     public List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied) {
-        return enquiries.stream().filter(e -> e.hasReplied() == replied).collect(Collectors.toList()); //182
+        return enquiries.stream()
+                        .filter(e -> e.hasReplied() == replied)
+                        .collect(Collectors.toList());
     }
 
     /**
-     * Sets project to empty
-     *
+     * Sets project to empty.
      * @param enquiry The enquiry to edit
      */
     @Override
-    public void removeProject(Enquiry enquiry) throws Exception {
+    public void removeProject(Enquiry enquiry) {
         enquiry.setProject(null);
     }
 }
