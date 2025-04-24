@@ -8,6 +8,7 @@ import btosystem.operations.interfaces.ProjectOperations;
 import btosystem.operations.interfaces.ProjectTeamOperations;
 import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.Service;
+import btosystem.service.user.interfaces.IUserAccountService;
 import btosystem.utils.DataManager;
 import btosystem.utils.HashUtil;
 import btosystem.utils.OperationsManager;
@@ -16,7 +17,7 @@ import btosystem.utils.OperationsManager;
  * Service class handling user account operations including login and
  * registration.
  */
-public class UserAccountService extends Service {
+public class UserAccountService extends Service implements IUserAccountService {
 
     /**
      * Constructs a new UserAccountService with required dependencies.
