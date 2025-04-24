@@ -68,7 +68,8 @@ public class DataManager {
     /**
      * Retrieves the map of users, where the key is the user's NRIC.
      *
-     * @return A HashMap where the key is the user's NRIC (String) and the value is the {@link User} object.
+     * @return A HashMap where the key is the user's NRIC (String) 
+     *          and the value is the {@link User} object.
      */
     public HashMap<String, User> getUsers() {
         return users;
@@ -77,7 +78,8 @@ public class DataManager {
     /**
      * Sets the map of users.
      *
-     * @param users The new HashMap where the key is the user's NRIC (String) and the value is the {@link User} object.
+     * @param users The new HashMap where the key is the user's NRIC (String) 
+     *              and the value is the {@link User} object.
      */
     public void setUsers(HashMap<String, User> users) {
         this.users = users;
@@ -226,7 +228,8 @@ public class DataManager {
     /**
      * Saves all BTO applications from all projects to the ApplicationList.csv file.
      * The CSV file contains the project name, applicant NRIC, status index,
-     * officer NRIC, flat index, and whether it's the applicant's active application for the project.
+     * officer NRIC, flat index, and whether it's the applicant's active application 
+     * for the project.
      */
     private void saveApplications() {
         List<String> buffer = new ArrayList<>();
@@ -261,7 +264,8 @@ public class DataManager {
 
     /**
      * Saves the project team information for each project to the ProjectTeamList.csv file.
-     * The CSV file contains the project name, manager NRIC, and a semicolon-separated list of officer NRICs.
+     * The CSV file contains the project name, 
+     * manager NRIC, and a semicolon-separated list of officer NRICs.
      */
     private void saveProjectTeam() {
         List<String> buffer = new ArrayList<>();
@@ -516,6 +520,7 @@ public class DataManager {
      * {@link HdbOfficer} objects, and then associates the manager and officers
      * with the project's {@link ProjectTeam}. Multiple officers can be assigned
      * to a team, with their NRICs separated by semicolons.
+     * 
      * @throws Error if a project specified in the file does not exist.
      */
     private void loadProjectTeam() {
@@ -553,6 +558,7 @@ public class DataManager {
      * retrieves the corresponding {@link Project} and {@link HdbOfficer} objects,
      * creates an {@link OfficerRegistration} object with the officer, sets its
      * status, and adds it to the project's {@link ProjectTeam}.
+     * 
      * @throws Error if a project specified in the file does not exist.
      */
     private void loadRegistration() {
@@ -583,6 +589,7 @@ public class DataManager {
      * flat type index, and the count of available flats, retrieves the
      * corresponding {@link Project}, and updates its unit count for the
      * specified {@link FlatType}.
+     * 
      * @throws Error if a project specified in the file does not exist.
      */
     private void loadFlatType() {
