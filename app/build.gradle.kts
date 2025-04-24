@@ -32,9 +32,9 @@ application {
 tasks.withType<Javadoc> {
     options {
         this as StandardJavadocDocletOptions
-        // addStringOption("Xdoclint:none", "-quiet") // Disables strict linting
-        addBooleanOption("author", true) // Includes @author tags
-        addBooleanOption("version", true) // Includes @version tags
+        addStringOption("Xdoclint:none", "-quiet") // Disables strict linting
+        //addBooleanOption("author", true) // Includes @author tags
+        //addBooleanOption("version", true) // Includes @version tags
     }
     setDestinationDir(file("../docs/javadoc")) // Output directory
 }
