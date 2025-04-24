@@ -182,7 +182,18 @@ public class GenericService extends Service {
      * @return formatted string representation of the registrations
      */
     public String displayRegistration(List<OfficerRegistration> registrations) {
-        return registrationManager.toString(registrations);
+        String registration = "";
+        for(OfficerRegistration r: registrations) {
+            registration = String.format("%-4s    %-20s   %-20s\n",
+                    "[" + 1 + "]",
+                    r.getOfficer().getName(),
+                    r.getStatus().toString());
+        }
+        return String.format("%-4s    %-20s   %-20s\n",
+            "No.",
+            "Officer Name", 
+            "Application Status")
+            + registration;
     }
 
     /**
