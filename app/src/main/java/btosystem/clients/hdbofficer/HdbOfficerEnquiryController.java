@@ -12,6 +12,7 @@ import java.util.List;
  * High-level controller class specific to the {@link HdbOfficer} role
  * handling enquiries related functionality.
  */
+
 public class HdbOfficerEnquiryController extends HdbOfficerController {
     private static final String[] MENU = {"Reply Enquiry", "Exit"};
     private Project project;
@@ -36,12 +37,12 @@ public class HdbOfficerEnquiryController extends HdbOfficerController {
     @Override
     protected boolean load() throws Exception {
         project = serviceManager.getProjectService().getCurrentProject(user);
-        if(project == null) {
+        if (project == null) {
             throw new Exception("No current project found. ");
 
         }
         enquiries = serviceManager.getEnquiryService().getEnquiries(project, false);
-        if(enquiries.size() <= 0) {
+        if (enquiries.size() <= 0) {
             throw new Exception("No enquiries found. ");
         }
         return true;

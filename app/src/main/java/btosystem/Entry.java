@@ -41,7 +41,8 @@ public class Entry {
      * @param accountService service for user account operations
      */
     public Entry(ApplicantServiceManager applicantServiceManager,
-            HdbOfficerServiceManager hdbOfficerServiceManager, HdbManagerServiceManager hdbManagerServiceManager,
+            HdbOfficerServiceManager hdbOfficerServiceManager, 
+            HdbManagerServiceManager hdbManagerServiceManager,
             UserAccountService accountService, DataManager dManager) {
         this.applicantServiceManager = applicantServiceManager;
         this.hdbOfficerServiceManager = hdbOfficerServiceManager;
@@ -50,16 +51,16 @@ public class Entry {
         this.dManager = dManager;
     }
 
-    public void run(){
-        while(true) {
+    public void run() {
+        while (true) {
             UserAccountController accountController = new UserAccountController(accountService);
-            if(user == null) {
+            if (user == null) {
                 accountController.execute();
                 user = accountController.getUser();
                 dManager.save();
             }
             Controller c = getController();
-            if(c != null) {
+            if (c != null) {
                 c.execute();
             }
             dManager.save();
@@ -74,7 +75,7 @@ public class Entry {
         if (user instanceof HdbOfficer) {
             return getController((HdbOfficer) user);
         }
-        if(user instanceof Applicant) {
+        if (user instanceof Applicant) {
             return getController((Applicant) user);
         }
         return null;

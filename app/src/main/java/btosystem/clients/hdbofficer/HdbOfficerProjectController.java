@@ -13,6 +13,7 @@ import java.util.List;
  * High-level controller class specific to the {@link HdbOfficer} role
  * handling Project related functionality.
  */
+
 public class HdbOfficerProjectController extends HdbOfficerController {
     private static final String[] MENU = {
         "View project", "View Participating Project", "Register for project", "Exit"
@@ -35,7 +36,7 @@ public class HdbOfficerProjectController extends HdbOfficerController {
     @Override
     protected boolean load() throws Exception {
         projects = serviceManager.getProjectService().getProjects(null, LocalDate.now());
-        if(projects == null || projects.size() <= 0) {
+        if (projects == null || projects.size() <= 0) {
             throw new Exception("No projects found. ");
         }
         return true;
@@ -65,6 +66,7 @@ public class HdbOfficerProjectController extends HdbOfficerController {
               throw new Exception("Please enter a valid input. ");
         }
     }
+    
     /**
      * Invokes service classes to perform the operations required
      * to view more details about a project.
@@ -84,7 +86,8 @@ public class HdbOfficerProjectController extends HdbOfficerController {
      */
     private void registerProject() throws Exception {
         Project project = getProject();
-        String input = InputHandler.getStringInput("Confirm to register for project? [Y/N]: ", RegexPatterns.YES_NO);
+        String input = InputHandler.getStringInput(
+            "Confirm to register for project? [Y/N]: ", RegexPatterns.YES_NO);
         if (!(input.equals("Y") || input.equals("y"))) {
             System.out.println("Project registration cancelled.");
             return;
@@ -95,7 +98,7 @@ public class HdbOfficerProjectController extends HdbOfficerController {
 
     private void viewCurrentProjects() throws Exception {
         List<Project> projects = serviceManager.getProjectService().getWorkingProject(user);
-        if(projects.size() <= 0 || projects == null) {
+        if (projects.size() <= 0 || projects == null) {
             throw new Exception("No participating projects. ");
         }
         System.out.println(serviceManager.getGenericService().displayProject(projects));

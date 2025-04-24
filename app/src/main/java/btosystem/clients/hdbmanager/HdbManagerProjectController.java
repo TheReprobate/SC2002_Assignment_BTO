@@ -19,6 +19,7 @@ import java.util.List;
  * High-level controller class specific to the {@link HdbManager} role
  * handling single-project related functionality.
  */
+
 public abstract class HdbManagerProjectController extends HdbManagerController {
     private static final String[] PROJECT_MENU = {
         "View Enquiries", "View Applications", "View Project Team", "Generate Report", "Exit"
@@ -98,32 +99,36 @@ public abstract class HdbManagerProjectController extends HdbManagerController {
         System.out.println(serviceManager.getGenericService().displayProject(project));
         System.out.println(ListToStringFormatter.toString(PROJECT_MENU));
         int input = InputHandler.getIntIndexInput("Select an option: ");
-        switch(input) {
-            case 0:
-                List<Enquiry> enquiries = serviceManager.getEnquiryService().getEnquiries(project);
-                if(enquiries.size() <= 0) {
-                    System.out.println("No enquiries found. ");
-                    break;
-                }
-                System.out.println(serviceManager.getGenericService().displayEnquiry(enquiries));
-                break;
-            case 1:
-                List<BtoApplication> applications = serviceManager.getApplicationService().getApplications(project);
-                if(applications.size() <= 0) {
-                    System.out.println("No applications found. ");
-                    break;
-                }
-                System.out.println(serviceManager.getGenericService().displayApplication(applications));
-                break;
-            case 2:
-                ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
-                System.out.println(serviceManager.getGenericService().displayTeam(team));
-            case 3:
-                System.out.println(serviceManager.getApplicationService().generateReport(project));
-            case 4:
-                break;
-            default:
-                throw new Exception("Option does not exist. ");
+        switch (input) {
+          case 0:
+              List<Enquiry> enquiries = serviceManager.getEnquiryService().getEnquiries(project);
+              if (enquiries.size() <= 0) {
+                  System.out.println("No enquiries found. ");
+                  break;
+              }
+              System.out.println(serviceManager.getGenericService().displayEnquiry(enquiries));
+              break;
+          case 1:
+              List<BtoApplication> applications = serviceManager.getApplicationService()
+                                                                .getApplications(project);
+              if (applications.size() <= 0) {
+                  System.out.println("No applications found. ");
+                  break;
+              }
+              System.out.println(serviceManager.getGenericService()
+                                                .displayApplication(applications));
+              break;
+          case 2:
+              ProjectTeam team = serviceManager.getTeamService().getProjectTeam(project);
+              System.out.println(serviceManager.getGenericService().displayTeam(team));
+              break;
+          case 3:
+              System.out.println(serviceManager.getApplicationService().generateReport(project));
+              break;
+          case 4:
+              break;
+          default:
+              throw new Exception("Option does not exist. ");
         }
     }
 }
