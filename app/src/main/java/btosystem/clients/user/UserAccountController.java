@@ -99,11 +99,11 @@ public class UserAccountController extends Controller {
         System.out.println("User registered with password: password. ");
     }
 
-    private void changePassword() throws Exception{
+    private void changePassword() throws Exception {
         String nric = InputHandler.getStringInput("Input NRIC: ", RegexPatterns.NRIC);
         String password = InputHandler.getStringInput("Current Password: ");
         user = accountService.login(nric, password);
-        if(user != null) {
+        if (user != null) {
             String newPassword = InputHandler.getStringInput("New Password: ");
             accountService.changePassword(nric, password, newPassword);
             System.out.println("Password changed successfully. ");
