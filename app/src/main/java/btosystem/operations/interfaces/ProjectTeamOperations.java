@@ -12,8 +12,7 @@ import java.util.List;
  * providing various operations related to ProjectTeam management.
  */
 public interface ProjectTeamOperations extends 
-                ToString<ProjectTeam>
-{
+                ToString<ProjectTeam> {
     /**
      * Interface method for ProjectTeam creation.
      * Details can be found in {@link btosystem.operations.ProjectTeamController}
@@ -64,12 +63,7 @@ public interface ProjectTeamOperations extends
     public List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
     
     /**
-     * Interface method for retrieval of Project by ProjectTeam object.
-     * Details can be found in {@link btosystem.controllers.ProjectTeamController}
-     */
-
-    /**
-     * Sets project to empty
+     * Sets project to empty.
      *
      * @param projectTeam The projectTeam to edit
      */
@@ -83,8 +77,6 @@ public interface ProjectTeamOperations extends
 
     HdbManager retrieveManager(ProjectTeam team);    
     
-
-    /* ---------------------------------- End OfficerRegistration --------------------------------- */
     public Project retrieveAssignedProject(ProjectTeam team);
 
     /**

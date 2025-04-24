@@ -29,7 +29,7 @@ public interface EnquiryOperations
      * @param enquiries The list of enquiries to search
      * @param index The index of the enquiry to retrieve
      * @return The Enquiry object if found, null otherwise
-     * @throws Exception 
+     * @throws Exception if enquiry has a reply
      */
     Enquiry retrieveEnquiry(List<Enquiry> enquiries, int index) throws Exception;
 
@@ -55,7 +55,7 @@ public interface EnquiryOperations
      * @param enquiries The list containing the enquiry
      * @param enquiry The enquiry to delete
      * @return 1 if deletion was successful, 0 otherwise
-     * @throws Exception 
+     * @throws Exception if enquiry has a reply
      */
     int deleteEnquiry(List<Enquiry> enquiries, Enquiry enquiry) throws Exception;
 
@@ -65,7 +65,7 @@ public interface EnquiryOperations
      * @param enquiry The enquiry to reply to
      * @param reply The reply content
      * @return 1 if reply was successful, 0 otherwise
-     * @throws Exception 
+     * @throws Exception if enquiry has a reply
      */
     int replyEnquiry(Enquiry enquiry, String reply) throws Exception;
 
@@ -75,7 +75,7 @@ public interface EnquiryOperations
      * @param enquiry The enquiry to edit
      * @param content The new content
      * @return 1 if edit was successful, 0 otherwise
-     * @throws Exception 
+     * @throws Exception if enquiry has a reply
      */
     int editEnquiry(Enquiry enquiry, String content) throws Exception;
 
@@ -106,9 +106,9 @@ public interface EnquiryOperations
     List<Enquiry> filterEnquiries(List<Enquiry> enquiries, boolean replied);
 
     /**
-     * Sets project to empty
+     * Sets project to empty.
      *
      * @param enquiry The enquiry to edit
      */
-    void removeProject(Enquiry enquiry) throws Exception;
+    void removeProject(Enquiry enquiry);
 }

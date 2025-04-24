@@ -8,7 +8,6 @@ import btosystem.classes.ProjectTeam;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import btosystem.operations.interfaces.ProjectOperations;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -208,20 +207,26 @@ public class ProjectController implements ProjectOperations {
         return 1;
     }
 
+    @Override
+    public int editProject(Project project, boolean visibility) {
+        project.setVisible(visibility);
+        return 1;
+    }
+
     /**
      * Method for deleting a project.
      *
      * @param projects List of projects
      * @param project Project to be deleted from the list
      * @return 1 for successful deletion else 0
-     * @throws Exception 
+     * @throws Exception if Project does not exist
      */
     @Override
     public int deleteProject(List<Project> projects, Project project) throws Exception {
         // .remove already checks whether element exists in collection
         // so we do not need to check .contains
         boolean removed = projects.remove(project);
-        if(!removed) {
+        if (!removed) {
             throw new Exception("Project does not exist. ");
         }
         return 1;
@@ -308,7 +313,9 @@ public class ProjectController implements ProjectOperations {
 
     @Override
     public boolean hasTimeOverlap(Project firstProject, Project secondProject) {
-        return secondProject.getOpenTime().isBefore(firstProject.getCloseTime()) && firstProject.getOpenTime().isBefore(secondProject.getCloseTime());
+        return secondProject.getOpenTime()
+                            .isBefore(firstProject.getCloseTime()) && firstProject.getOpenTime()
+                            .isBefore(secondProject.getCloseTime());
     }
 
     @Override
@@ -331,11 +338,5 @@ public class ProjectController implements ProjectOperations {
     @Override
     public List<FlatType> getAvailableFlatTypes(Project project) {
         return new ArrayList<>(project.getUnits().keySet());
-    }
-
-    @Override
-    public int editProject(Project project, boolean visibility) {
-        project.setVisible(visibility);
-        return 1;
     }
 }

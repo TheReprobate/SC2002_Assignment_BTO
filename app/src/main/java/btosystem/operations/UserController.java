@@ -9,7 +9,6 @@ import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.User;
 import btosystem.operations.interfaces.UserOperations;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +28,8 @@ public class UserController implements UserOperations {
      * @return Authenticated User object if successful, null otherwise
      * @throws Exception  //29
      */
-    public User authenticate(HashMap<String, User> users, String username, String password) throws Exception {//31
+    public User authenticate(HashMap<String, User> users, 
+                            String username, String password) throws Exception {
         User user = retrieveUser(users, username);
         if (user != null && user.getPassword().equals(password)) {
             return user;
@@ -64,7 +64,10 @@ public class UserController implements UserOperations {
 
     @Override
     public String toString(User data) {
-        return "[" + (data.isMarried() ? "Married" : "Single") +"] " + data.getName() + " - " + data.getAge() + "years old\n";
+        return "[" 
+            + (data.isMarried() ? "Married" : "Single") 
+            + "] " + data.getName() 
+            + " - " + data.getAge() + "years old\n";
     }
 
     @Override
@@ -85,7 +88,9 @@ public class UserController implements UserOperations {
     }
 
     @Override
-    public void addApplicant(HashMap<String, User> users, String nric, String name, int age, boolean married) throws Exception {//87
+    public void addApplicant(HashMap<String, User> users, 
+                            String nric, String name, int age, 
+                            boolean married) throws Exception {
         if (users.get(nric) != null) {
             throw new Exception("User already exist. ");
         }

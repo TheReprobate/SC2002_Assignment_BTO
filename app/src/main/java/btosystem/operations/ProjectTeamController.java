@@ -7,7 +7,6 @@ import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
 import btosystem.classes.enums.RegistrationStatus;
 import btosystem.operations.interfaces.ProjectTeamOperations;
-
 import java.util.List;
 
 /**
@@ -296,7 +295,7 @@ public class ProjectTeamController implements ProjectTeamOperations {
     }
     
     /**
-     * Sets project to empty
+     * Sets project to empty.
      *
      * @param projectTeam The projectTeam to edit
      */

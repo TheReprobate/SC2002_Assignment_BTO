@@ -12,8 +12,7 @@ import java.util.List;
  */
 
 public interface OfficerRegistrationOperations extends 
-                ListToString<OfficerRegistration>
-{
+                ListToString<OfficerRegistration> {
     /**
      * Interface method for OfficerRegistration creation.
      * Details can be found in {@link btosystem.operations.OfficerRegistrationController}

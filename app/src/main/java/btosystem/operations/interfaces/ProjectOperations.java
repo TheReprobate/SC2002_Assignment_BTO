@@ -5,7 +5,6 @@ import btosystem.classes.Enquiry;
 import btosystem.classes.HdbManager;
 import btosystem.classes.Project;
 import btosystem.classes.ProjectTeam;
-import btosystem.classes.enums.ApplicationStatus;
 import btosystem.classes.enums.FlatType;
 import btosystem.classes.enums.Neighborhood;
 import java.time.LocalDate;
@@ -105,7 +104,6 @@ public interface ProjectOperations
     /**
      * Interface method for project deletion.
      * Details can be found in {@link btosystem.operations.ProjectController}
-     * @throws Exception 
      */
     int deleteProject(List<Project> projects, Project project) throws Exception;
 
