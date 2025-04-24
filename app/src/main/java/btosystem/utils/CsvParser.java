@@ -45,7 +45,7 @@ public class CsvParser {
     }
 
     public static void saveToCSV(String filename, List<String> strings) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("src\\main\\resources\\%s", filename)))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(String.format("src/main/resources/%s", filename)))) {
             for(String s: strings){
                 writer.write(s);
                 writer.newLine();

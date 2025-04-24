@@ -25,15 +25,15 @@ import btosystem.utils.DataManager;
 public class HdbManagerProjectService extends Service {
 
     public HdbManagerProjectService(DataManager dataManager, 
-                                    BtoApplicationOperations applicationManager, 
-                                    EnquiryOperations enquiryManager,
+                                    BtoApplicationOperations applicationOperations, 
+                                    EnquiryOperations enquiryOperations,
                                     OfficerRegistrationOperations registrationOperations, 
                                     ProjectTeamOperations projectTeamOperations,
                                     UserOperations userOperations, 
                                     ProjectOperations projectOperations) {
         super(dataManager, 
-            applicationManager, 
-            enquiryManager, 
+            applicationOperations,
+            enquiryOperations,
             registrationOperations, 
             projectTeamOperations, 
             userOperations, 
@@ -84,7 +84,6 @@ public class HdbManagerProjectService extends Service {
         if (!hasValidTime(openTime, closeTime)) {
             return;
         }
-        ProjectTeam team = projectTeamManager.createProjectTeam(project);
         List<Project> managerCreatedProjects = userManager.retrieveCreatedProjects(user);
         
         projectManager.addProject(projects, project);

@@ -1,6 +1,7 @@
 package btosystem.service.hdbofficer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import btosystem.classes.BtoApplication;
@@ -22,10 +23,10 @@ import btosystem.utils.OperationsManager;
 
 public class HdbOfficerProjectService extends ApplicantProjectService {
 
-    public HdbOfficerProjectService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
+    public HdbOfficerProjectService(DataManager dataManager, BtoApplicationOperations applicationOperations, EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+        super(dataManager, applicationOperations, enquiryOperations, registrationOperations, projectTeamOperations, userOperations, projectOperations);
     }
     public List<Project> getProjects() {
         return dataManager.getProjects();
@@ -34,13 +35,26 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
         return projectManager.filterProject(getProjects(), start, end);
     }
 
-    public Project getCurrentProject(HdbOfficer user) throws Exception {
+    public List<Project> getWorkingProject(HdbOfficer user) {
+        List<Project> projects = new ArrayList<>();
+        List<ProjectTeam> teams = userManager.retrieveTeams(user);
+        for(ProjectTeam t: teams) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            projects.add(p);
+        }
+        return projects;
+    }
+
+    public Project getCurrentProject(HdbOfficer user) {
         ProjectTeam currentTeam = getCurrentTeam(user);
+        if(currentTeam == null) {
+            return null;
+        }
         Project projectInCharge = projectTeamManager.retrieveAssignedProject(currentTeam);
         return projectInCharge;
     }
 
-    private ProjectTeam getCurrentTeam(HdbOfficer user) throws Exception{
+    private ProjectTeam getCurrentTeam(HdbOfficer user) {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
         for(ProjectTeam t: teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
@@ -48,6 +62,6 @@ public class HdbOfficerProjectService extends ApplicantProjectService {
                 return t;
             }
         }
-        throw new Exception("Currently not in a team.");
+        return null;
     }
 }

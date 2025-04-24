@@ -130,7 +130,7 @@ public class BtoApplicationController implements BtoApplicationOperations {
             return "There are currently 0 applications!";
         }
 
-        String formattedString = "%4s %24s %9s %24s %10s";
+        String formattedString = "%-4s %-24s %-12s %-24s %-10s";
         int count = 1;
         String output = String.format(
                 formattedString, "No.", "Applicant", "Type", "Officer-in-Charge", "Status"
@@ -139,10 +139,8 @@ public class BtoApplicationController implements BtoApplicationOperations {
             output = output.concat("\n").concat(
                     String.format(
                             formattedString,
-                            count,
-                            application.getApplicant().getName(),
+                            "[" + count + "]",
                             application.getFlatType(),
-                            (application.getOfficerInCharge() != null ? application.getOfficerInCharge().getName() : "N/A"),
                             application.getStatus()
                     )
             );
@@ -153,12 +151,9 @@ public class BtoApplicationController implements BtoApplicationOperations {
 
     @Override
     public String toString(BtoApplication data) {
-        return String.format("%s \n%s \n%s \n%s \n%s",
-                "Project: " + data.getProject().getName(),
+        return String.format("%s \n%s",
                 "Flat Type: " + data.getFlatType(),
-                "Applicant: " + data.getApplicant().getName(),
-                "Application Status: " + data.getStatus().toString(),
-                "Officer-in-Charge: " + (data.getOfficerInCharge() != null ? data.getOfficerInCharge().getName() : "N/A")
+                "Application Status: " + data.getStatus().toString()
                 );
     }
 

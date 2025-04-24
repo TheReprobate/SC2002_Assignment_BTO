@@ -19,15 +19,15 @@ import java.util.List;
 public class HdbManagerProjectTeamService extends Service {
 
     public HdbManagerProjectTeamService(DataManager dataManager, 
-                                        BtoApplicationOperations applicationManager, 
-                                        EnquiryOperations enquiryManager,
+                                        BtoApplicationOperations applicationOperations, 
+                                        EnquiryOperations enquiryOperations,
                                         OfficerRegistrationOperations registrationOperations, 
                                         ProjectTeamOperations projectTeamOperations,
                                         UserOperations userOperations, 
                                         ProjectOperations projectOperations) {
         super(dataManager, 
-            applicationManager, 
-            enquiryManager, 
+            applicationOperations,
+            enquiryOperations,
             registrationOperations, 
             projectTeamOperations, 
             userOperations, 
@@ -59,6 +59,13 @@ public class HdbManagerProjectTeamService extends Service {
             throw new Exception("Access Denied. Not allowed to access this project. ");
         }
         HdbOfficer officer = registrationManager.retrieveAppliedOfficer(registration);
+        List<ProjectTeam> officerTeam = userManager.retrieveTeams(officer);
+        for(ProjectTeam t: officerTeam) {
+            Project p = projectTeamManager.retrieveAssignedProject(t);
+            if(projectManager.hasTimeOverlap(project, p)) {
+                throw new Exception("Unable to process, time overlap detected. ");
+            }
+        }
         if(projectTeamManager.hasMaxOfficers(team)) {
             throw new Exception("Maximum possible officers in team.  ");
         }

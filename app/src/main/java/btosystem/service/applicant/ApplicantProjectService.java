@@ -18,10 +18,10 @@ import btosystem.utils.OperationsManager;
 
 public class ApplicantProjectService extends Service {
 
-    public ApplicantProjectService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
+    public ApplicantProjectService(DataManager dataManager, BtoApplicationOperations applicationOperations, EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+        super(dataManager, applicationOperations, enquiryOperations, registrationOperations, projectTeamOperations, userOperations, projectOperations);
     }
 
     public List<Project> getVisibleProjects() {

@@ -21,10 +21,10 @@ import btosystem.utils.OperationsManager;
 
 public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationService{
 
-    public HdbOfficerBtoApplicationService(DataManager dataManager, BtoApplicationOperations applicationManager, EnquiryOperations enquiryManager,
+    public HdbOfficerBtoApplicationService(DataManager dataManager, BtoApplicationOperations applicationOperations, EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations, ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations, ProjectOperations projectOperations) {
-        super(dataManager, applicationManager, enquiryManager, registrationOperations, projectTeamOperations, userOperations, projectOperations);
+        super(dataManager, applicationOperations, enquiryOperations, registrationOperations, projectTeamOperations, userOperations, projectOperations);
     }
 
     @Override
@@ -49,10 +49,7 @@ public class HdbOfficerBtoApplicationService extends ApplicantBtoApplicationServ
     }
 
     public void processApplication(BtoApplication application, HdbOfficer officer) throws Exception {
-        Applicant applicant = applicationManager.retrieveApplicant(application);
-        if (!hasApplicationAccess(officer, application)) {
-            throw new Exception("Access Denied. Not allowed to process own application. ");
-        }        
+        Applicant applicant = applicationManager.retrieveApplicant(application);    
         FlatType flatType = application.getFlatType();
         if (!hasApplicationAccess(officer, application)) {
             throw new Exception("Access Denied. Not allowed to access this application. ");

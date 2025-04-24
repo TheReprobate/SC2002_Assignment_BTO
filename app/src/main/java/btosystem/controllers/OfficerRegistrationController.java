@@ -49,7 +49,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
      */
 
     @Override
-    public OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations, 
+    public OfficerRegistration retrieveOfficerRegistration(List<OfficerRegistration> registrations,
                                                         int index) throws Exception {
         if (registrations == null) {
             throw new Exception("List<OfficerRegistration> object does not exist.");
@@ -119,16 +119,17 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
             // Invalid OfficerRegistration data
             return "Invalid OfficerRegistration data";
         }
-        String registration = String.format("%-4s    %-20s   %-20s\n", 
-                    1 + ")", 
-                    data.getOfficer().getName(), 
+        return "";
+        /*String registration = String.format("%-4s    %-20s   %-20s\n",
+                    1 + ")",
+                    data.getOfficer().getName(),
                     data.getStatus().toString());
 
         return String.format("%-4s    %-20s   %-20s\n",
-            "No.", 
+            "No.",
             "Officer Name", 
             "Application Status")
-            + registration;
+            + registration;*/
     }
 
     /**
@@ -144,8 +145,8 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
             // Invalid OfficerRegistration data
             return "Invalid List of data.";
         }
-
-        String registrations = "";
+        return "";
+        /*String registrations = "";
 
         for (int i = 0; i < data.size(); i++) {
             registrations += String.format("%-4s    %-20s   %-20s\n", 
@@ -161,7 +162,7 @@ public class OfficerRegistrationController implements OfficerRegistrationOperati
         return String.format("%-4s    %-20s   %-20s\n",
              "No.", 
              "Officer Name", 
-             "Application Status") + registrations;
+             "Application Status") + registrations;*/
     }
 
     /**

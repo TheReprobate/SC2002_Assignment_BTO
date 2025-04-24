@@ -31,5 +31,15 @@ public enum Neighborhood {
     TAMPINES,
     TANJONG_PAGAR,
     TOA_PAYOH,
-    WOODLANDS,
+    WOODLANDS;
+
+    /**
+     * Returns a human-readable formatted string representation of the Neighbourhood.
+     *
+     * @return the formatted string representation
+     */
+    @Override
+    public String toString() {
+        return this.name().replace("_", " ");
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ApplicantBtoApplicationController extends ApplicantController {
     private static final String[] MENU = {
-        "Create Application", "Withdrawal Application", "Exit"
+        "Create Application", "Withdraw Application", "Exit"
     };
     private BtoApplication application;
 
@@ -36,16 +36,21 @@ public class ApplicantBtoApplicationController extends ApplicantController {
     @Override
     protected boolean load() throws Exception {
         application = serviceManager.getApplicationService().getApplication(user);
-        if (application == null) {
-            System.out.println("No active application");
-        }
         return true;
     }
 
     @Override
     protected String display() {
-        return serviceManager.getGenericService().displayApplication(application)
-                + ListToStringFormatter.toString(MENU);
+        if (application == null) {
+            return "You currently do not have an active application.\n"
+                    + ListToStringFormatter.toString(MENU);
+        }
+        else {
+            return "Current Application: \n"
+                    + serviceManager.getGenericService().displayApplication(application)
+                    + "\n"
+                    + ListToStringFormatter.toString(MENU);
+        }
     }
 
     @Override
@@ -87,7 +92,7 @@ public class ApplicantBtoApplicationController extends ApplicantController {
         int flatIndex = InputHandler.getIntIndexInput("Select a flat to apply for: ");
         FlatType flatType = flatTypes.get(flatIndex);
         serviceManager.getApplicationService().createApplication(user, project, flatType);
-        System.out.println("Application creation success!");
+        System.out.println("Application created successfully!");
     }
 
     /**
@@ -105,7 +110,7 @@ public class ApplicantBtoApplicationController extends ApplicantController {
                 "Confirm to withdraw application? [Y/N] ", RegexPatterns.YES_NO
         );
         if (!(input.equals("Y") || input.equals("y"))) {
-            System.out.println("Application withdrawal cancelled");
+            System.out.println("Application withdrawal cancelled!");
             return;
         }
         serviceManager.getApplicationService().withdrawApplication(user);
