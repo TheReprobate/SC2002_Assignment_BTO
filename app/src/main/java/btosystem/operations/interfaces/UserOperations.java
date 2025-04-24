@@ -108,5 +108,11 @@ public interface UserOperations extends ToString<User> {
      */
     public void setApplication(Applicant applicant, BtoApplication application);
 
+    /**
+     * Changes the password of the specified user to the provided new password.
+     *
+     * @param user The user whose password will be changed.
+     * @param password The new password to set for the user.
+     */
     public void changePassword(User user, String password);
 }

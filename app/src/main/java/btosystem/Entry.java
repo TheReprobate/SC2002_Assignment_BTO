@@ -51,6 +51,11 @@ public class Entry {
         this.dManager = dManager;
     }
 
+    /**
+     * Runs the main application loop. This method continuously prompts the user
+     * for login, determines their role, and navigates them to the appropriate
+     * controller. The application persists data upon user logout or controller exit.
+     */
     public void run() {
         while (true) {
             UserAccountController accountController = new UserAccountController(accountService);

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * An interface that extends {@link ListToString}
- * and {@link CleanupOperations} for {@link BtoApplication} objects,
+ * {@link BtoApplication} objects,
  * providing various operations related to application management.
  */
 public interface BtoApplicationOperations extends 
@@ -86,6 +86,14 @@ public interface BtoApplicationOperations extends
      */
     int withdrawApplication(BtoApplication application) throws IllegalArgumentException;
 
+    /**
+     * Adds a BtoApplication object to the provided list of applications.
+     *
+     * @param applications The list to which the BtoApplication will be added.
+     * It is assumed that this list is already instantiated.
+     * @param application  The BtoApplication object to be added to the list.
+     * @return An integer value indicating the success of the operation.
+     */
     int addApplication(List<BtoApplication> applications, BtoApplication application);
 
     /**
@@ -97,19 +105,64 @@ public interface BtoApplicationOperations extends
      */
     List<FlatType> getEligibleFlatTypes(Applicant applicant);
 
+    /**
+     * Retrieves the flat type associated with the given BTO application.
+     *
+     * @param application The BtoApplication from which to retrieve the flat type.
+     * @return The FlatType selected in the application, or null if not set.
+     */
     FlatType retrieveFlatType(BtoApplication application);
 
+    /**
+     * Checks if the specified BTO application is ready to be processed.
+     *
+     * @param application The BtoApplication to check.
+     * @return true if the application is ready to process; false otherwise.
+     */
     boolean isReadyToProcess(BtoApplication application);
 
+    /**
+     * Filters a list of BTO applications by the specified application status.
+     *
+     * @param applications The list of BtoApplication objects to filter.
+     * @param status The ApplicationStatus to filter by.
+     * @return A list of BtoApplication objects with the specified status.
+     */
     List<BtoApplication> filterApplications(List<BtoApplication> applications, 
                                             ApplicationStatus status);
 
+    /**
+     * Retrieves the project associated with the given BTO application.
+     *
+     * @param application The BtoApplication from which to retrieve the project.
+     * @return The Project associated with the application, or null if not set.
+     */
     Project retrieveProject(BtoApplication application);
 
+    /**
+     * Retrieves the applicant who submitted the specified BTO application.
+     *
+     * @param application The BtoApplication from which to retrieve the applicant.
+     * @return The Applicant who submitted the application.
+     */
     Applicant retrieveApplicant(BtoApplication application);
 
+    /**
+     * Checks if the specified BTO application is currently pending.
+     *
+     * @param application The BtoApplication to check.
+     * @return true if the application is pending; false otherwise.
+     */
     boolean isPending(BtoApplication application);
 
+    /**
+     * Determines whether the specified applicant has already applied,
+     * based on the provided list of BTO applications.
+     *
+     * @param applications The list of BtoApplication objects to search.
+     * @param applicant The Applicant to check for.
+     * @return true if the applicant has applied; false otherwise.
+     */
     boolean hasApplied(List<BtoApplication> applications, Applicant applicant);
 
     /**

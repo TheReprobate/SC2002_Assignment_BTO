@@ -69,15 +69,40 @@ public interface ProjectTeamOperations extends
      */
     void removeProject(ProjectTeam projectTeam);
 
+    /**
+     * Adds a ProjectTeam to the provided list of ProjectTeams.
+     *
+     * @param projectTeams The list of ProjectTeams to which the team will be added.
+     * @param team The ProjectTeam to add.
+     */
     void addProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team); 
 
+    /**
+     * Removes a ProjectTeam from the provided list of ProjectTeams.
+     *
+     * @param projectTeams The list of ProjectTeams from which the team will be removed.
+     * @param team The ProjectTeam to remove.
+     */
     void removeProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team);
 
+    /**
+     * Retrieves the list of HdbOfficers assigned to the specified ProjectTeam.
+     *
+     * @param team The ProjectTeam whose officers are to be retrieved.
+     * @return A list of HdbOfficer objects assigned to the team.
+     */
     List<HdbOfficer> retrieveOfficerTeam(ProjectTeam team);
 
+    /**
+     * Retrieves the HdbManager assigned to the specified ProjectTeam.
+     *
+     * @param team The ProjectTeam whose manager is to be retrieved.
+     * @return The HdbManager assigned to the team, or null if none is assigned.
+     */
     HdbManager retrieveManager(ProjectTeam team);    
     
     public Project retrieveAssignedProject(ProjectTeam team);
+
 
     /**
      * Interface method to check if team is at max officers occupancy.
@@ -92,4 +117,6 @@ public interface ProjectTeamOperations extends
      */
 
     public boolean hasManager(ProjectTeam team);
+
+     /* ---------------------------------- End OfficerRegistration --------------------------------- */
 }
