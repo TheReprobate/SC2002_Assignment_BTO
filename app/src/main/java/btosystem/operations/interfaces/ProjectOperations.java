@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * An interface that extends {@link ListToString}
- * and {@link CleanupOperations} for {@link Project} objects,
+ * for {@link Project} objects,
  * providing various operations related to project management.
  */
 public interface ProjectOperations
