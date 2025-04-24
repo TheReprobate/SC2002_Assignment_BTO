@@ -48,6 +48,15 @@ public class ApplicantProjectService extends Service {
                 userOperations, projectOperations);
     }
 
+    /**
+     * Retrieves a list of currently visible and open BTO projects.
+     * This method fetches all projects from the data manager, filters them to include
+     * only those marked as visible, and then further filters this list to include
+     * only projects that are currently open for application.
+     *
+     * @return A List of {@link Project} objects that are both visible to applicants
+     * and currently open for application.
+     */
     public List<Project> getVisibleProjects() {
         List<Project> projects = dataManager.getProjects();
         List<Project> visibleProjects = projectManager.filterProject(projects, true);
