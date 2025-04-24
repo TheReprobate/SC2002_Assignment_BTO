@@ -72,7 +72,19 @@ public class UserAccountService extends Service {
             boolean married) throws Exception {
         userManager.addApplicant(dataManager.getUsers(), nric, name, age, married);
     }
-    
+
+    /**
+     * Allows a user to change their password. This method first authenticates the user
+     * using their current password. If the authentication is successful, the new password
+     * is hashed and updated for the user in the system.
+     *
+     * @param nric The NRIC of the user whose password needs to be changed.
+     * @param oldPassword The user's current password for authentication.
+     * @param newPassword The new password that the user wants to set. This will be hashed
+     * before being stored.
+     * @throws Exception If the authentication with the old password fails, or if there is
+     * an issue updating the password in the system.
+     */
     public void changePassword(String nric, String oldPassword, String newPassword) throws Exception {
         User user = login(nric, oldPassword);
         String hashedPassword = HashUtil.hashPassword(newPassword);

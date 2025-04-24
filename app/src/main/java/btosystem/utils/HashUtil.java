@@ -3,8 +3,18 @@ package btosystem.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Utility class providing hashing functionalities.
+ */
 public class HashUtil {
 
+    /**
+     * Hashes the given password using the MD5 algorithm.
+     *
+     * @param password The password to be hashed.
+     * @return The MD5 hash of the password as a hexadecimal string.
+     * @throws RuntimeException If the MD5 hashing algorithm is not available.
+     */
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
