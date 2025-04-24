@@ -64,28 +64,52 @@ public interface ProjectTeamOperations extends
     public List<OfficerRegistration> retrieveOfficerRegistrations(ProjectTeam team);
     
     /**
-     * Interface method for retrieval of Project by ProjectTeam object.
-     * Details can be found in {@link btosystem.controllers.ProjectTeamController}
-     */
-
-    /**
-     * Sets project to empty
+     * Sets project to empty.
      *
      * @param projectTeam The projectTeam to edit
      */
     void removeProject(ProjectTeam projectTeam);
 
+    /**
+     * Adds a ProjectTeam to the provided list of ProjectTeams.
+     *
+     * @param projectTeams The list of ProjectTeams to which the team will be added.
+     * @param team The ProjectTeam to add.
+     */
     void addProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team); 
 
+    /**
+     * Removes a ProjectTeam from the provided list of ProjectTeams.
+     *
+     * @param projectTeams The list of ProjectTeams from which the team will be removed.
+     * @param team The ProjectTeam to remove.
+     */
     void removeProjectTeam(List<ProjectTeam> projectTeams, ProjectTeam team);
 
+    /**
+     * Retrieves the list of HdbOfficers assigned to the specified ProjectTeam.
+     *
+     * @param team The ProjectTeam whose officers are to be retrieved.
+     * @return A list of HdbOfficer objects assigned to the team.
+     */
     List<HdbOfficer> retrieveOfficerTeam(ProjectTeam team);
 
+    /**
+     * Retrieves the HdbManager assigned to the specified ProjectTeam.
+     *
+     * @param team The ProjectTeam whose manager is to be retrieved.
+     * @return The HdbManager assigned to the team, or null if none is assigned.
+     */
     HdbManager retrieveManager(ProjectTeam team);    
-    
 
-    /* ---------------------------------- End OfficerRegistration --------------------------------- */
+    /**
+     * Retrieves the Project assigned to the specified ProjectTeam.
+     *
+     * @param team The ProjectTeam whose assigned project is to be retrieved.
+     * @return The Project assigned to the team, or null if none is assigned.
+     */
     public Project retrieveAssignedProject(ProjectTeam team);
+
 
     /**
      * Interface method to check if team is at max officers occupancy.
@@ -100,4 +124,6 @@ public interface ProjectTeamOperations extends
      */
 
     public boolean hasManager(ProjectTeam team);
+
+     /* ---------------------------------- End OfficerRegistration --------------------------------- */
 }
