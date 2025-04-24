@@ -12,7 +12,8 @@ public class Applicant extends User {
     private List<Enquiry> enquiries;
 
     /**
-     * Constructs an {@code Applicant} object with the specified NRIC, name, age, and marital status.
+     * Constructs an {@code Applicant} object with the specified NRIC, 
+     *                                  name, age, and marital status.
      *
      * @param nric    The NRIC of the applicant.
      * @param name    The name of the applicant.

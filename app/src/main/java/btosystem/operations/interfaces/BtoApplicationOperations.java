@@ -90,7 +90,7 @@ public interface BtoApplicationOperations extends
      * Adds a BtoApplication object to the provided list of applications.
      *
      * @param applications The list to which the BtoApplication will be added.
-     * It is assumed that this list is already instantiated.
+     *                     It is assumed that this list is already instantiated.
      * @param application  The BtoApplication object to be added to the list.
      * @return An integer value indicating the success of the operation.
      */

@@ -11,7 +11,8 @@ public class HdbOfficer extends Applicant {
     private List<ProjectTeam> teams;
 
     /**
-     * Constructs an {@code HdbOfficer} object with the specified NRIC, name, age, and marital status.
+     * Constructs an {@code HdbOfficer} object with the specified NRIC, 
+     *                                      name, age, and marital status.
      *
      * @param nric    The NRIC of the HDB officer.
      * @param name    The name of the HDB officer.

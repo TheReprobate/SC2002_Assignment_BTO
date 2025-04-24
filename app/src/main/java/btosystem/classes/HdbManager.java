@@ -12,7 +12,8 @@ public class HdbManager extends User {
     private List<Project> createdProjects;
 
     /**
-     * Constructs an {@code HdbManager} object with the specified NRIC, name, age, and marital status.
+     * Constructs an {@code HdbManager} object with the specified NRIC, 
+     *                                  name, age, and marital status.
      * Initializes the lists for created projects and project teams.
      *
      * @param nric    The NRIC of the HDB manager.

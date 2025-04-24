@@ -33,15 +33,14 @@ public class HdbManagerProjectTeamService extends Service {
      * @param userOperations User related operations.
      * @param projectOperations Project related operations.
      */
-    public HdbManagerProjectTeamService (
+    public HdbManagerProjectTeamService(
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,
             OfficerRegistrationOperations registrationOperations,
             ProjectTeamOperations projectTeamOperations,
             UserOperations userOperations,
-            ProjectOperations projectOperations)
-    {
+            ProjectOperations projectOperations) {
         super(dataManager,
             applicationOperations,
             enquiryOperations,
@@ -96,8 +95,8 @@ public class HdbManagerProjectTeamService extends Service {
      * @param team The project team the officer is joining.
      * @param registration The officer registration to be approved.
      * @throws Exception If the manager does not have access to the project,
-     * if the officer has a time overlap with another project,
-     * or if the project team has reached its maximum capacity.
+     *                  if the officer has a time overlap with another project,
+     *                  or if the project team has reached its maximum capacity.
      */
     public void approveRegistration(HdbManager user, 
                                     ProjectTeam team, 
@@ -108,13 +107,13 @@ public class HdbManagerProjectTeamService extends Service {
         }
         HdbOfficer officer = registrationManager.retrieveAppliedOfficer(registration);
         List<ProjectTeam> officerTeam = userManager.retrieveTeams(officer);
-        for(ProjectTeam t: officerTeam) {
+        for (ProjectTeam t : officerTeam) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
-            if(projectManager.hasTimeOverlap(project, p)) {
+            if (projectManager.hasTimeOverlap(project, p)) {
                 throw new Exception("Unable to process, time overlap detected. ");
             }
         }
-        if(projectTeamManager.hasMaxOfficers(team)) {
+        if (projectTeamManager.hasMaxOfficers(team)) {
             throw new Exception("Maximum possible officers in team.  ");
         }
         registrationManager.approveRegistration(registration);
@@ -150,7 +149,7 @@ public class HdbManagerProjectTeamService extends Service {
      * @param user The HDB manager joining the team.
      * @param project The project to join.
      * @throws Exception If the project already has a manager or if the manager
-     * has a time overlap with another assigned project.
+     *                  has a time overlap with another assigned project.
      */
     public void joinTeam(HdbManager user, Project project) throws Exception {
         ProjectTeam projectTeam = projectManager.retrieveProjectTeam(project);
@@ -158,9 +157,9 @@ public class HdbManagerProjectTeamService extends Service {
             throw new Exception("Project already has a manager. ");
         }
         List<ProjectTeam> userTeams = userManager.retrieveTeams(user);
-        for (ProjectTeam t : userTeams){
+        for (ProjectTeam t : userTeams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
-            if (projectManager.hasTimeOverlap(project, p)){
+            if (projectManager.hasTimeOverlap(project, p)) {
                 throw new Exception("Unable to join team, time overlapped with other projects. ");
             }
         }
@@ -176,11 +175,11 @@ public class HdbManagerProjectTeamService extends Service {
      * @param project The project to check access to.
      * @return True if the manager has access to the project, false otherwise.
      * @throws Exception If there is an issue retrieving the manager's teams or
-     * the project assigned to those teams.
+     *                   the project assigned to those teams.
      */
     private boolean hasProjectAccess(HdbManager user, Project project) throws Exception {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if (p.equals(project)) {
                 return true;

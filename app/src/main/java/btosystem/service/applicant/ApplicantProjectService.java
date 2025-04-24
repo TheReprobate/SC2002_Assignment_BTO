@@ -1,11 +1,6 @@
 package btosystem.service.applicant;
 
-import java.util.List;
-
-import btosystem.classes.Applicant;
 import btosystem.classes.Project;
-import btosystem.classes.User;
-import btosystem.classes.enums.Neighborhood;
 import btosystem.operations.interfaces.BtoApplicationOperations;
 import btosystem.operations.interfaces.EnquiryOperations;
 import btosystem.operations.interfaces.OfficerRegistrationOperations;
@@ -14,7 +9,7 @@ import btosystem.operations.interfaces.ProjectTeamOperations;
 import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
+import java.util.List;
 
 /**
  * Service class for applicants to interact with project-related information.
@@ -29,12 +24,15 @@ public class ApplicantProjectService extends Service {
      * @param dataManager           Data management operations for accessing and storing data.
      * @param applicationOperations BTO application-related operations.
      * @param enquiryOperations     Operations for handling user enquiries.
-     * @param registrationOperations Operations for officer registration (not directly used in this service but inherited).
-     * @param projectTeamOperations Operations for managing project teams (not directly used in this service but inherited).
-     * @param userOperations        Operations related to user management (not directly used in this service but inherited).
+     * @param registrationOperations Operations for officer registration 
+     *                              (not directly used in this service but inherited).
+     * @param projectTeamOperations Operations for managing project teams 
+     *                              (not directly used in this service but inherited).
+     * @param userOperations        Operations related to user management 
+     *                              (not directly used in this service but inherited).
      * @param projectOperations     Operations specifically related to project management.
      */
-    public ApplicantProjectService (
+    public ApplicantProjectService(
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,
@@ -55,7 +53,7 @@ public class ApplicantProjectService extends Service {
      * only projects that are currently open for application.
      *
      * @return A List of {@link Project} objects that are both visible to applicants
-     * and currently open for application.
+     *         and currently open for application.
      */
     public List<Project> getVisibleProjects() {
         List<Project> projects = dataManager.getProjects();

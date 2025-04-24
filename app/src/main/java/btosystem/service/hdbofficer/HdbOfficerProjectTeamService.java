@@ -32,7 +32,7 @@ public class HdbOfficerProjectTeamService extends Service {
      * @param userOperations        User operations.
      * @param projectOperations     Project operations.
      */
-    public HdbOfficerProjectTeamService (
+    public HdbOfficerProjectTeamService(
             DataManager dataManager,
              BtoApplicationOperations applicationOperations,
              EnquiryOperations enquiryOperations,
@@ -53,17 +53,19 @@ public class HdbOfficerProjectTeamService extends Service {
     /**
      * Creates a new officer registration for a specific project.
      * This method checks for existing registrations, ongoing applications in other open projects,
-     * and potential time overlaps with currently assigned projects before creating the registration.
+     * and potential time overlaps with currently assigned projects 
+     * before creating the registration.
      *
      * @param user    The {@link HdbOfficer} creating the registration.
      * @param project The {@link Project} for which the officer is registering.
      * @throws Exception If the officer has a pending application for the team,
-     * already has an existing application in another open project,
-     * or if there is a time overlap with their currently assigned projects.
+     *                  already has an existing application in another open project,
+     *                  or if there is a time overlap with their currently assigned projects.
      */
     public void createRegistration(HdbOfficer user, Project project) throws Exception {
         ProjectTeam team = projectManager.retrieveProjectTeam(project);
-        List<OfficerRegistration> registrations = projectTeamManager.retrieveOfficerRegistrations(team);
+        List<OfficerRegistration> registrations = projectTeamManager
+                                                .retrieveOfficerRegistrations(team);
         if (registrationManager.hasApplied(registrations, user)) {
             throw new Exception("Already has pending application for this team. ");
         }
@@ -71,8 +73,10 @@ public class HdbOfficerProjectTeamService extends Service {
         ProjectTeam currentTeam = getCurrentTeam(user);
         if (currentTeam != null) {
             Project currentProject = projectTeamManager.retrieveAssignedProject(currentTeam);
-            if (application != null && applicationManager.retrieveProject(application).equals(currentProject)) {
-                throw new Exception("Already has existing application in project, unable to apply for project. ");
+            if (application != null && applicationManager
+                                    .retrieveProject(application).equals(currentProject)) {
+                throw new Exception(
+                "Already has existing application in project, unable to apply for project. ");
             }
             Project appliedProject = projectTeamManager.retrieveAssignedProject(team);
             if (projectManager.hasTimeOverlap(currentProject, appliedProject)) {
@@ -80,21 +84,24 @@ public class HdbOfficerProjectTeamService extends Service {
             }
         }
         OfficerRegistration registration = registrationManager.createRegistration(team, user);
-        List<OfficerRegistration> teamRegistrationRef = projectTeamManager.retrieveOfficerRegistrations(team);
+        List<OfficerRegistration> teamRegistrationRef = projectTeamManager
+                                                        .retrieveOfficerRegistrations(team);
         registrationManager.addRegistration(teamRegistrationRef, registration);
     }
 
     /**
      * Retrieves the current project team that the given HDB officer is actively working on.
      * A team is considered the current team if it is assigned to a project that is currently open
-     * for application. If the officer is not currently assigned to any open project, this method returns {@code null}.
+     * for application. If the officer is not currently assigned to any open project, 
+     * this method returns {@code null}.
      *
      * @param user The {@link HdbOfficer} object for whom to retrieve the current team.
-     * @return The {@link ProjectTeam} object of the officer's current team, or {@code null} if none.
+     * @return The {@link ProjectTeam} object of the officer's current team, 
+     *          or {@code null} if none.
      */
-    private ProjectTeam getCurrentTeam(HdbOfficer user){
+    private ProjectTeam getCurrentTeam(HdbOfficer user) {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if (projectManager.isOpen(p)) {
                 return t;

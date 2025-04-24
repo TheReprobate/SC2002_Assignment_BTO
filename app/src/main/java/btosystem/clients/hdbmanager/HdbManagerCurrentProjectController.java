@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * High-level controller class specific to the {@link HdbManager} role
  * handling functionality related to the HDB Manager's current project.
- * <p>
  * This class extends {@link HdbManagerProjectController} and provides
  * actions such as viewing project details, approving/rejecting officer
  * registrations, editing project information, and deleting the current project.
@@ -35,7 +34,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
      *
      * @param user           reference to the logged-in {@link HdbManager} user.
      * @param serviceManager reference to the {@link HdbManagerServiceManager}
-     * for accessing business logic.
+     *                      for accessing business logic.
      */
     public HdbManagerCurrentProjectController(HdbManager user, 
                                             HdbManagerServiceManager serviceManager) {
@@ -88,8 +87,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
      * the parent class's {@link #viewProject(Project)} method to display
      * further options related to the project.
      *
-     * @throws Exception if there's an error in getting the project or during
-     * the viewing process.
+     * @throws Exception if there's an error in getting the project or during the viewing process.
      */
     private void viewProject() throws Exception {
         Project project = getProject();
@@ -103,8 +101,8 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
      * the service layer.
      *
      * @throws Exception if there are no pending registrations, if the user
-     * provides invalid input, or if an error occurs during
-     * the approval process.
+     *                  provides invalid input, 
+     *                  or if an error occurs during the approval process.
      */
     private void approveRegistration() throws Exception {
         Project project = getProject();
@@ -127,8 +125,8 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
      * the service layer.
      *
      * @throws Exception if there are no pending registrations, if the user
-     * provides invalid input, or if an error occurs during
-     * the rejection process.
+     *                  provides invalid input, 
+     *                  or if an error occurs during the rejection process.
      */
     private void rejectRegistration() throws Exception {
         Project project = getProject();
@@ -150,7 +148,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
      * project's visibility status.
      *
      * @throws Exception if the user provides invalid input or if an error
-     * occurs during the project editing process.
+     *                  occurs during the project editing process.
      */
     private void editProject() throws Exception {
         Project project = getProject();
@@ -191,7 +189,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
      * @param project the {@link Project} for which to retrieve registrations.
      * @return the selected {@link OfficerRegistration} object.
      * @throws Exception if no pending registrations are found or if the user
-     * provides an invalid selection.
+     *                   provides an invalid selection.
      */
     private OfficerRegistration getRegistration(Project project) throws Exception {
         List<OfficerRegistration> registrations = serviceManager.getTeamService()
@@ -212,7 +210,7 @@ public class HdbManagerCurrentProjectController extends HdbManagerProjectControl
      * for confirmation before proceeding with the deletion through the service layer.
      *
      * @throws Exception if the user provides invalid input or if an error occurs
-     * during the project deletion process.
+     *                      during the project deletion process.
      */
     private void deleteProject() throws Exception {
         Project project = getProject();

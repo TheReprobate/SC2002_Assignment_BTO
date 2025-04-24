@@ -12,7 +12,6 @@ import btosystem.operations.interfaces.ProjectTeamOperations;
 import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.applicant.ApplicantEnquiryService;
 import btosystem.utils.DataManager;
-import btosystem.utils.OperationsManager;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 
@@ -32,7 +31,7 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
      * @param userOperations User operations
      * @param projectOperations Project operations
      */
-    public HdbOfficerEnquiryService (
+    public HdbOfficerEnquiryService(
         DataManager dataManager,
         BtoApplicationOperations applicationOperations,
         EnquiryOperations enquiryOperations,
@@ -113,7 +112,8 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
      * which enquiries an officer has the authority to view and potentially reply to.
      *
      * @param user The {@link HdbOfficer} object requesting the viewable enquiries.
-     * @return A {@code List} of {@link Enquiry} objects associated with the officer's current project.
+     * @return A {@code List} of {@link Enquiry} 
+     *          objects associated with the officer's current project.
      */
     private List<Enquiry> getViewableProjectEnquiries(HdbOfficer user) {
         ProjectTeam currentTeam = getCurrentTeam(user);
@@ -125,14 +125,16 @@ public class HdbOfficerEnquiryService extends ApplicantEnquiryService {
     /**
      * Retrieves the current project team that the given HDB officer is actively working on.
      * A team is considered the current team if it is assigned to a project that is currently open
-     * for application. If the officer is not currently assigned to any open project, this method returns {@code null}.
+     * for application. If the officer is not currently assigned to any open project, 
+     * this method returns {@code null}.
      *
      * @param user The {@link HdbOfficer} object for whom to retrieve the current team.
-     * @return The {@link ProjectTeam} object of the officer's current team, or {@code null} if none.
+     * @return The {@link ProjectTeam} object of the officer's current team, 
+     *          or {@code null} if none.
      */
-    private ProjectTeam getCurrentTeam(HdbOfficer user){
+    private ProjectTeam getCurrentTeam(HdbOfficer user) {
         List<ProjectTeam> teams = userManager.retrieveTeams(user);
-        for (ProjectTeam t: teams) {
+        for (ProjectTeam t : teams) {
             Project p = projectTeamManager.retrieveAssignedProject(t);
             if (projectManager.isOpen(p)) {
                 return t;

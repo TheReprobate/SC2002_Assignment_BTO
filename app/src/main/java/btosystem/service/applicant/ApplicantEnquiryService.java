@@ -31,7 +31,7 @@ public class ApplicantEnquiryService extends Service {
      * @param userOperations User operations
      * @param projectOperations Project operations
      */
-    public ApplicantEnquiryService (
+    public ApplicantEnquiryService(
             DataManager dataManager,
             BtoApplicationOperations applicationOperations,
             EnquiryOperations enquiryOperations,

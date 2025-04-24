@@ -100,7 +100,7 @@ public interface ProjectTeamOperations extends
      * @return The HdbManager assigned to the team, or null if none is assigned.
      */
     HdbManager retrieveManager(ProjectTeam team);    
-    
+
     public Project retrieveAssignedProject(ProjectTeam team);
 
 
@@ -117,6 +117,4 @@ public interface ProjectTeamOperations extends
      */
 
     public boolean hasManager(ProjectTeam team);
-
-     /* ---------------------------------- End OfficerRegistration --------------------------------- */
 }
