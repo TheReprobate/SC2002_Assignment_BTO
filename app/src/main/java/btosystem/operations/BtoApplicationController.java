@@ -118,11 +118,10 @@ public class BtoApplicationController implements BtoApplicationOperations {
             return "There are currently 0 applications!";
         }
 
-        String formattedString = "%-4s %-24s %-12s %-24s %-10s";
+        String formattedString = "%-4s %-12s %-10s";
         int count = 1;
         String output = String.format(
-                formattedString, "No.", "Applicant", "Type", 
-                "Officer-in-Charge", "Status"
+                formattedString, "No.", "Type", "Status"
         );
         for (BtoApplication application : data) {
             output = output.concat("\n").concat(

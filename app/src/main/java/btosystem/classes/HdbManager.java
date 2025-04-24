@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a manager within the Housing & Development Board (HDB) system.
+ * Represents a manager within the Housing and Development Board (HDB) system.
  * An HDB manager is a type of user who can manage project teams and created projects.
  */
 public class HdbManager extends User {

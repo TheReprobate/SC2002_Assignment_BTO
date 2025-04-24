@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents an HDB (Housing & Development Board) officer, who is also an applicant.
+ * Represents an HDB (Housing and Development Board) officer, who is also an applicant.
  * HDB officers can be part of project teams.
  */
 public class HdbOfficer extends Applicant {
