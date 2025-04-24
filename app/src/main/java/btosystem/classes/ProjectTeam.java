@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * ProjectTeam class.
  * Logical implementation is handled by:
- * {@link btosystem.controllers.ProjectTeamController}
+ * {@link btosystem.operations.ProjectTeamController}
  */
 
 public class ProjectTeam {
@@ -19,7 +19,7 @@ public class ProjectTeam {
     /**
      * Constructor for ProjectTeam object.
      * Actual implementation for creation of object is handled by:
-     * {@link btosystem.controllers.ProjectTeamController}
+     * {@link btosystem.operations.ProjectTeamController}
      */
 
     public ProjectTeam(Project project) {
@@ -56,7 +56,7 @@ public class ProjectTeam {
     /**
      * Modifier method for officer list.
      * Actual implementation is handled by:
-     * {@link btosystem.controllers.ProjectTeamController}
+     * {@link btosystem.operations.ProjectTeamController}
      */
 
     public void assignOfficer(HdbOfficer officer) {
@@ -66,7 +66,7 @@ public class ProjectTeam {
     /**
      * Modifier method for registration list.
      * Actual implementation is handled by:
-     * {@link btosystem.controllers.ProjectTeamController}
+     * {@link btosystem.operations.ProjectTeamController}
      */
 
     public void addOfficerRegistration(OfficerRegistration officerRegistration) {
@@ -76,7 +76,7 @@ public class ProjectTeam {
     /**
      * Used for cleanup of object.
      * Actual implementation is handled by:
-     * {@link btosystem.controllers.ProjectTeamController}
+     * {@link btosystem.operations.ProjectTeamController}
      */
 
     public void removeOfficers() {
@@ -86,7 +86,7 @@ public class ProjectTeam {
     /**
      * Used for cleanup of object.
      * Actual implementation is handled by:
-     * {@link btosystem.controllers.ProjectTeamController}
+     * {@link btosystem.operations.ProjectTeamController}
      */
 
     public void removeOfficerRegistrations() {

@@ -5,7 +5,7 @@ import btosystem.classes.enums.FlatType;
 
 /**
  * BTOApplication class, logical implementation is handled by BtoApplicationController.
- * {@link btosystem.controllers.BtoApplicationController}
+ * {@link btosystem.operations.BtoApplicationController}
  */
 public class BtoApplication {
     private ApplicationStatus status;

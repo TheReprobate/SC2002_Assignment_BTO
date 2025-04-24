@@ -4,7 +4,7 @@ import btosystem.classes.enums.RegistrationStatus;
 
 /**
  * ProjectTeam class, logical implementation is handled by OfficerRegistrationController.
- * {@link btosystem.controllers.OfficerRegistrationController}
+ * {@link btosystem.operations.OfficerRegistrationController}
  */
 public class OfficerRegistration {
     private RegistrationStatus status;
@@ -13,7 +13,7 @@ public class OfficerRegistration {
     /**
      * Constructor for OfficerRegistration object.
      * Actual implementation for creation of object is handled by:
-     * {@link btosystem.controllers.ProjectTeamController}
+     * {@link btosystem.operations.ProjectTeamController}
      */
 
     public OfficerRegistration(HdbOfficer officer) {

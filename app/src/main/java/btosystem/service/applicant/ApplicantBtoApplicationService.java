@@ -6,12 +6,12 @@ import btosystem.classes.Applicant;
 import btosystem.classes.BtoApplication;
 import btosystem.classes.Project;
 import btosystem.classes.enums.FlatType;
-import btosystem.controllers.interfaces.BtoApplicationOperations;
-import btosystem.controllers.interfaces.EnquiryOperations;
-import btosystem.controllers.interfaces.OfficerRegistrationOperations;
-import btosystem.controllers.interfaces.ProjectOperations;
-import btosystem.controllers.interfaces.ProjectTeamOperations;
-import btosystem.controllers.interfaces.UserOperations;
+import btosystem.operations.interfaces.BtoApplicationOperations;
+import btosystem.operations.interfaces.EnquiryOperations;
+import btosystem.operations.interfaces.OfficerRegistrationOperations;
+import btosystem.operations.interfaces.ProjectOperations;
+import btosystem.operations.interfaces.ProjectTeamOperations;
+import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.Service;
 import btosystem.utils.DataManager;
 

@@ -1,18 +1,17 @@
 package btosystem;
 
-import btosystem.clients.MainClient;
-import btosystem.controllers.BtoApplicationController;
-import btosystem.controllers.EnquiryController;
-import btosystem.controllers.OfficerRegistrationController;
-import btosystem.controllers.ProjectController;
-import btosystem.controllers.ProjectTeamController;
-import btosystem.controllers.UserController;
-import btosystem.controllers.interfaces.BtoApplicationOperations;
-import btosystem.controllers.interfaces.EnquiryOperations;
-import btosystem.controllers.interfaces.OfficerRegistrationOperations;
-import btosystem.controllers.interfaces.ProjectOperations;
-import btosystem.controllers.interfaces.ProjectTeamOperations;
-import btosystem.controllers.interfaces.UserOperations;
+import btosystem.operations.BtoApplicationController;
+import btosystem.operations.EnquiryController;
+import btosystem.operations.OfficerRegistrationController;
+import btosystem.operations.ProjectController;
+import btosystem.operations.ProjectTeamController;
+import btosystem.operations.UserController;
+import btosystem.operations.interfaces.BtoApplicationOperations;
+import btosystem.operations.interfaces.EnquiryOperations;
+import btosystem.operations.interfaces.OfficerRegistrationOperations;
+import btosystem.operations.interfaces.ProjectOperations;
+import btosystem.operations.interfaces.ProjectTeamOperations;
+import btosystem.operations.interfaces.UserOperations;
 import btosystem.service.ApplicantServiceManager;
 import btosystem.service.GenericService;
 import btosystem.service.HdbManagerServiceManager;
@@ -116,7 +115,7 @@ public class App {
                 officerProjectService, officerProjectTeamService, gService);
 
         
-        MainClient client = new MainClient(
+        Entry client = new Entry(
                 applicantServiceManager, hdbOfficerServiceManager,
                 hdbMangerServiceManager, accountService, 
                 dManager);

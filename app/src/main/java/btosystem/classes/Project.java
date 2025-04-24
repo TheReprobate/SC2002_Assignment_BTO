@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Project class, logical implementation is handled by ProjectController.
- * {@link btosystem.controllers.ProjectController}
+ * {@link btosystem.operations.ProjectController}
  */
 public class Project {
     private String name;
@@ -26,7 +26,7 @@ public class Project {
     /**
      * Constructor for Project object.
      * Actual implementation for creation of object is handled by.
-     * {@link btosystem.controllers.ProjectController}
+     * {@link btosystem.operations.ProjectController}
      */
     public Project(
             String name,
