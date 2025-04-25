@@ -1,5 +1,7 @@
 ProjectName,ManagerNric,OfficersNric
-The Everglades,T0000000A,T0000001A;T1000000A
-PROJECT1,null,null
-PROJECT2,T0000000A,null
-PROJECT3,T0000000A,null
+The Everglades,null,null
+The Palms,T0000000A,T1234567J
+The Meadows,T0000000A,null
+The Vistas,T0000000A,null
+The Gardens,null,null
+The Oasis,null,null
